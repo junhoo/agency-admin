@@ -1,0 +1,139 @@
+<template>
+    <header class="head-nav">
+        <div class="content">
+          <img class="icon-left" src="~assets/logo.png">
+          <p class="blue">收益钱包</p>
+        </div>
+        <div class="content">
+          <p>欢迎你xx代理</p>
+          <img class="icon-right" src="~assets/logo.png">
+        </div>
+    </header>
+</template>
+<script>
+export default {
+  name: "head-nav",
+  computed: {
+    user() {
+      return this.$store.getters.user;
+    }
+  },
+  methods: {
+    setDialogInfo(cmditem) {
+      if (!cmditem) {
+        console.log("test");
+        this.$message("菜单选项缺少command属性");
+        return;
+      }
+      switch (cmditem) {
+        case "info":
+          this.showInfoList();
+          break;
+        case "logout":
+          this.logout();
+          break;
+      }
+    },
+    showInfoList() {
+      // 个人信息
+      this.$router.push("/infoshow");
+    },
+    logout() {
+      // 清除token
+      localStorage.removeItem("eleToken");
+      this.$store.dispatch("clearCurrentState");
+
+      // 页面跳转
+      this.$router.push("/login");
+    }
+  }
+};
+</script>
+
+<style lang="scss" scoped>
+.head-nav {
+  position: fixed;
+  top: 0;
+  left: 260px;
+  right: 0;
+  height: 100px;
+  color: #fff;
+  background: #09192F;
+  border-bottom: 1px solid #1f2d3d;
+  display: flex;
+  justify-content: space-between;
+  padding-top: 30px; 
+  box-sizing: border-box;
+  .blue {
+    color: #3986E2;
+  }
+  .content {
+    display: flex;
+    height: 40px;
+    line-height: 40px;
+    .icon-left {
+      width: 10px;
+      height: 10px;
+    }
+    .icon-right {
+      width: 28px;
+      height: 30px;
+    }
+  }
+}
+.logo-container {
+  line-height: 60px;
+  min-width: 400px;
+}
+.logo {
+  height: 50px;
+  width: 50px;
+  margin-right: 5px;
+  vertical-align: middle;
+  display: inline-block;
+}
+.title {
+  vertical-align: middle;
+  font-size: 22px;
+  font-family: "Microsoft YaHei";
+  letter-spacing: 3px;
+}
+.user {
+  line-height: 60px;
+  text-align: right;
+  float: right;
+  padding-right: 10px;
+}
+.avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  vertical-align: middle;
+  display: inline-block;
+}
+.welcome {
+  display: inline-block;
+  width: auto;
+  vertical-align: middle;
+  padding: 0 5px;
+}
+.name {
+  line-height: 20px;
+  text-align: center;
+  font-size: 14px;
+}
+.comename {
+  font-size: 12px;
+}
+.avatarname {
+  color: #409eff;
+  font-weight: bolder;
+}
+.username {
+  cursor: pointer;
+  margin-right: 5px;
+}
+.el-dropdown {
+  color: #fff;
+}
+</style>
