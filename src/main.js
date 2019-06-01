@@ -2,7 +2,8 @@ import Vue from 'vue';
 import App from './App.vue';
 import router from './router';
 import './plugins/element.js'
-// import ElementUI from 'element-ui';
+import '@/assets/styles/reset.css'
+import '@/assets/styles/border.css'
 import { Row, Menu, Submenu, MenuItem } from 'element-ui'
 
 Vue.use(Row)

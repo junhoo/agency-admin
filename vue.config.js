@@ -16,6 +16,7 @@ module.exports = {
         config.resolve.alias
             .set('@$', resolve('src'))
             .set('assets',resolve('src/assets'))
+            .set('imgurl',resolve('src/assets/img'))
             .set('components',resolve('src/components'))
     },
     transpileDependencies: [], // 默认babel-loader忽略mode_modules，这里可增加例外的依赖包名
@@ -36,7 +37,7 @@ module.exports = {
     pwa: { // 单页插件相关配置 https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-pwa
     },
     devServer: {
-        open: true,
+        open: false,
         host: '0.0.0.0',
         port: 8080,
         https: false,

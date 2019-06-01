@@ -1,12 +1,12 @@
 <template>
     <header class="head-nav">
         <div class="content">
-          <img class="icon-left" src="~assets/logo.png">
+          <div class="icon-left"></div>
           <p class="blue">收益钱包</p>
         </div>
         <div class="content">
           <p>欢迎你xx代理</p>
-          <img class="icon-right" src="~assets/logo.png">
+          <div class="icon-right"></div>
         </div>
     </header>
 </template>
@@ -54,7 +54,7 @@ export default {
 .head-nav {
   position: fixed;
   top: 0;
-  left: 260px;
+  left: 200px;
   right: 0;
   height: 100px;
   color: #fff;
@@ -62,7 +62,7 @@ export default {
   border-bottom: 1px solid #1f2d3d;
   display: flex;
   justify-content: space-between;
-  padding-top: 30px; 
+  padding-top: 30px;
   box-sizing: border-box;
   .blue {
     color: #3986E2;
@@ -73,11 +73,18 @@ export default {
     line-height: 40px;
     .icon-left {
       width: 10px;
-      height: 10px;
+      height: 40px;
+      background: url('~imgurl/logo.png') no-repeat center;
+      background-size: 10px;
+      margin-left: 40px;
     }
     .icon-right {
-      width: 28px;
-      height: 30px;
+      width: 30px;
+      height: 40px;
+      background: url('~imgurl/logo.png') no-repeat center;
+      background-size: 28px 30px;
+      margin-left: 16px;
+      margin-right: 40px;
     }
   }
 }

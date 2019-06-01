@@ -7,7 +7,7 @@
                 text-color="#fff"
                 active-text-color="#409eff"
                 class="el-menu-vertical-demo">
-                <div class="meun-logo"></div>
+                <div class="meun-logo" style="background: #061220;"></div>
                 <router-link v-for="(item, index) in items" :key="index" :to="item.path">
                     <el-menu-item
                         :index='item.path'>
@@ -73,14 +73,14 @@ export default {
   height: 100px;
 }
 .el-menu-vertical-demo:not(.el-menu--collapse) {
-  width: 260px;
+  width: 200px;
   min-height: 400px;
 }
 .el-menu-vertical-demo {
   width: 35px;
 }
 .el-submenu .el-menu-item {
-  min-width: 260px;
+  min-width: 200px;
 }
 
 .hiddenDropdown,
