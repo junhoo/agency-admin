@@ -7,7 +7,7 @@
                 text-color="#fff"
                 active-text-color="#409eff"
                 class="el-menu-vertical-demo">
-                <div class="meun-logo" style="background: #061220;"></div>
+                <div class="meun-logo"></div>
                 <router-link v-for="(item, index) in items" :key="index" :to="item.path">
                     <el-menu-item
                         :index='item.path'>
@@ -71,6 +71,9 @@ export default {
 }
 .meun-logo {
   height: 100px;
+  background-color: #061220;
+  background: url('~imgurl/logo.png') no-repeat center;
+  background-size: 102px 56px;
 }
 .el-menu-vertical-demo:not(.el-menu--collapse) {
   width: 200px;

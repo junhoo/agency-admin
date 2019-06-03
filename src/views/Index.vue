@@ -26,13 +26,20 @@ export default {
   height: 100%;
   overflow: hidden;
 }
+
 .rightContainer {
-  position: relative;
+  box-sizing: border-box;
+  position: fixed;
   top: 100px;
   left: 200px;
-  width: calc(100% - 180px);
-  height: calc(100% - 71px);
+  right: 0;
+  bottom: 0;
+  width: calc(100% - 200px);
+  height: calc(100% - 100px);
   overflow: auto;
+  background-color: #061220;
+  padding-left: 58px;
+  padding-right: 28px;
 }
 </style>
 

@@ -2,7 +2,7 @@
     <header class="head-nav">
         <div class="content">
           <div class="icon-left"></div>
-          <p class="blue">收益钱包</p>
+          <p class="nav-name">收益钱包</p>
         </div>
         <div class="content">
           <p>欢迎你xx代理</p>
@@ -10,6 +10,7 @@
         </div>
     </header>
 </template>
+
 <script>
 export default {
   name: "head-nav",
@@ -64,8 +65,9 @@ export default {
   justify-content: space-between;
   padding-top: 30px;
   box-sizing: border-box;
-  .blue {
+  .nav-name {
     color: #3986E2;
+    font-size: 14px;
   }
   .content {
     display: flex;
@@ -77,6 +79,7 @@ export default {
       background: url('~imgurl/logo.png') no-repeat center;
       background-size: 10px;
       margin-left: 40px;
+      margin-right: 14px;
     }
     .icon-right {
       width: 30px;
