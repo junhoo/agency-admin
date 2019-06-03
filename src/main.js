@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import App from './App.vue';
 import router from './router';
+import VCharts from 'v-charts'
 import './plugins/element.js'
 import '@/assets/styles/reset.css'
 import '@/assets/styles/border.css'
@@ -16,6 +17,7 @@ Vue.use(TabPane)
 Vue.use(Table)
 Vue.use(TableColumn)
 Vue.use( Dialog)
+Vue.use(VCharts)
 
 Vue.config.productionTip = false;
 
