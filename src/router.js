@@ -2,6 +2,7 @@ import Vue from 'vue';
 import Router from 'vue-router';
 import Home from './views/Home.vue';
 import Index from './views/Index.vue'
+import earnings from "./views/earnings.vue";
 
 Vue.use(Router);
 const routes =  [
@@ -12,7 +13,8 @@ const routes =  [
     component: Index,
     children: [
       { path: '', component: Home },
-      { path: '/home', name: 'home', component: Home }
+      { path: '/home', name: 'home', component: Home },
+      { path: '/earnings', name: 'earnings', component: earnings }
     ]
   }
 ]

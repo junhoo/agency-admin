@@ -27,7 +27,7 @@ export default {
         {
           icon: "fa-money",
           name: "收益钱包",
-          path: "fund"
+          path: "earnings"
         },
         {
           icon: "fa-asterisk",
