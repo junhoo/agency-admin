@@ -8,7 +8,7 @@
           <span>积分余额</span>
         </div>
         <div class="right">
-          <el-button type="primary">兑换USDT</el-button>
+          <el-button type="primary" @click="dialogVisible2 = true">兑换USDT</el-button>
         </div>
       </div>
       <div class="box">
@@ -17,7 +17,7 @@
           <span style="color:#059E7E;">积分余额</span>
         </div>
         <div class="right">
-          <el-button type="primary">兑换USDT</el-button>
+          <el-button type="primary" @click="dialogVisible3 = true">提现USDT</el-button>
         </div>
       </div>
       <div class="box three">
@@ -69,27 +69,89 @@
           <el-table-column prop="address" label="区块确认数" align="center"></el-table-column>
           <el-table-column prop="address" label="交易状态" align="center">
             <template>
-              <span style="color:red;" @click="dialogVisible = true">审核中</span>
+              <span style="color:red;" @click="dialogVisible1 = true">审核中</span>
             </template>
           </el-table-column>
         </el-table>
       </el-tab-pane>
     </el-tabs>
 
-    <!-- 弹框 -->
-    <el-dialog title="设置资金密码" :visible.sync="dialogVisible" width="285px" :modal-append-to-body='false'>
+    <!-- 设置资金密码弹框 -->
+    <el-dialog
+      title="设置资金密码"
+      :visible.sync="dialogVisible1"
+      width="285px"
+      :modal-append-to-body="false"
+    >
       <div class="mobile">
-          <span>验证手机：153****4544</span>
+        <span>验证手机：153****4544</span>
       </div>
-      <div>
-          <input type="text">
-          <span>获取验证码</span>
+      <div class="text">
+        <el-input size="small" placeholder="输入验证码" v-model="input"></el-input>
+        <el-button type="primary">获取验证码</el-button>
       </div>
-      <div>注：为确保资金安全，请先验证手机，并设置您的资金密码。</div>
-      <div>设置资金密码</div>
-      <input type="text" placeholder="请输入6位数密码">
+      <div class="tips">注：为确保资金安全，请先验证手机，并设置您的资金密码。</div>
+      <div class="password">设置资金密码</div>
+      <el-input size="small" placeholder="请输入6位数密码" v-model="input3" class="input"></el-input>
       <span slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
+        <el-button type="primary" @click="dialogVisible1 = false">确 定</el-button>
+      </span>
+    </el-dialog>
+
+    <!-- 兑换USDT弹框 -->
+
+    <el-dialog
+      title="兑换USDT"
+      :visible.sync="dialogVisible2"
+      width="285px"
+      :modal-append-to-body="false"
+    >
+      <div class="mobile">
+        <span>兑换积分数</span>
+      </div>
+      <div class="text">
+        <el-input size="small" placeholder="输入要兑换的数量" v-model="input"></el-input>
+        <el-button type="primary">全部兑换</el-button>
+      </div>
+      <!-- <div class="tips">注：为确保资金安全，请先验证手机，并设置您的资金密码。</div> -->
+      <div class="password" style="marginTop:16px">可获得USDT个数</div>
+      <el-input size="small" placeholder="数量（USDT)" v-model="input3" class="input"></el-input>
+      <div class="tips">可用积分数：123124</div>
+      <span slot="footer" class="dialog-footer">
+        <el-button type="primary" @click="dialogVisible2 = false">确 定</el-button>
+      </span>
+    </el-dialog>
+
+    <!-- 我要提币弹框 -->
+
+    <el-dialog
+      title="我要提币"
+      :visible.sync="dialogVisible3"
+      width="285px"
+      :modal-append-to-body="false"
+    >
+      <div class="mobile">
+        <span>提币地址</span>
+      </div>
+      <el-input size="small" placeholder="输入或粘贴钱包地址" v-model="input3" class="input"></el-input>
+      <div class="mobile" style="marginTop:16px">
+        <span>提币数量</span>
+      </div>
+      <div class="text" style="marginTop:16px">
+        <el-input size="small" placeholder="输入提币数量" v-model="input"></el-input>
+        <el-button type="primary">全部</el-button>
+      </div>
+      <!-- <div class="tips">注：为确保资金安全，请先验证手机，并设置您的资金密码。</div> -->
+      <div class="password" style="marginTop:16px">资金密码</div>
+      <el-input size="small" placeholder="输入资金密码" v-model="input3" class="input"></el-input>
+      <div class="tips">每笔提现收取: 1USDT矿工费</div>
+      <div class="tips">实际到账: 0.0001USDT</div>
+      <span slot="footer" class="dialog-footer">
+        <el-button type="primary" @click="dialogVisible3 = false">确 定</el-button>
+        <div class="tips" style="marginTop:33px;color: #5c6680;">提币须知：</div>
+        <div class="tips" style="color: #5c6680;">1.请认真检查转出地址正确无误，否则导致的损失平台概不负责</div>
+        <div class="tips" style="color: #5c6680;">2.提现超过10个USDT以上，需提交平台审核</div>
+        <div class="tips" style="color: #5c6680;">3.提现到上述地址后，将在2个区块确认后到账</div>
       </span>
     </el-dialog>
   </div>
@@ -100,8 +162,12 @@ export default {
   name: "earnings",
   data() {
     return {
-      dialogVisible:false,
+      input: "",
+      dialogVisible1: false,
+      dialogVisible2: false,
+      dialogVisible3: false,
       activeName: "first",
+      input3: "",
       tableData: [
         {
           date: "2016-05-02",
@@ -142,7 +208,9 @@ export default {
   border-right: none !important;
   border-bottom: 2px solid #06476d !important;
 }
-
+.rightContainer{
+  padding-top: 0;
+}
 .container {
   height: 100%;
   width: 100%;
@@ -204,6 +272,10 @@ export default {
             font-size: 21px;
             color: #fff;
           }
+          span:nth-of-type(2) {
+            color: #059e7e;
+          }
+
           span:nth-of-type(4) {
             color: #2f70be;
           }
@@ -216,16 +288,96 @@ export default {
       }
     }
   }
+  .mobile {
+    font-size: 12px;
+    color: #5c6680;
+    margin-bottom: 15px;
+  }
+  .text {
+    display: flex;
+    align-items: center;
+    .el-input {
+      width: 170px;
+      background-color: #0e1b2f;
+      color: #2b374f;
+      font-size: 12px;
+      margin-right: 10px;
+      border-radius: 2px;
+    }
+    button {
+      width: 70px;
+      height: 25px;
+      background-color: #059e7e;
+      font-size: 12px;
+      color: #fff;
+      border: 2px;
+      line-height: 25px;
+      border-radius: 2px;
+    }
+  }
+  .tips {
+    color: #047e65;
+    font-size: 12px;
+    margin-bottom: 13px;
+    margin-top: 10px;
+  }
+  .password {
+    color: #5c6680;
+    font-size: 12px;
+    margin-bottom: 15px;
+  }
+  .input {
+    width: 239px;
+    background-color: #0e1b2f;
+    color: #2b374f;
+    font-size: 12px;
+    margin-right: 10px;
+    border-radius: 2px;
+  }
+  .el-button--primary {
+    width: 242px;
+    height: 32px;
+    padding: 0;
+    border-radius: 2px;
+  }
 }
 </style>
-<style>
+<style lang="scss">
+.el-dialog__footer {
+  text-align: left;
+}
+/* 输入框样式 */
+.el-input__inner {
+  background-color:  #0C2040;
+  color: #708193;
+  font-size: 12px;
+  border: none;
+}
+.el-input__inner::placeholder {
+  color: #2b374f;
+}
+.el-input__inner:hover {
+  border-color: none;
+}
+/* tab栏样式 */
 .el-tabs__item.is-active {
   color: #fff;
 }
 .el-tabs__nav-wrap::after {
   display: none;
 }
-
+/* 表格样式 */
+.el-table--border,
+.el-table--group {
+  border: 2px solid #06476d;
+}
+.el-table__header-wrapper th:nth-last-of-type(2) {
+  border-right: 2px solid #06476d;
+}
+.is-leaf {
+  border-right: none !important;
+  border-bottom: 2px solid #06476d !important;
+}
 .el-table tr {
   background-color: #061220;
 }
@@ -248,11 +400,18 @@ export default {
 .el-table--enable-row-hover .el-table__body tr:hover > td {
   background-color: #212e3e !important;
 }
-.el-dialog{
-    background-color: #12223B;
-    margin-top: 30vh;
+/* 弹框样式 */
+.el-dialog {
+  background-color: #12223b;
+  margin-top: 30vh;
 }
-.el-dialog__title{
-    color: #fff;
+.el-dialog__title {
+  color: #fff;
+  font-size: 12px;
+}
+// 文本域样式
+.el-textarea__inner{
+  background-color: #0C2040;
+  border-color: #0C2040;
 }
 </style>

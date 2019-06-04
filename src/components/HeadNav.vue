@@ -82,24 +82,30 @@ export default {
   .nav-name {
     color: #3986E2;
     font-size: 14px;
+    margin-left: 55px;
   }
   .content {
+    position: relative;
     display: flex;
     height: 40px;
     line-height: 40px;
     .icon-left {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
       width: 10px;
-      height: 40px;
-      background: url('~imgurl/logo.png') no-repeat center;
-      background-size: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background-color: #37EC6B;
+      // background: url('~imgurl/logo.png') no-repeat center;
+      // background-size: 10px;
       margin-left: 40px;
-      margin-right: 14px;
     }
     .icon-right {
       width: 30px;
       height: 40px;
-      background: url('~imgurl/logo.png') no-repeat center;
-      background-size: 28px 30px;
+      background: url('~imgurl/siginout.png') no-repeat center;
+      background-size: 18px 18px;
       margin-left: 16px;
       margin-right: 40px;
     }
