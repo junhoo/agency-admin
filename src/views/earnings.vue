@@ -130,6 +130,19 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+/deep/ .el-table--border, .el-table--group {
+  border: 2px solid #06476d;
+}
+
+/deep/ .el-table__header-wrapper th:nth-last-of-type(2) {
+  border-right: 2px solid #06476d;
+}
+
+/deep/ .is-leaf {
+  border-right: none !important;
+  border-bottom: 2px solid #06476d !important;
+}
+
 .container {
   height: 100%;
   width: 100%;
@@ -212,17 +225,7 @@ export default {
 .el-tabs__nav-wrap::after {
   display: none;
 }
-.el-table--border,
-.el-table--group {
-  border: 2px solid #06476d;
-}
-.el-table__header-wrapper th:nth-last-of-type(2) {
-  border-right: 2px solid #06476d;
-}
-.is-leaf {
-  border-right: none !important;
-  border-bottom: 2px solid #06476d !important;
-}
+
 .el-table tr {
   background-color: #061220;
 }

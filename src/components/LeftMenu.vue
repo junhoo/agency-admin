@@ -32,7 +32,7 @@ export default {
         {
           icon: "fa-asterisk",
           name: "商户交易数据",
-          path: "info"
+          path: "merchants"
         },
         {
           icon: "fa-asterisk",

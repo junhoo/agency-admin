@@ -6,9 +6,17 @@ import './plugins/element.js'
 import '@/assets/styles/reset.css'
 import '@/assets/styles/border.css'
 import {
-  Row, Menu, Submenu, MenuItem,Tabs,TabPane,Table, TableColumn, Dialog,} from 'element-ui'
+  Row, Col,
+  Menu,
+  Submenu,
+  MenuItem,
+  Tabs, TabPane,
+  Table, TableColumn,
+  Dialog
+} from 'element-ui'
 
 Vue.use(Row)
+Vue.use(Col)
 Vue.use(Menu)
 Vue.use(Submenu)
 Vue.use(MenuItem)
