@@ -1,9 +1,11 @@
 <template>
   <div class="index">
-    <HeadNav :headTitle='headtitleIndex'></HeadNav>
     <LeftMenu @toindexData="sendleftData"></LeftMenu>
-    <div class="rightContainer">
-      <router-view></router-view>
+    <div class="rrr">
+      <HeadNav :headTitle='headtitleIndex'></HeadNav>
+      <div class="rightContainer">
+        <router-view></router-view>
+      </div>
     </div>
   </div>
 </template>
@@ -34,22 +36,25 @@ export default {
 .index {
   width: 100%;
   height: 100%;
-  overflow: hidden;
 }
 
-.rightContainer {
+.rrr {
+  position: fixed;
   box-sizing: border-box;
   position: fixed;
-  top: 100px;
+  top: 0;
   left: 200px;
   right: 0;
   bottom: 0;
-  width: calc(100% - 200px);
-  height: calc(100% - 100px);
-  overflow: auto;
+  overflow-y: scroll;
   background-color: #061220;
-  padding-left: 58px;
-  padding-right: 28px;
+}
+
+.rightContainer {
+  position: relative;
+  min-width: 1200px;
+  background-color: #061220;
+  padding: 0 28px 50px 58px;
 }
 </style>
 

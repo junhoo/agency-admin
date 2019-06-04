@@ -4,17 +4,33 @@
     <ul class="search">
       <li class="iteminput">
         <input type="text" placeholder="输入联系人/机构名称">
-        <!-- <i slot="suffix" class="el-input__icon el-icon-search"></i> -->
+        <i slot="suffix" class="el-input__icon el-icon-search"></i>
       </li>
-      <li  class="iteminput">
-
+      <li class="iteminput">
+          <el-date-picker
+            popper-class="xiala"
+            v-model="startTime"
+            type="date"
+            placeholder="选择日期">
+          </el-date-picker>
       </li>
-       <li  class="iteminput">
-         <span class="subSearch" @click="search()">添加商户</span>
+      <li class="iteminput">
+        <span class="line"></span>
+      </li>
+      <li class="iteminput">
+          <el-date-picker
+            popper-class="xiala"
+            v-model="endTime"
+            type="date"
+            placeholder="选择日期">
+          </el-date-picker>
+      </li>
+       <li class="iteminput iteminput5">
+         <span class="subSearch" @click="addMerchant()">添加商户</span>
       </li>
     </ul>
     <!-- 表格 -->
-    <div v-if="0" class="tableBox">
+    <div v-if="dataShow" class="tableBox">
       <el-table
           :data="tableData"
           border
@@ -39,7 +55,7 @@
     </div>
 
     <!-- 无数据 -->
-    <div class="nodata">
+    <div v-else class="nodata">
       <img src="../assets/img/noData.png" alt="">
     </div>
     <!-- 弹框 -->
@@ -78,7 +94,9 @@ export default {
         }
       ],
       inputName: '',
-      value1: '',
+      startTime: '',
+      endTime: '',
+      dataShow: true
     };
   },
   methods: {
@@ -86,7 +104,8 @@ export default {
       console.log(row)
       this.dialogVisible = true
     },
-    search () {}
+    addMerchant () {
+    }
   },
 };
 </script>
@@ -95,36 +114,36 @@ export default {
 .container {
   height: 100%;
   width: 100%;
+  position: relative;
   .search{
     height: 100px;
     line-height: 100px;
     display: flex;
     .iteminput{
       position: relative;
+      margin-right: 20px;
       input{
         color: #555F79;
         font-size: 17px;
-        padding: 5px 12px;
-        height: 38px;
-        line-height: 38px;
+        padding: 2px 12px;
+        height: 26px;
+        line-height: 26px;
         background-color: transparent;
         border-radius: 3px;
         border: 1px solid #555F79;
-        margin-right: 20px;
         &::placeholder{
           color: #555F79
         }
       }
       i{
         position: absolute;
-        top: 50%;
-        transform: translateY(-50%);
-        right: 10px;
+        top: 30%;
+        right: 0px;
         margin-right: 20px;
-        color: #555F79;
         width: 15px;
+        color: #555F79;
         font-weight: 600;
-        font-size: 17px;
+        font-size: 17px
       }
       .subSearch{
         display: inline-block;
@@ -133,10 +152,19 @@ export default {
         background-color: #059E7E;
         border-radius: 3px;
         width: 118px;
-        height: 37px;
-        line-height: 37px;
+        height: 30px;
+        line-height: 30px;
         text-align: center
       }
+      .line{
+        display: inline-block;
+        width: 25px;
+        height: 1px;
+        background-color: #555F79
+      }
+    }
+    .iteminput5{
+      padding-top: 2px
     }
   }
   .dialogContant{
@@ -148,11 +176,10 @@ export default {
   }
   .nodata{
     position: absolute;
-    top: 50%;
+    top: 300px;
     left: 50%;
-    transform: translate(-50%);
+    transform: translateX(-50%);
     width: 100px
-
   }
 }
 </style>
@@ -200,5 +227,25 @@ export default {
 }
 .el-dialog__body{
   padding: 25px 25px 60px !important;
+}
+.el-input__inner{
+  color: #555F79;
+  font-size: 17px;
+  padding: 15px 10px 15px 30px !important;
+  height: 26px;
+  line-height: 26px;
+  background-color: transparent;
+  border-radius: 3px;
+  border: 1px solid #555F79;
+}
+.el-input__inner::placeholder{
+    color: #555F79
+}
+.el-input__icon{
+  color: #555F79;
+  font-weight: 600;
+  font-size: 17px;
+}
+.xiala{
 }
 </style>

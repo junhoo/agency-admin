@@ -45,7 +45,7 @@ export default {
         {
           icon: "fa-asterisk",
           name: "商户管理",
-          path: "/POSManagement",
+          path: "/addManagement",
           index: 3
         },
         {

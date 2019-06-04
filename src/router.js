@@ -1,9 +1,10 @@
-import Vue from 'vue'
-import Router from 'vue-router'
-import Home from './views/Home.vue'
-import Index from './views/Index.vue'
-import earnings from "./views/earnings.vue"
-import POSManagement from "./views/POSManagement.vue"
+import Vue from 'vue';
+import Router from 'vue-router';
+import Merchants from './views/Merchants.vue';
+import Index from './views/Index.vue';
+import earnings from './views/earnings.vue';
+import POSManagement from './views/POSManagement.vue';
+import AddManagement from './views/addManagement.vue';
 
 Vue.use(Router)
 const routes =  [
@@ -13,10 +14,10 @@ const routes =  [
     name: 'index',
     component: Index,
     children: [
-      { path: '', component: Home },
-      { path: '/home', name: 'home', component: Home },
       { path: '/earnings', name: 'earnings', component: earnings },
-      { path: '/POSManagement', name: 'POSManagement', component: POSManagement }
+      { path: '/posManagement', name: 'POSManagement', component: POSManagement },
+      { path: '/addManagement', name: 'AddManagement', component: AddManagement },
+      { path: '/merchants', name: 'merchants', component: Merchants }
     ]
   }
 ]
