@@ -8,13 +8,7 @@ import '@/assets/styles/reset.css'
 import '@/assets/styles/border.css'
  
 import {
-  Row, Col,
-  Menu,
-  Submenu,
-  MenuItem,
-  Tabs, TabPane,
-  Table, TableColumn,
-  Dialog
+  Row, Col, Menu, Submenu, MenuItem, Tabs, TabPane, Table, TableColumn, Dialog, Input, Dropdown, DropdownMenu, DropdownItem, Form, FormItem, DatePicker,
 } from 'element-ui'
 
 Vue.use(VueApexCharts)
@@ -27,8 +21,15 @@ Vue.use(Tabs)
 Vue.use(TabPane)
 Vue.use(Table)
 Vue.use(TableColumn)
-Vue.use( Dialog)
+Vue.use(Dialog)
 Vue.use(VCharts)
+Vue.use(Input)
+Vue.use(Dropdown)
+Vue.use(DropdownMenu)
+Vue.use(DropdownItem)
+Vue.use(Form)
+Vue.use(FormItem)
+Vue.use(DatePicker)
 
 Vue.component('apexchart', VueApexCharts)
 Vue.config.productionTip = false;
