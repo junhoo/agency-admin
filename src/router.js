@@ -1,9 +1,12 @@
 import Vue from 'vue';
 import Router from 'vue-router';
-import Home from './views/Home.vue';
+import Merchants from './views/Merchants.vue';
 import Index from './views/Index.vue'
 import earnings from "./views/Earnings.vue";
 import deal from "./views/Deal.vue";
+import dealData from "./views/Deal_data.vue";
+import dealDetail from "./views/Deal_detail.vue";
+import information from "./views/Information.vue";
 
 Vue.use(Router);
 const routes =  [
@@ -13,10 +16,13 @@ const routes =  [
     name: 'index',
     component: Index,
     children: [
-      { path: '', component: Home },
-      { path: '/home', name: 'home', component: Home },
+      { path: '', component: Merchants },
+      { path: '/merchants', name: 'merchants', component: Merchants },
       { path: '/earnings', name: 'earnings', component: earnings},
-      { path: '/deal', name: 'deal', component: deal}
+      { path: '/deal', name: 'deal', component: deal},
+      { path: '/dealData', name: 'dealData', component: dealData},
+      { path: '/dealDetail', name: 'dealDetail', component: dealDetail},
+      { path: '/information', name: 'information', component: information},
     ]
   }
 ]

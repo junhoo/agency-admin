@@ -196,6 +196,21 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+/deep/ .el-table--border, .el-table--group {
+  border: 2px solid #06476d;
+}
+
+/deep/ .el-table__header-wrapper th:nth-last-of-type(2) {
+  border-right: 2px solid #06476d;
+}
+
+/deep/ .is-leaf {
+  border-right: none !important;
+  border-bottom: 2px solid #06476d !important;
+}
+.rightContainer{
+  padding-top: 0;
+}
 .container {
   height: 100%;
   width: 100%;
@@ -333,8 +348,8 @@ export default {
 }
 /* 输入框样式 */
 .el-input__inner {
-  background-color: #0e1b2f;
-  color: #2b374f;
+  background-color:  #0C2040;
+  color: #708193;
   font-size: 12px;
   border: none;
 }
@@ -393,6 +408,11 @@ export default {
 .el-dialog__title {
   color: #fff;
   font-size: 12px;
+}
+// 文本域样式
+.el-textarea__inner{
+  background-color: #0C2040;
+  border-color: #0C2040;
 }
 </style>
 

@@ -10,7 +10,7 @@
         style="width: 100%;"
         size="small"
       ></el-date-picker>
-      <div class="symbol">-</div>
+      <div class="symbol">一</div>
       <el-date-picker
         type="date"
         placeholder="选择日期"
@@ -18,8 +18,15 @@
         style="width: 100%;"
         size="small"
       ></el-date-picker>
-      <el-button type="primary" size="small">立即创建</el-button>
-      <el-button size="small">取消</el-button>
+      <el-dropdown>
+        <el-button type="primary" @click.native="toData">
+          全部商户
+          <i class="el-icon-arrow-down el-icon--right"></i>
+        </el-button>
+        <el-dropdown-menu slot="dropdown">
+          <el-dropdown-item v-for="(item,index) in dropdownList" :key="index" >{{item}}</el-dropdown-item>
+        </el-dropdown-menu>
+      </el-dropdown>
     </el-form>
   </div>
 </template>
@@ -29,12 +36,22 @@ export default {
   nama: "deal",
   data() {
     return {
+      dropdownList: ["黄金糕", "狮子头", "螺蛳粉", "双皮奶", "蚵仔煎"],
       input2: "",
       form: {
         date1: "",
         date2: ""
       }
     };
+  },
+  methods:{
+     toData(){
+        
+        this.$router.push('/dealData')
+     } 
+  },
+  mounted(){
+
   }
 };
 </script>
@@ -43,23 +60,37 @@ export default {
 .container {
   width: 100%;
   height: 100%;
+  padding: 16px 0 0 0;
+  box-sizing: border-box;
   .my-form {
     display: flex;
     align-items: center;
     .el-input {
-      width: 117px;
+      width: 177px;
     }
     .el-date-editor {
       width: 113px !important;
     }
-    .start{
-        width: 67px;
-        padding: 0 13px;
-        box-sizing: border-box;
-        font-size: 12px;
+    .start {
+      width: 67px;
+      font-size: 12px;
+      text-align: center;
     }
-    .symbol{
-        width: 17px;
+    .symbol {
+      width: 17px;
+      text-align: center;
+    }
+    .el-button--primary {
+      width: 77px;
+      height: 25px;
+      padding: 0;
+      border-radius: 2px;
+      background-color: #059e7e;
+      border-color: #059e7e;
+      margin-left: 10px;
+      .el-icon--right {
+        margin-left: 0;
+      }
     }
   }
 }

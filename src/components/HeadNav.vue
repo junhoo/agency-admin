@@ -53,10 +53,7 @@ export default {
 
 <style lang="scss" scoped>
 .head-nav {
-  position: fixed;
-  top: 0;
-  left: 200px;
-  right: 0;
+  position: relative;
   height: 100px;
   color: #fff;
   background: #09192F;

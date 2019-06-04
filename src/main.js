@@ -6,11 +6,11 @@ import './plugins/element.js'
 import '@/assets/styles/reset.css'
 import '@/assets/styles/border.css'
 import {
-  Row, Menu, Submenu, MenuItem, Tabs, TabPane, Table, TableColumn, Dialog, Input, Dropdown, DropdownMenu, DropdownItem,Form,FormItem, DatePicker,
+  Row, Col, Menu, Submenu, MenuItem, Tabs, TabPane, Table, TableColumn, Dialog, Input, Dropdown, DropdownMenu, DropdownItem, Form, FormItem, DatePicker,
 } from 'element-ui'
 
-
 Vue.use(Row)
+Vue.use(Col)
 Vue.use(Menu)
 Vue.use(Submenu)
 Vue.use(MenuItem)
@@ -26,7 +26,7 @@ Vue.use(DropdownMenu)
 Vue.use(DropdownItem)
 Vue.use(Form)
 Vue.use(FormItem)
-Vue.use( DatePicker)
+Vue.use(DatePicker)
 
 Vue.config.productionTip = false;
 
