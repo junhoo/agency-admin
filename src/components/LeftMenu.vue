@@ -37,7 +37,7 @@ export default {
         {
           icon: "fa-asterisk",
           name: "交易流水记录",
-          path: "info"
+          path: "deal"
         },
         {
           icon: "fa-asterisk",
