@@ -16,7 +16,10 @@
       <div class="content">
         <div class="money light-blue">
           1862,325
-          <div class="percent">30%</div>
+          <div class="percent">
+            <!-- 30% -->
+            <p class="text">30%</p>
+          </div>
         </div>
         <p class="name">用户数量</p>
       </div>
@@ -31,10 +34,7 @@
       <!-- :background-color="backgroundColor" -->
 
       <!-- 波浪图 -->
-      <ve-line
-        :data="chartData"
-        :settings="chartSettings">
-      </ve-line>
+      <common-apexchart></common-apexchart>
     </section>
 
     <section class="chart-box chart-mid">
@@ -47,10 +47,11 @@
         </div>
 
         <!-- 柱状图 -->
-        <ve-histogram
-          :data="xxxchartData"
-          :settings="xxxchartSettings">
-        </ve-histogram>
+        <template>
+          <div id="midchart">
+            <apexchart type=bar height=350 :options="midchartOptions" :series="midseries" />
+          </div>
+        </template>
       </div>
       <!-- 上右 -->
       <div class="content">
@@ -97,22 +98,23 @@
 </template>
 
 <script>
+import CommonApexchart from 'components/Apexchart'
 export default {
   name: 'merchants',
+  components: {
+    CommonApexchart
+  },
   mounted () {
+    this.getTop()
+    this.getMid()
   },
   data () {
-    this.xxxchartSettings = {
-      metrics: ['访问用户', '下单用户'],
-      dimension: ['日期']
-    }
-    this.chartSettings = {
-      metrics: ['下单用户'],
-      area: true
-    }
-    // this.backgroundColor = 'gray'
     return {
-      chartData: {
+      topseries: [],
+      topchartOptions: {},
+      midseries: [],
+      midchartOptions: {},
+      topchartData: {
         columns: ['日期', '下单用户'],
         rows: [
           { '日期': '1000', '下单用户': 1093 },
@@ -121,17 +123,6 @@ export default {
           { '日期': '6000', '下单用户': 1423 },
           { '日期': '8000', '下单用户': 3492 },
           { '日期': '9000', '下单用户': 4293 }
-        ]
-      },
-      xxxchartData: {
-        columns: ['日期', '访问用户', '下单用户', '下单率'],
-        rows: [
-          { '日期': '1/1', '访问用户': 1393, '下单用户': 1093, '下单率': 0.32 },
-          { '日期': '1/2', '访问用户': 3530, '下单用户': 3230, '下单率': 0.26 },
-          { '日期': '1/3', '访问用户': 2923, '下单用户': 2623, '下单率': 0.76 },
-          { '日期': '1/4', '访问用户': 1723, '下单用户': 1423, '下单率': 0.49 },
-          { '日期': '1/5', '访问用户': 3792, '下单用户': 3492, '下单率': 0.323 },
-          { '日期': '1/6', '访问用户': 4593, '下单用户': 4293, '下单率': 0.78 }
         ]
       },
       tableData: [
@@ -172,6 +163,102 @@ export default {
         }
       ]
     }
+  },
+  methods: {
+    getTop () {
+      this.topseries = [{
+        name: "STOCK ABC",
+        data: topseries.monthDataSeries1.prices
+      }],
+      this.topchartOptions = {
+        chart: {
+          zoom: {
+            enabled: false
+          }
+        },
+        dataLabels: {
+          enabled: false
+        },
+        stroke: {
+          curve: 'straight'
+        },
+        series: [{
+          name: "STOCK ABC",
+          data: topseries.monthDataSeries1.prices
+        }],
+        title: {
+          text: 'Fundamental Analysis of Stocks',
+          align: 'left'
+        },
+        subtitle: {
+          text: 'Price Movements',
+          align: 'left'
+        },
+        labels: topseries.monthDataSeries1.dates,
+        xaxis: {
+          type: 'datetime',
+        },
+        yaxis: {
+          opposite: true
+        },
+        legend: {
+          horizontalAlign: 'left'
+        }
+      }
+    },
+
+    getMid () {
+      this.midseries = [
+        {
+          name: 'Net Profit',
+          data: [44, 55, 57, 56, 61, 58, 63, 60, 66]
+        }, {
+          name: 'Revenue',
+          data: [76, 85, 101, 98, 87, 105, 91, 114, 94]
+        }
+        // , {
+        //   name: 'Free Cash Flow',
+        //   data: [35, 41, 36, 26, 45, 48, 52, 53, 41]
+        // }
+      ],
+      this.midchartOptions = {
+        // colors: '#008FFB',
+        plotOptions: {
+          bar: {
+            horizontal: false,
+            columnWidth: '55%',
+            endingShape: 'rounded'
+          },
+        },
+        dataLabels: {
+          enabled: false
+        },
+        stroke: {
+          show: true,
+          width: 2,
+          colors: ['transparent']
+        },
+        xaxis: {
+          categories: ['小米', '小米', '小米', '小米', '小米', '小米', '小米', '小米', '小米'],
+        },
+        yaxis: {
+          title: {
+            text: '$ (thousands)'
+          }
+        },
+        fill: {
+          opacity: 1
+
+        },
+        tooltip: {
+          y: {
+            formatter: function (val) {
+              return "$ " + val + " thousands"
+            }
+          }
+        }
+      }
+    }
   }
 }
 </script>
@@ -189,7 +276,8 @@ export default {
 
 /deep/ .is-leaf {
   border-right: none !important;
-  border-bottom: 2px solid transparent !important;
+  border-bottom: 1.2px solid transparent !important;
+  padding-top: 32px;
 }
 
 /deep/ .el-table__body-wrapper {
@@ -200,6 +288,10 @@ export default {
   padding: 0;
 }
 
+/deep/ .el-table td, .el-table th.is-leaf {
+  padding-top: 32px;
+}
+
 .container {
   box-sizing: border-box;
   display: flex;
@@ -208,6 +300,7 @@ export default {
     height: 60px;
     width: 22%;
     border-right: 1.2px solid #051E33;
+    text-align: center;
     &:last-child {
       border: 0;
     }
@@ -219,9 +312,15 @@ export default {
       color: #fff;
       .percent {
         position: absolute;
-        top: 0; 
+        top: 0;
         right: 25px;
         font-size: 8px;
+        background: url('~imgurl/go_up.png') no-repeat left top 46%;
+        background-size: 15px;
+        .text {
+          padding-left: 15px;
+          color: #37EC6B;
+        }
       }
     }
     .name {
@@ -243,7 +342,7 @@ export default {
 
 .chart-top {
   margin-top: 40px;
-  border: 2px solid #06476d;
+  border: 1.2px solid #06476d;
   .title-box {
     color: #fff;
     text-align: left;
@@ -253,8 +352,8 @@ export default {
       float: left;
       width: 36px;
       height: 40px;
-      background: url('~imgurl/logo.png') no-repeat center;
-      background-size: 20px;
+      background: url('~imgurl/table_icon.png') no-repeat center;
+      background-size: 15px;
     }
     .text {
       float: left;
@@ -273,19 +372,19 @@ export default {
   .content {
     width: 48.5%;
     // height: 221px;
-    border: 2px #06476d solid;
+    border: 1.2px #06476d solid;
     .title-box {
       color: #fff;
       text-align: left;
       height: 40px;
       line-height: 40px;
-      border-bottom: 2px #06476d solid;
+      border-bottom: 1.2px #06476d solid;
       .icon {
         float: left;
         width: 36px;
         height: 40px;
-        background: url('~imgurl/logo.png') no-repeat center;
-        background-size: 20px;
+        background: url('~imgurl/table_icon.png') no-repeat center;
+        background-size: 15px;
       }
       .text {
         float: left;

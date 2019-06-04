@@ -1,3 +1,4 @@
+import VueApexCharts from 'vue-apexcharts'
 import Vue from 'vue';
 import App from './App.vue';
 import router from './router';
@@ -5,6 +6,7 @@ import VCharts from 'v-charts'
 import './plugins/element.js'
 import '@/assets/styles/reset.css'
 import '@/assets/styles/border.css'
+ 
 import {
   Row, Col,
   Menu,
@@ -15,6 +17,7 @@ import {
   Dialog
 } from 'element-ui'
 
+Vue.use(VueApexCharts)
 Vue.use(Row)
 Vue.use(Col)
 Vue.use(Menu)
@@ -27,6 +30,7 @@ Vue.use(TableColumn)
 Vue.use( Dialog)
 Vue.use(VCharts)
 
+Vue.component('apexchart', VueApexCharts)
 Vue.config.productionTip = false;
 
 new Vue({
