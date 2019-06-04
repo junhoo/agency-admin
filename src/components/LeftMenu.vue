@@ -9,7 +9,7 @@
                 class="el-menu-vertical-demo">
                 <div class="meun-logo"></div>
                 <router-link v-for="(item, index) in items" :key="index" :to="item.path">
-                    <el-menu-item
+                    <el-menu-item @click="toindexData(item.index)"
                         :index='item.path'>
                         <span slot="title">{{item.name}}</span>
                     </el-menu-item>
@@ -27,31 +27,41 @@ export default {
         {
           icon: "fa-money",
           name: "收益钱包",
-          path: "earnings"
+          path: "earnings",
+          index: 0
         },
         {
           icon: "fa-asterisk",
           name: "商户交易数据",
-          path: "info"
+          path: "info",
+          index: 1
         },
         {
           icon: "fa-asterisk",
           name: "交易流水记录",
-          path: "info"
+          path: "info",
+          index: 2
         },
         {
           icon: "fa-asterisk",
           name: "商户管理",
-          path: "info"
+          path: "/POSManagement",
+          index: 3
         },
         {
           icon: "fa-asterisk",
           name: "信息管理",
-          path: "info"
+          path: "info",
+          index: 4
         }
       ]
     };
-  }
+  },
+  methods: {
+    toindexData(index){
+      this.$emit("toindexData", index)
+    }
+  },
 };
 </script>
 <style scoped>

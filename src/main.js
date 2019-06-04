@@ -1,13 +1,21 @@
-import Vue from 'vue';
-import App from './App.vue';
-import router from './router';
+import Vue from 'vue'
+import router from './router'
 import VCharts from 'v-charts'
 import './plugins/element.js'
 import '@/assets/styles/reset.css'
 import '@/assets/styles/border.css'
 import {
-  Row, Menu, Submenu, MenuItem,Tabs,TabPane,Table, TableColumn, Dialog,} from 'element-ui'
-
+  Input, Row,
+  Menu,
+  Submenu,
+  MenuItem,
+  Tabs,
+  TabPane,
+  Table,
+  TableColumn,
+  Dialog
+} from 'element-ui'
+import App from './App.vue'
 Vue.use(Row)
 Vue.use(Menu)
 Vue.use(Submenu)
@@ -18,8 +26,9 @@ Vue.use(Table)
 Vue.use(TableColumn)
 Vue.use( Dialog)
 Vue.use(VCharts)
+Vue.use(Input)
 
-Vue.config.productionTip = false;
+Vue.config.productionTip = false
 
 new Vue({
   router,

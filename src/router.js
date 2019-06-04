@@ -1,10 +1,11 @@
-import Vue from 'vue';
-import Router from 'vue-router';
-import Home from './views/Home.vue';
+import Vue from 'vue'
+import Router from 'vue-router'
+import Home from './views/Home.vue'
 import Index from './views/Index.vue'
-import earnings from "./views/earnings.vue";
+import earnings from "./views/earnings.vue"
+import POSManagement from "./views/POSManagement.vue"
 
-Vue.use(Router);
+Vue.use(Router)
 const routes =  [
   { path: '/', redirect: '/index' },
   {
@@ -14,11 +15,12 @@ const routes =  [
     children: [
       { path: '', component: Home },
       { path: '/home', name: 'home', component: Home },
-      { path: '/earnings', name: 'earnings', component: earnings }
+      { path: '/earnings', name: 'earnings', component: earnings },
+      { path: '/POSManagement', name: 'POSManagement', component: POSManagement }
     ]
   }
 ]
 
 export default new Router({
   routes
-});
+})

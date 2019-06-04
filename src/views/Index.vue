@@ -1,7 +1,7 @@
 <template>
   <div class="index">
-    <HeadNav></HeadNav>
-    <LeftMenu></LeftMenu>
+    <HeadNav :headTitle='headtitleIndex'></HeadNav>
+    <LeftMenu @toindexData="sendleftData"></LeftMenu>
     <div class="rightContainer">
       <router-view></router-view>
     </div>
@@ -17,6 +17,16 @@ export default {
   components: {
     HeadNav,
     LeftMenu
+  },
+  data() {
+    return {
+      headtitleIndex: 0
+    }
+  },
+  methods: {
+    sendleftData(data){
+      this.headtitleIndex=data;
+    }
   }
 };
 </script>
