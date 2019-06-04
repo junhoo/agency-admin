@@ -4,7 +4,7 @@ import Merchants from './views/Merchants.vue';
 import Index from './views/Index.vue';
 import earnings from './views/earnings.vue';
 import POSManagement from './views/POSManagement.vue';
-import AddManagement from './views/addManagement.vue';
+import AddManagement from './views/AddManagement.vue';
 
 Vue.use(Router)
 const routes =  [
