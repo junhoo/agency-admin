@@ -11,8 +11,8 @@
 </template>
 
 <script>
-import HeadNav from "../components/HeadNav";
-import LeftMenu from "../components/LeftMenu";
+import HeadNav from "components/bmodule/HeadNav";
+import LeftMenu from "components/bmodule/LeftMenu";
 
 export default {
   name: "index",
@@ -55,7 +55,6 @@ export default {
   position: relative;
   min-width: 1200px;
   background-color: #061220;
-  padding: 0 28px 50px 58px;
+  padding: 30px 28px 50px 58px;
 }
 </style>
-

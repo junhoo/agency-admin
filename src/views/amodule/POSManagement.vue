@@ -7,6 +7,9 @@
         <i slot="suffix" class="el-input__icon el-icon-search"></i>
       </li>
       <li class="iteminput">
+        <span>起始日期</span>
+      </li>
+      <li class="iteminput">
           <el-date-picker
             popper-class="xiala"
             v-model="startTime"
@@ -56,7 +59,7 @@
 
     <!-- 无数据 -->
     <div v-else class="nodata">
-      <img src="../assets/img/noData.png" alt="">
+      <img src="~imgurl/noData.png" alt="">
     </div>
     <!-- 弹框 -->
     <el-dialog title="设置资金密码" :visible.sync="dialogVisible" width="400px" :modal-append-to-body='false' center>
@@ -106,7 +109,7 @@ export default {
     },
     addMerchant () {
       this.$router.push({
-        path: '/AddManagement',
+        path: '/a_add_management',
         query: {
           index: 5
         }
@@ -127,11 +130,13 @@ export default {
     line-height: 100px;
     display: flex;
     .iteminput{
+      font-size: 12px;
+      color: #555F79;
       position: relative;
       margin-right: 20px;
       input{
         color: #555F79;
-        font-size: 17px;
+        font-size: 12px;
         padding: 2px 12px;
         height: 26px;
         line-height: 26px;
@@ -144,17 +149,17 @@ export default {
       }
       i{
         position: absolute;
-        top: 30%;
-        right: 0px;
+        top: 4%;
+        right: -12px;
         margin-right: 20px;
         width: 15px;
         color: #555F79;
         font-weight: 600;
-        font-size: 17px
+        font-size: 14px
       }
       .subSearch{
         display: inline-block;
-        font-size: 18px;
+        font-size: 12px;
         color: #fff;
         background-color: #059E7E;
         border-radius: 3px;
@@ -175,7 +180,7 @@ export default {
     }
   }
   .dialogContant{
-    font-size: 17px;
+    font-size: 12px;
     color: #5C6680;
     background-color: #0E1B2F;
     border-radius: 17px;
@@ -237,7 +242,7 @@ export default {
 }
 .el-input__inner{
   color: #555F79;
-  font-size: 17px;
+  font-size: 12px !important;
   padding: 15px 10px 15px 30px !important;
   height: 26px;
   line-height: 26px;
@@ -251,7 +256,7 @@ export default {
 .el-input__icon{
   color: #555F79;
   font-weight: 600;
-  font-size: 17px;
+  font-size: 13px !important;
 }
 .xiala{
 }
