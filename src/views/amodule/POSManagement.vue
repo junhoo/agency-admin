@@ -56,7 +56,7 @@
 
     <!-- 无数据 -->
     <div v-else class="nodata">
-      <img src="../assets/img/noData.png" alt="">
+      <img src="~imgurl/noData.png" alt="">
     </div>
     <!-- 弹框 -->
     <el-dialog title="设置资金密码" :visible.sync="dialogVisible" width="400px" :modal-append-to-body='false' center>

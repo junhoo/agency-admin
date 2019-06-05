@@ -27,31 +27,31 @@ export default {
         {
           icon: "fa-money",
           name: "收益钱包",
-          path: "earnings",
+          path: "a_earnings",
           index: 0
         },
         {
           icon: "fa-asterisk",
           name: "商户交易数据",
-          path: "merchants",
+          path: "a_merchants",
           index: 1
         },
         {
           icon: "fa-asterisk",
           name: "交易流水记录",
-          path: "deal",
+          path: "a_deal",
           index: 2
         },
         {
           icon: "fa-asterisk",
           name: "商户管理",
-          path: "/addManagement",
+          path: "a_add_management",
           index: 3
         },
         {
           icon: "fa-asterisk",
           name: "信息管理",
-          path: "information",
+          path: "a_information",
           index: 4
         }
       ]

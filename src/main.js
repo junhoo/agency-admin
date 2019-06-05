@@ -14,7 +14,7 @@ import {
   MenuItem,
   Tabs, TabPane,
   Table, TableColumn,
-  Dialog, Input, Dropdown, DropdownMenu, DropdownItem, Form, FormItem, DatePicker
+  Dialog, Input, Dropdown, DropdownMenu, DropdownItem, Form, FormItem, DatePicker, 
 } from 'element-ui'
 
 Vue.use(VueApexCharts)

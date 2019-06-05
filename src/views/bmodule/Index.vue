@@ -11,8 +11,8 @@
 </template>
 
 <script>
-import HeadNav from "../components/HeadNav";
-import LeftMenu from "../components/LeftMenu";
+import HeadNav from "components/bmodule/HeadNav";
+import LeftMenu from "components/bmodule/LeftMenu";
 
 export default {
   name: "index",

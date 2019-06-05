@@ -1,9 +1,16 @@
 <template>
   <div class="container">
     <el-form ref="form" :model="form" label-width="80px" class="my-form">
-      <el-input placeholder="请输入内容" prefix-icon="el-icon-search" v-model="input2" size="small" class="my-btn"></el-input>
+      <el-input
+        placeholder="请输入内容"
+        prefix-icon="el-icon-search"
+        v-model="input2"
+        size="small"
+        class="my-btn"
+      ></el-input>
       <div class="start">起始日期</div>
       <el-date-picker
+        class="my-btn"
         type="date"
         placeholder="选择日期"
         v-model="form.date1"
@@ -12,6 +19,7 @@
       ></el-date-picker>
       <div class="symbol">一</div>
       <el-date-picker
+        class="my-btn"
         type="date"
         placeholder="选择日期"
         v-model="form.date1"
@@ -19,17 +27,17 @@
         size="small"
       ></el-date-picker>
       <el-dropdown>
-        <el-button type="primary" @click.native="toData">
+        <el-button type="primary"  size="small" @click.native="toData">
           全部商户
-          <i class="el-icon-arrow-down el-icon--right"></i>
+          <i class="el-icon-caret-bottom el-icon--right"></i>
         </el-button>
         <el-dropdown-menu slot="dropdown">
-          <el-dropdown-item v-for="(item,index) in dropdownList" :key="index" >{{item}}</el-dropdown-item>
+          <el-dropdown-item v-for="(item,index) in dropdownList" :key="index">{{item}}</el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
     </el-form>
     <div class="img">
-      <img src="~imgurl/noData.png" alt="">
+      <img src="~imgurl/noData.png" alt>
     </div>
   </div>
 </template>
@@ -47,15 +55,12 @@ export default {
       }
     };
   },
-  methods:{
-     toData(){
-        
-        this.$router.push('/dealData')
-     } 
+  methods: {
+    toData() {
+      this.$router.push("/a_deal_data");
+    }
   },
-  mounted(){
-
-  }
+  mounted() {}
 };
 </script>
 
@@ -96,12 +101,12 @@ export default {
       }
     }
   }
-  .img{
+  .img {
     width: 100%;
     height: 636px;
     display: flex;
     justify-content: center;
     align-items: center;
-  }  
+  }
 }
 </style>

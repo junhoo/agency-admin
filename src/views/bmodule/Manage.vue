@@ -21,10 +21,10 @@
         class="form"
         :label-position="labelPosition"
       >
-        <el-form-item label="代理ID">
+        <el-form-item label="姓名">
           <el-input v-model="form.name" size="small"></el-input>
         </el-form-item>
-        <el-form-item label="联系人">
+        <el-form-item label="电话">
           <el-input v-model="form.name" size="small"></el-input>
         </el-form-item>
         <el-form-item label="微信号">
@@ -36,14 +36,11 @@
         <el-form-item label="保证金">
           <el-input v-model="form.name" size="small"></el-input>
         </el-form-item>
-        <el-form-item label="代理名称">
+        <el-form-item label="代理ID">
           <el-input v-model="form.name" size="small"></el-input>
         </el-form-item>
         <el-form-item label="奖励比例">
           <el-input v-model="form.name" size="small"></el-input>
-        </el-form-item>
-        <el-form-item label="机构简介">
-          <el-input type="textarea" v-model="form.desc" size="small"></el-input>
         </el-form-item>
       </el-form>
     </div>
@@ -54,6 +51,7 @@
       :visible.sync="dialogVisible1"
       width="285px"
       :modal-append-to-body="false"
+      center
     >
       <div class="mobile">
         <span>验证手机：153****4544</span>
@@ -62,11 +60,11 @@
         <el-input size="small" placeholder="输入验证码" v-model="input"></el-input>
         <el-button type="primary">获取验证码</el-button>
       </div>
-      <div class="tips">注：为确保资金安全，请先验证手机，并设置您的资金密码。</div>
-      <div class="password">设置资金密码</div>
+      <div class="tips" style="marginTop:16px;">注：为确保资金安全，请先验证手机，并设置您的资金密码。</div>
+      <div class="password" style="marginTop:20px;">设置资金密码</div>
       <el-input size="small" placeholder="请输入6位数密码" v-model="input3" class="input"></el-input>
       <span slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="dialogVisible1 = false">确 定</el-button>
+        <el-button type="primary" @click="dialogVisible1 = false" style="marginTop:16px;">确 定</el-button>
       </span>
     </el-dialog>
 
@@ -76,6 +74,7 @@
       :visible.sync="dialogVisible2"
       width="285px"
       :modal-append-to-body="false"
+      center
     >
       <div class="mobile">
         <span>验证手机：153****4544</span>
@@ -84,23 +83,24 @@
         <el-input size="small" placeholder="输入验证码" v-model="input"></el-input>
         <el-button type="primary">获取验证码</el-button>
       </div>
-      <div class="tips">注：为确保资金安全，请先验证手机。</div>
-      <div class="password">新的手机号</div>
+      <div class="tips" style="marginTop:16px;">注：为确保资金安全，请先验证手机。</div>
+      <div class="password" style="marginTop:16px;">新的手机号</div>
       <el-input size="small" placeholder="请输入新的手机号码" v-model="input3" class="input"></el-input>
       <div class="text1" style="marginTop:10px">
         <el-input size="small" placeholder="输入新的手机验证码" v-model="input"></el-input>
         <el-button type="primary" class="btn">获取验证码</el-button>
       </div>
       <span slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="dialogVisible2 = false">确 定</el-button>
+        <el-button type="primary" @click="dialogVisible2 = false" style="marginTop:16px;">确 定</el-button>
       </span>
     </el-dialog>
     <!-- 修改登录密码弹框 -->
     <el-dialog
       title="修改登录密码"
       :visible.sync="dialogVisible3"
-      width="285px"
+      width="300px"
       :modal-append-to-body="false"
+      center
     >
       <div class="mobile">
         <span>验证手机：153****4544</span>
@@ -109,11 +109,11 @@
         <el-input size="small" placeholder="输入验证码" v-model="input"></el-input>
         <el-button type="primary">获取验证码</el-button>
       </div>
-      <div class="tips">注：为确保资金安全，请先验证手机。</div>
-      <div class="password">设置登录密码</div>
+      <div class="tips" style="marginTop:16px;">注：为确保资金安全，请先验证手机。</div>
+      <div class="password" style="marginTop:16px;">设置登录密码</div>
       <el-input size="small" placeholder="请输入6-20位登录密码" v-model="input3" class="input"></el-input>
       <span slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="dialogVisible3 = false">确 定</el-button>
+        <el-button type="primary" @click="dialogVisible3 = false" style="marginTop:16px;">确 定</el-button>
       </span>
     </el-dialog>
   </div>
@@ -122,12 +122,13 @@
 
 <script>
 export default {
+  nama:'manage',
   data() {
     return {
       input3: "",
       dialogVisible1: false,
       dialogVisible2: false,
-      dialogVisible3:false,
+      dialogVisible3: false,
       labelPosition: "left",
       form: {
         name: "",
@@ -195,11 +196,7 @@ export default {
       box-sizing: border-box;
 
       .el-form-item {
-        margin-bottom: 0;
-
-        &:last-child {
-          margin-top: 10px;
-        }
+        margin-bottom: 0; 
       }
     }
   }
@@ -257,8 +254,9 @@ export default {
     .tips {
       color: #047e65;
       font-size: 12px;
-      margin-bottom: 13px;
-      margin-top: 10px;
+      //
+      line-height: 14px;
+      height: 14px;
     }
     .password {
       color: #5c6680;
