@@ -12,9 +12,9 @@ import {
   Menu,
   Submenu,
   MenuItem,
-  Tabs, TabPane,
-  Table, TableColumn,
-  Dialog, Input, Dropdown, DropdownMenu, DropdownItem, Form, FormItem, DatePicker, 
+  Tabs, TabPane, Select, Option,
+  Table, TableColumn, Radio, RadioGroup,
+  Dialog, Input, Dropdown, DropdownMenu, DropdownItem, Form, FormItem, DatePicker
 } from 'element-ui'
 
 Vue.use(VueApexCharts)
@@ -31,11 +31,15 @@ Vue.use(Dialog)
 Vue.use(VCharts)
 Vue.use(Input)
 Vue.use(Dropdown)
+Vue.use(Select)
 Vue.use(DropdownMenu)
 Vue.use(DropdownItem)
 Vue.use(Form)
+Vue.use(Option)
 Vue.use(FormItem)
 Vue.use(DatePicker)
+Vue.use(Radio)
+Vue.use(RadioGroup)
 
 Vue.component('apexchart', VueApexCharts)
 Vue.config.productionTip = false;

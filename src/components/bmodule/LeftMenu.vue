@@ -32,27 +32,39 @@ export default {
         },
         {
           icon: "fa-money",
+          name: "交易数据分析图",
+          path: "",
+          index: 1
+        },
+        {
+          icon: "fa-money",
+          name: "名下用户分析图",
+          path: "",
+          index: 2
+        },
+        {
+          icon: "fa-money",
           name: "交易员接单流水",
           path: "b_deal",
-          index: 1
+          index: 3
         },
         {
           icon: "fa-money",
           name: "交易员信息管理",
           path: "b_information",
-          index: 2
+          index: 4
         },
         {
           icon: "fa-money",
           name: "推广渠道",
           path: "b_generalize",
-          index: 3
+          index: 5
         },
         {
           icon: "fa-money",
           name: "我的信息管理",
           path: "b_manage",
-          index: 4
+          index: 6
         },
         
       ]

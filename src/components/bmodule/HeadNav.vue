@@ -20,6 +20,9 @@ export default {
       return this.$store.getters.user;
     }
   },
+  watch: {
+
+  },
   methods: {
     setDialogInfo(cmditem) {
       if (!cmditem) {
@@ -54,13 +57,17 @@ export default {
       if (value === 0) {
         value = '收益钱包'
       } else if (value === 1) {
-        value = '商户交易数据'
+        value = '交易数据分析图'
       } else if (value === 2) {
-        value = '交易流水记录'
+        value = '名下用户分析图'
       } else if (value === 3) {
-        value = '商户管理'
+        value = '交易员接单流水'
+      } else if (value === 4) {
+        value = '交易员信息管理'
+      } else if (value === 5) {
+        value = '推广渠道'
       } else {
-        value = '信息管理'
+        value = '我的信息管理'
       }
       return value
     }

@@ -73,7 +73,6 @@ export default {
     .img {
       width: 249px;
       height: 535px;
-      background-color: red;
       border-radius: 25px;
       overflow: auto;
       overflow-x: hidden;
