@@ -2,7 +2,7 @@
     <header class="head-nav">
         <div class="content">
           <div class="icon-left"></div>
-          <p class="nav-name">收益钱包</p>
+          <p class="nav-name">{{headTitle | headTitleText}}</p>
         </div>
         <div class="content">
           <p>欢迎你xx代理</p>
@@ -14,6 +14,7 @@
 <script>
 export default {
   name: "head-nav",
+  props: {headTitle: Number},
   computed: {
     user() {
       return this.$store.getters.user;
@@ -46,6 +47,22 @@ export default {
 
       // 页面跳转
       this.$router.push("/login");
+    }
+  },
+  filters: {
+    headTitleText(value){
+      if (value === 0) {
+        value = '收益钱包'
+      } else if (value === 1) {
+        value = '商户交易数据'
+      } else if (value === 2) {
+        value = '交易流水记录'
+      } else if (value === 3) {
+        value = '商户管理'
+      } else {
+        value = '信息管理'
+      }
+      return value
     }
   }
 };

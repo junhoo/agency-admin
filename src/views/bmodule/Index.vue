@@ -1,8 +1,8 @@
 <template>
   <div class="index">
-    <LeftMenu></LeftMenu>
+    <LeftMenu @toindexData="sendleftData"></LeftMenu>
     <div class="rrr">
-      <HeadNav></HeadNav>
+      <HeadNav :headTitle='headtitleIndex'></HeadNav>
       <div class="rightContainer">
         <router-view></router-view>
       </div>
@@ -11,14 +11,24 @@
 </template>
 
 <script>
-import HeadNav from "../components/HeadNav";
-import LeftMenu from "../components/LeftMenu";
+import HeadNav from "components/bmodule/HeadNav";
+import LeftMenu from "components/bmodule/LeftMenu";
 
 export default {
   name: "index",
   components: {
     HeadNav,
     LeftMenu
+  },
+  data() {
+    return {
+      headtitleIndex: 0
+    }
+  },
+  methods: {
+    sendleftData(data){
+      this.headtitleIndex=data;
+    }
   }
 };
 </script>

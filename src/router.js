@@ -1,32 +1,48 @@
 import Vue from 'vue';
 import Router from 'vue-router';
-import Merchants from './views/Merchants.vue';
-import Index from './views/Index.vue'
-import Earnings from "./views/Earnings.vue";
-import deal from "./views/Deal.vue";
-import dealData from "./views/Deal_data.vue";
-import dealDetail from "./views/Deal_detail.vue";
-import information from "./views/Information.vue";
+// A方后台
+import Merchants from './views/amodule/Merchants.vue';
+import AIndex from './views/amodule/Index.vue';
+import POSManagement from './views/amodule/POSManagement.vue';
+import AddManagement from './views/amodule/AddManagement.vue';
+import Earnings from "./views/amodule/Earnings.vue";
+import deal from "./views/amodule/Deal.vue";
+import dealData from "./views/amodule/Deal_data.vue";
+import dealDetail from "./views/amodule/Deal_detail.vue";
+import information from "./views/amodule/Information.vue";
 
-Vue.use(Router);
+// B方后台
+import BIndex from './views/bmodule/Index.vue';
+import BEarnings from './views/bmodule/Earnings.vue';
+
+Vue.use(Router)
 const routes =  [
-  { path: '/', redirect: '/index' },
+  { path: '/', redirect: '/aindex' },
   {
-    path: '/index',
-    name: 'index',
-    component: Index,
+    path: '/aindex',
+    name: 'aindex',
+    component: AIndex,
     children: [
-      { path: '', component: Merchants },
-      { path: '/merchants', name: 'merchants', component: Merchants },
-      { path: '/earnings', name: 'earnings', component: Earnings},
-      { path: '/deal', name: 'deal', component: deal},
-      { path: '/dealData', name: 'dealData', component: dealData},
-      { path: '/dealDetail', name: 'dealDetail', component: dealDetail},
-      { path: '/information', name: 'information', component: information},
+      { path: '/a_pos_management', name: 'POSManagement', component: POSManagement },
+      { path: '/a_add_management', name: 'AddManagement', component: AddManagement },
+      { path: '/a_merchants', name: 'merchants', component: Merchants },
+      { path: '/a_earnings', name: 'earnings', component: Earnings},
+      { path: '/a_deal', name: 'deal', component: deal},
+      { path: '/a_deal_data', name: 'dealData', component: dealData},
+      { path: '/a_deal_detail', name: 'dealDetail', component: dealDetail},
+      { path: '/a_information', name: 'information', component: information},
+    ]
+  },
+  {
+    path: '/bindex',
+    name: 'bindex',
+    component: BIndex,
+    children: [
+      { path: '/b_earnings', name: 'BEarnings', component: BEarnings }
     ]
   }
 ]
 
 export default new Router({
   routes
-});
+})

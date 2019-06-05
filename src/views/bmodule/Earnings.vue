@@ -159,7 +159,7 @@
 
 <script>
 export default {
-  name: "earnings",
+  name: "BEarnings",
   data() {
     return {
       input: "",
@@ -415,5 +415,3 @@ export default {
   border-color: #0C2040;
 }
 </style>
-
-
