@@ -283,10 +283,6 @@ export default {
 }
 </style>
 
-<style>
-.el-form-item__label {
-  color: #fff;
-}
-</style>
+
 
 

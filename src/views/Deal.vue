@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <el-form ref="form" :model="form" label-width="80px" class="my-form">
-      <el-input placeholder="请输入内容" prefix-icon="el-icon-search" v-model="input2" size="small"></el-input>
+      <el-input placeholder="请输入内容" prefix-icon="el-icon-search" v-model="input2" size="small" class="my-btn"></el-input>
       <div class="start">起始日期</div>
       <el-date-picker
         type="date"
@@ -28,6 +28,9 @@
         </el-dropdown-menu>
       </el-dropdown>
     </el-form>
+    <div class="img">
+      <img src="~imgurl/noData.png" alt="">
+    </div>
   </div>
 </template>
 
@@ -93,5 +96,12 @@ export default {
       }
     }
   }
+  .img{
+    width: 100%;
+    height: 636px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }  
 }
 </style>

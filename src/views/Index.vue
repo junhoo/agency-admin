@@ -55,7 +55,7 @@ export default {
   position: relative;
   min-width: 1200px;
   background-color: #061220;
-  padding: 0 28px 50px 58px;
+  padding: 30px 28px 50px 58px;
 }
 </style>
 

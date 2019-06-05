@@ -196,7 +196,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-/deep/ .el-table--border, .el-table--group {
+/deep/ .el-table--border,
+.el-table--group {
   border: 2px solid #06476d;
 }
 
@@ -208,7 +209,7 @@ export default {
   border-right: none !important;
   border-bottom: 2px solid #06476d !important;
 }
-.rightContainer{
+.rightContainer {
   padding-top: 0;
 }
 .container {
@@ -346,12 +347,17 @@ export default {
 .el-dialog__footer {
   text-align: left;
 }
+.el-form-item__label {
+  color: #fff;
+}
+
 /* 输入框样式 */
 .el-input__inner {
-  background-color:  #0C2040;
+  background-color: #0c2040;
   color: #708193;
   font-size: 12px;
   border: none;
+  padding: 0 15px !important;
 }
 .el-input__inner::placeholder {
   color: #2b374f;
@@ -410,8 +416,13 @@ export default {
   font-size: 12px;
 }
 // 文本域样式
-.el-textarea__inner{
-  background-color: #0C2040;
-  border-color: #0C2040;
+.el-textarea__inner {
+  background-color: #0c2040;
+  border-color: #0c2040;
+}
+.my-btn,.start {
+  .el-input__inner{
+        padding: 15px 10px 15px 30px !important;
+  }
 }
 </style>
