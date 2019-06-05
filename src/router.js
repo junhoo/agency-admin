@@ -2,7 +2,7 @@ import Vue from 'vue';
 import Router from 'vue-router';
 import Merchants from './views/Merchants.vue';
 import Index from './views/Index.vue'
-import earnings from "./views/Earnings.vue";
+import Earnings from "./views/Earnings.vue";
 import deal from "./views/Deal.vue";
 import dealData from "./views/Deal_data.vue";
 import dealDetail from "./views/Deal_detail.vue";
@@ -18,7 +18,7 @@ const routes =  [
     children: [
       { path: '', component: Merchants },
       { path: '/merchants', name: 'merchants', component: Merchants },
-      { path: '/earnings', name: 'earnings', component: earnings},
+      { path: '/earnings', name: 'earnings', component: Earnings},
       { path: '/deal', name: 'deal', component: deal},
       { path: '/dealData', name: 'dealData', component: dealData},
       { path: '/dealDetail', name: 'dealDetail', component: dealDetail},

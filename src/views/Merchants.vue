@@ -47,11 +47,7 @@
         </div>
 
         <!-- 柱状图 -->
-        <template>
-          <div id="midchart">
-            <apexchart type=bar height=350 :options="midchartOptions" :series="midseries" />
-          </div>
-        </template>
+        <common-mid></common-mid>
       </div>
       <!-- 上右 -->
       <div class="content">
@@ -99,14 +95,16 @@
 
 <script>
 import CommonApexchart from 'components/Apexchart'
+import CommonMid from 'components/midchart'
 export default {
   name: 'merchants',
   components: {
-    CommonApexchart
+    CommonApexchart,
+    CommonMid
   },
   mounted () {
-    this.getTop()
-    this.getMid()
+    // this.getTop()
+    // this.getMid()
   },
   data () {
     return {
