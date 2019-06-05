@@ -12,7 +12,8 @@
       </el-form-item>
       <el-form-item label="联系电话" prop="name" class="phoneT">
         <el-input v-model="ruleForm.phone" placeholder="请填写商户手机号码"></el-input>
-        <el-input v-model="ruleForm.phone" placeholder="输入验证码"></el-input>
+        <el-input v-model="ruleForm.phone" class="code" placeholder="输入验证码"></el-input>
+        <el-button size="small" type="success" @click="getCode()">获取验证码</el-button>
       </el-form-item>
       <el-form-item label="机构名称" prop="name">
         <el-input v-model="ruleForm.name" placeholder="请填写机构名称"></el-input>
@@ -22,6 +23,16 @@
       </el-form-item>
       <el-form-item label="机构简介" prop="name">
         <el-input type="textarea" v-model="ruleForm.ref" placeholder="请填写机构简介（选填）"></el-input>
+      </el-form-item>
+      <el-form-item label-width='180px' label="用户提现手续费扣除方式" class="payWay">
+       <el-radio-group v-model="ruleForm.radio">
+         <el-radio :label="0">用户支付</el-radio>
+         <el-radio :label="1">项目方支付</el-radio>
+       </el-radio-group>
+      </el-form-item>
+      <el-form-item label="" class="submitbtn">
+         <el-button type="success" @click="submit(0)">取消</el-button>
+         <el-button type="primary" @click="submit(1)">确定添加</el-button>
       </el-form-item>
     </el-form>
     <!-- 弹框 -->
@@ -44,7 +55,8 @@ export default {
          phone: '',
          name: '',
          link: '',
-         ref: ''
+         ref: '',
+         radio: 0,
        },
        rules: {
          email: [
@@ -69,9 +81,11 @@ export default {
           }
         });
       },
-      resetForm(formName) {
-        this.$refs[formName].resetFields();
-      }
+    resetForm(formName) {
+      this.$refs[formName].resetFields();
+    },
+    getCode () {},
+    submit (index) {}
   },
 };
 </script>
@@ -103,9 +117,6 @@ export default {
     font-size: 12px
   }
   .el-form-item__content{
-    .phoneT{
-      display: flex;
-    }
     .el-input, .el-textarea{
       .el-input__inner, .el-textarea__inner{
         font-size: 12px;
@@ -118,6 +129,70 @@ export default {
           color: #4A556E;
         }
       }
+    }
+  }
+}
+.phoneT{
+  position: relative;
+  .el-form-item__content{
+    display: flex;
+    .el-input{
+      margin-right: 8px;
+      width: 50%
+    }
+    .code{
+      width: 30%;
+    }
+  }
+  .el-button--success{
+    background-color: #059E7E;
+    border-radius: 2px;
+    color: #FEFEFF;
+    font-size: 12px;
+    border: none;
+    height: 30px;
+    position: absolute;
+    top: 6px;
+    right: 2px
+  }
+}
+.payWay{
+  .el-radio{
+    .el-radio__label{
+      font-size: 12px;
+      color: #47526B
+    }
+    .el-radio__input{
+      .el-radio__inner{
+        background-color: transparent;
+        border-color: #06476D
+      }
+    }
+    .is-checked{
+      .el-radio__inner{
+        background-color: #214E84;
+        &::after{
+          background-color: #3986E2;
+        }
+      }
+    }
+  }
+}
+.submitbtn{
+  .el-form-item__content{
+    display: flex;
+    .el-button{
+      flex: 1;
+      margin-right: 30px;
+      background-color: #2F71BF;
+      border-color: #2F71BF;
+      font-size: 12px;
+      color: #FFF
+    }
+    .el-button--success{
+      background-color: transparent;
+      border-color: #2F71BF;
+      color: #2F71BF
     }
   }
 }

@@ -8,7 +8,7 @@
                 active-text-color="#409eff"
                 class="el-menu-vertical-demo">
                 <div class="meun-logo"></div>
-                <router-link v-for="(item, index) in items" :key="index" :to="item.path">
+                <router-link v-show="item.index !== 5" v-for="(item, index) in items" :key="index" :to="item.path">
                     <el-menu-item @click="toindexData(item.index)"
                         :index='item.path'>
                         <span slot="title">{{item.name}}</span>
@@ -23,6 +23,7 @@ export default {
   name: "leftmenu",
   data() {
     return {
+      addManagement: false,
       items: [
         {
           icon: "fa-money",
@@ -45,7 +46,7 @@ export default {
         {
           icon: "fa-asterisk",
           name: "商户管理",
-          path: "/addManagement",
+          path: "/POSManagement",
           index: 3
         },
         {
@@ -56,6 +57,9 @@ export default {
         }
       ]
     };
+  },
+  created() {
+    this.addManagement = sessionStorage.getItem('addManagement')
   },
   methods: {
     toindexData(index){

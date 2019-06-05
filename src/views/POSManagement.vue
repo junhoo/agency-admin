@@ -105,6 +105,13 @@ export default {
       this.dialogVisible = true
     },
     addMerchant () {
+      this.$router.push({
+        path: '/AddManagement',
+        query: {
+          index: 5
+        }
+      })
+      sessionStorage.setItem('addManagement', 'true')
     }
   },
 };

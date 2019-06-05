@@ -3,6 +3,7 @@
         <div class="content">
           <div class="icon-left"></div>
           <p class="nav-name">{{headTitle | headTitleText}}</p>
+          <!-- <p class="nav-name">{{this.index}}添加商户</p> -->
         </div>
         <div class="content">
           <p>欢迎你xx代理</p>
@@ -15,9 +16,24 @@
 export default {
   name: "head-nav",
   props: {headTitle: Number},
+  data() {
+    return {
+      index: null
+    }
+  },
   computed: {
     user() {
       return this.$store.getters.user;
+    }
+  },
+  beforeCreate() {
+    if (this.$route.query.index) {
+      this.headTitle = this.$route.query.index
+    }
+  },
+  created() {
+    if (this.$route.query.index) {
+      this.index = this.$route.query.index
     }
   },
   methods: {
@@ -59,8 +75,10 @@ export default {
         value = '交易流水记录'
       } else if (value === 3) {
         value = '商户管理'
-      } else {
+      } else if (value === 4) {
         value = '信息管理'
+      } else {
+        value = '添加商户'
       }
       return value
     }
