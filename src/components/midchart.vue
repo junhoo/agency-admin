@@ -1,8 +1,8 @@
 <template>
-   <div>
-     <!-- <apexchart height="350" type="area" :options="chartOptions" :series="series" /> -->
-     <apexchart type=bar height=350 :options="chartOptions" :series="series" />
-   </div>
+  <div>
+    <!-- <apexchart height="350" type="area" :options="chartOptions" :series="series" /> -->
+    <apexchart type="bar" height="350" :options="chartOptions" :series="series"/>
+  </div>
 </template>
 
 <script>
@@ -11,20 +11,24 @@ export default {
     objs: Object
   },
   watch: {
-    objs (val) {
-      this.series[0].data = val.data1
-      this.series[1].data = val.data2
-    }
+    objs: {
+       handler(newName) {
+        this.series[0].data = newName.midList1
+        this.series[1].data = newName.midList2
+      },
+       deep:true
+      }
+
   },
   data () {
     return {
       series: [
         {
           name: '买入金额',
-          data: [40, 55, 57, 56, 61, 58, 63, 60, 66]
+          data: []
         }, {
           name: '卖出金额',
-          data: [76, 85, 101, 98, 87, 105, 91, 114, 94]
+          data: []
         }
       ],
       chartOptions: {

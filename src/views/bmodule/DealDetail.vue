@@ -33,15 +33,11 @@
             <el-dropdown-item v-for="(item,index) in dropdownList" :key="index">{{item}}</el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
-        <el-dropdown>
-          <el-button type="primary" size="small">
-            交易金额
-            <i class="el-icon-d-caret el-icon--right"></i>
-          </el-button>
-          <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item v-for="(item,index) in dropdownList" :key="index">{{item}}</el-dropdown-item>
-          </el-dropdown-menu>
-        </el-dropdown>
+
+        <el-button type="primary" size="small">
+          交易金额
+          <i class="el-icon-d-caret el-icon--right"></i>
+        </el-button>
       </div>
     </el-form>
 

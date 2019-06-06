@@ -28,15 +28,11 @@
           style="marginLeft:10px"
           class="my-btn"
         ></el-input>
-        <el-dropdown>
-          <el-button type="primary" size="small">
-            交易金额
-            <i class="el-icon-d-caret el-icon--right"></i>
-          </el-button>
-          <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item v-for="(item,index) in dropdownList" :key="index">{{item}}</el-dropdown-item>
-          </el-dropdown-menu>
-        </el-dropdown>
+
+        <el-button type="primary" size="small">
+          交易金额
+          <i class="el-icon-d-caret el-icon--right"></i>
+        </el-button>
       </div>
     </el-form>
 
@@ -121,7 +117,7 @@ export default {
     justify-content: space-between;
     margin-bottom: 10px;
     padding-right: 16px;
-    
+
     .right {
       display: flex;
       align-items: center;
@@ -135,7 +131,7 @@ export default {
         width: 67px;
         font-size: 12px;
         text-align: center;
-        color: #555F79;
+        color: #555f79;
       }
       .symbol {
         width: 17px;
@@ -146,8 +142,8 @@ export default {
         height: 25px;
         padding: 0;
         border-radius: 2px;
-        background-color: #059E7E;
-        border-color: #059E7E;
+        background-color: #059e7e;
+        border-color: #059e7e;
         margin-left: 10px;
         .el-icon--right {
           margin-left: 0;
