@@ -7,42 +7,26 @@
 
 <script>
 export default {
-  data: function() {
+  props: {
+    objs: Object
+  },
+  watch: {
+    objs (val) {
+      this.series[0].data = val.data1
+      this.series[1].data = val.data2
+    }
+  },
+  data () {
     return {
-      // 1
-      // chartOptions: {
-      //   chart: {
-      //     id: 'vuechart-example2'
-      //   },
-      //   xaxis: {
-      //     categories: [1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998]
-      //   }
-      // },
-      // series: [{
-      //   name: 'series-1',
-      //   data: [30, 40, 35, 50, 49, 60, 70, 91]
-      // }],
-      series: [{
-        name: '买入金额',
-        itemStyle : {  
-          normal : { 
-            color: '#f5f5f5',
-            // color: function(){  
-            //   return '#f5f5f5';   
-            // },  
-            label : {
-              show : false  
-            },  
-            labelLine : {  
-              show : false  
-            }
-          }
-        },
-        data: [40, 55, 57, 56, 61, 58, 63, 60, 66]
-      }, {
-        name: '卖出金额',
-        data: [76, 85, 101, 98, 87, 105, 91, 114, 94]
-      }],
+      series: [
+        {
+          name: '买入金额',
+          data: [40, 55, 57, 56, 61, 58, 63, 60, 66]
+        }, {
+          name: '卖出金额',
+          data: [76, 85, 101, 98, 87, 105, 91, 114, 94]
+        }
+      ],
       chartOptions: {
         plotOptions: {
           bar: {

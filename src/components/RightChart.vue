@@ -6,7 +6,16 @@
 
 <script>
 export default {
-  data: function() {
+  props: {
+    objs: Object
+  },
+  watch: {
+    objs (val) {
+      this.series[0].data = val.data1
+      this.series[1].data = val.data2
+    }
+  },
+  data () {
     return {
       series: [{
         name: '充值',

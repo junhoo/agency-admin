@@ -34,7 +34,7 @@
         <div class="date-box">
           <div class="hint">起始日期</div>
           <div class="time-icon"></div>
-          <el-form ref="form" :model="form" label-width="20px" class="my-form">
+          <el-form ref="form" label-width="20px" class="my-form">
             <el-date-picker
               type="date"
               placeholder="2018-05"
@@ -47,7 +47,7 @@
           <p class="black">—</p>
 
           <div class="time-icon"></div>
-          <el-form ref="form" :model="form" label-width="20px" class="my-form" style="margin-right: 10px;">
+          <el-form ref="form" label-width="20px" class="my-form" style="margin-right: 10px;">
             <el-date-picker
               type="date"
               placeholder="2019-06"
@@ -60,7 +60,7 @@
       </div>
 
       <!-- 波浪图 -->
-      <common-apexchart></common-apexchart>
+      <top-chart :list="toplist"></top-chart>
     </section>
 
     <section class="chart-box chart-mid">
@@ -73,11 +73,11 @@
           <div class="date-box">
             <div class="hint">日期</div>
             <div class="time-icon"></div>
-            <el-form ref="form" :model="form" label-width="20px" class="my-form" style="margin-right: 10px;">
+            <el-form ref="form" label-width="20px" class="my-form" style="margin-right: 10px;">
               <el-date-picker
                 type="date"
                 placeholder="2019-06"
-                v-model="midFrom1"
+                v-model="midFrom1.date"
                 size="small"
                 :editable="false"
               ></el-date-picker>
@@ -86,7 +86,7 @@
         </div>
 
         <!-- 柱状图 -->
-        <common-mid></common-mid>
+        <common-mid :objs="midlist1"></common-mid>
       </div>
 
       <!-- 中右 -->
@@ -99,11 +99,11 @@
           <div class="date-box">
             <div class="hint">日期</div>
             <div class="time-icon"></div>
-            <el-form ref="form" :model="form" label-width="20px" class="my-form" style="margin-right: 10px;">
+            <el-form ref="form" label-width="20px" class="my-form" style="margin-right: 10px;">
               <el-date-picker
                 type="date"
                 placeholder="2019-06"
-                v-model="midFrom2"
+                v-model="midFrom2.date"
                 size="small"
                 :editable="false"
               ></el-date-picker>
@@ -111,7 +111,7 @@
           </div>
         </div>
 
-        <common-right></common-right>
+        <common-right :objs="midlist2"></common-right>
       </div>
     </section>
 
@@ -128,14 +128,14 @@
 
             <el-form
               ref="form"
-              :model="form"
+              :model="midFrom1.date"
               label-width="20px"
               class="my-form"
               style="margin-right: 10px;" >
               <el-date-picker
                 type="date"
                 placeholder="2019-06"
-                v-model="midFrom2"
+                v-model="midFrom2.date"
                 size="small"
                 :editable="false" >
               </el-date-picker>
@@ -167,11 +167,11 @@
           <div class="date-box">
             <div class="hint">日期</div>
             <div class="time-icon"></div>
-            <el-form ref="form" :model="form" label-width="20px" class="my-form" style="margin-right: 10px;">
+            <el-form ref="form" label-width="20px" class="my-form" style="margin-right: 10px;">
               <el-date-picker
                 type="date"
                 placeholder="2019-06"
-                v-model="midFrom2"
+                v-model="midFrom2.date"
                 size="small"
                 :editable="false"
               ></el-date-picker>
@@ -184,26 +184,48 @@
 </template>
 
 <script>
-import CommonApexchart from 'components/Apexchart'
+import TopChart from 'components/Apexchart'
 import CommonMid from 'components/midchart'
 import CommonRight from 'components/RightChart'
 export default {
   name: 'merchants',
   components: {
-    CommonApexchart,
+    TopChart,
     CommonMid,
     CommonRight
   },
   mounted () {
+    this.toplist = [100, 100, 80, 80, 50, 50, 70, 91]
+    this.midlist1 = {
+     data1: [20, 40, 80, 80, 50, 50, 70, 91],
+     data2: [50, 60, 80, 80, 50, 50, 70, 91]
+    }
+    this.midlist2 = {
+     data1: [20, 40, 80, 80, 50, 50, 70, 91],
+     data2: [50, 60, 80, 80, 50, 50, 70, 91]
+    }
   },
   data () {
     return {
+      toplist: [],
+      midlist1: {
+        data1: [],
+        data2: []
+      },
+      midlist2: {
+        data1: [],
+        data2: []
+      },
       topFrom: {
         date1: '',
         date2: ''
       },
-      midFrom1: '',
-      midFrom2: '',
+      midFrom1: {
+        date: ''
+      },
+      midFrom2: {
+        date: ''
+      },
       topseries: [],
       topchartOptions: {},
       midseries: [],
@@ -262,21 +284,6 @@ export default {
         },
         {
           date: "9",
-          name: "ASDAS",
-          address: "3242342"
-        },
-        {
-          date: "10",
-          name: "ASDAS",
-          address: "3242342"
-        },
-        {
-          date: "11",
-          name: "ASDAS",
-          address: "3242342"
-        },
-        {
-          date: "7",
           name: "ASDAS",
           address: "3242342"
         }
