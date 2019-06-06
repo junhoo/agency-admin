@@ -1,11 +1,6 @@
 <template>
   <div class="container">
-    <router-link :to="{path:'/a_deal_data'}">
-      <div class="el-icon-back"></div>
-    </router-link>
-
     <el-form ref="form" :model="form" label-width="80px" class="my-form">
-      <div class="left">累计收益积分：568555.02</div>
       <div class="right">
         <div class="start">起始日期</div>
         <el-date-picker
@@ -26,7 +21,7 @@
           size="small"
         ></el-date-picker>
         <el-input
-          placeholder="请输入内容"
+          placeholder="输入手机号码查询"
           prefix-icon="el-icon-search"
           v-model="input2"
           size="small"
@@ -35,8 +30,8 @@
         ></el-input>
         <el-dropdown>
           <el-button type="primary" size="small">
-            全部交易类型
-            <i class="el-icon-caret-bottom el-icon--right"></i>
+            团队人数
+            <i class="el-icon-d-caret el-icon--right"></i>
           </el-button>
           <el-dropdown-menu slot="dropdown">
             <el-dropdown-item v-for="(item,index) in dropdownList" :key="index">{{item}}</el-dropdown-item>
@@ -53,17 +48,19 @@
       :header-cell-style="{background:'#12223B',color:'#606266'}"
       align="center"
     >
-      <el-table-column prop="date" label="订单号" width="100%" align="center"></el-table-column>
-      <el-table-column prop="name" label="总积分" width="100%" align="center"></el-table-column>
-      <el-table-column prop="address" label="兑换积分数" align="center"></el-table-column>
-      <el-table-column prop="address" label="获得USDT数" align="center"></el-table-column>
-      <el-table-column prop="address" label="兑换时间" align="center"></el-table-column>
-      <el-table-column prop="address" label="剩余积分" align="center"></el-table-column>
-      <el-table-column prop="address" label="兑换状态" align="center"></el-table-column>
-      <el-table-column prop="address" label="操作" align="center">
+      <el-table-column prop="date" label="UID" width="100%" align="center"></el-table-column>
+      <el-table-column prop="name" label="手机号" width="100%" align="center"></el-table-column>
+      <el-table-column prop="address" label="邮箱" align="center"></el-table-column>
+      <el-table-column prop="address" label="是否实名" align="center"></el-table-column>
+      <el-table-column prop="address" label="用户名称" align="center"></el-table-column>
+      <el-table-column prop="address" label="保证金" align="center"></el-table-column>
+      <el-table-column prop="address" label="注册时间" align="center"></el-table-column>
+      <el-table-column prop="address" label="推荐人ID" align="center"></el-table-column>
+      <el-table-column prop="address" label="团队人数" align="center"></el-table-column>
+      <el-table-column prop="address" label="操作" align="center">                                                                                                                      
         <template scope>
-          <router-link :to="{path:'/a_deal_detail'}">
-            <span style="color:#3986E2">查看详细流水</span>
+          <router-link :to="{path:'b_InforDtetail'}">
+            <span style="color:#3986E2">查看团队人员</span>
           </router-link>
         </template>
       </el-table-column>
@@ -73,7 +70,7 @@
 
 <script>
 export default {
-  nama: "deal",
+  nama: "information",
   data() {
     return {
       dropdownList: ["黄金糕", "狮子头", "螺蛳粉", "双皮奶", "蚵仔煎"],
@@ -86,22 +83,22 @@ export default {
         {
           date: "2016-05-02",
           name: "王小虎",
-          address: "上海市普陀区金沙江路 1518 弄"
+          address: "上海市普"
         },
         {
           date: "2016-05-04",
           name: "王小虎",
-          address: "上海市普陀区金沙江路 1517 弄"
+          address: "上海市普"
         },
         {
           date: "2016-05-01",
           name: "王小虎",
-          address: "上海市普陀区金沙江路 1519 弄"
+          address: "上海市普"
         },
         {
           date: "2016-05-03",
           name: "王小虎",
-          address: "上海市普陀区金沙江路 1516 弄"
+          address: "上海市普"
         }
       ]
     };
@@ -117,25 +114,19 @@ export default {
   height: 100%;
   padding: 16px 0 0 0;
   box-sizing: border-box;
-  .el-icon-back {
-    font-size: 18px;
-    font-weight: bold;
-    color: #4c5974;
-  }
+
   .my-form {
     display: flex;
     align-items: center;
     justify-content: space-between;
     margin-bottom: 10px;
     padding-right: 16px;
-    .left {
-      color: #059e7e;
-    }
+    
     .right {
       display: flex;
       align-items: center;
       .el-input {
-        width: 177px;
+        width: 223px;
       }
       .el-date-editor {
         width: 113px !important;
@@ -144,17 +135,19 @@ export default {
         width: 67px;
         font-size: 12px;
         text-align: center;
+        color: #555F79;
       }
       .symbol {
         width: 17px;
         text-align: center;
       }
       .el-button--primary {
-        width: 105px;
+        width: 77px;
         height: 25px;
         padding: 0;
-        background-color: #3986e2;
-        border-color: #3986e2;
+        border-radius: 2px;
+        background-color: #059E7E;
+        border-color: #059E7E;
         margin-left: 10px;
         .el-icon--right {
           margin-left: 0;

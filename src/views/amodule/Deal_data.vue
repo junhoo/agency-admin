@@ -1,9 +1,16 @@
 <template>
   <div class="container">
     <el-form ref="form" :model="form" label-width="80px" class="my-form">
-      <el-input placeholder="请输入内容" prefix-icon="el-icon-search" v-model="input2" size="small"></el-input>
+      <el-input
+        placeholder="请输入内容"
+        prefix-icon="el-icon-search"
+        v-model="input2"
+        size="small"
+        class="my-btn"
+      ></el-input>
       <div class="start">起始日期</div>
       <el-date-picker
+        class="my-btn"
         type="date"
         placeholder="选择日期"
         v-model="form.date1"
@@ -12,6 +19,7 @@
       ></el-date-picker>
       <div class="symbol">一</div>
       <el-date-picker
+        class="my-btn"
         type="date"
         placeholder="选择日期"
         v-model="form.date1"
@@ -19,9 +27,9 @@
         size="small"
       ></el-date-picker>
       <el-dropdown>
-        <el-button type="primary">
+        <el-button type="primary"  size="small">
           全部商户
-          <i class="el-icon-arrow-down el-icon--right"></i>
+          <i class="el-icon-caret-bottom el-icon--right"></i>
         </el-button>
         <el-dropdown-menu slot="dropdown">
           <el-dropdown-item v-for="(item,index) in dropdownList" :key="index">{{item}}</el-dropdown-item>
@@ -46,7 +54,7 @@
       <el-table-column prop="address" label="兑换状态" align="center"></el-table-column>
       <el-table-column prop="address" label="操作" align="center">
         <template scope>
-          <router-link :to="{path:'/dealDetail'}">
+          <router-link :to="{path:'/a_deal_detail'}">
             <span style="color:#3986E2">查看详细流水</span>
           </router-link>
         </template>

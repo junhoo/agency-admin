@@ -32,7 +32,8 @@
         </div>
       </div>
     </div>
-
+    <!-- 推广跳转 -->
+    <div class="generalize"><a href="#">积分不够用？快去推广邀请吧!</a></div>
     <!-- tab切换 -->
     <el-tabs v-model="activeName">
       <el-tab-pane label="积分兑换记录" name="first">
@@ -82,6 +83,7 @@
       :visible.sync="dialogVisible1"
       width="285px"
       :modal-append-to-body="false"
+      center
     >
       <div class="mobile">
         <span>验证手机：153****4544</span>
@@ -105,6 +107,7 @@
       :visible.sync="dialogVisible2"
       width="285px"
       :modal-append-to-body="false"
+      center
     >
       <div class="mobile">
         <span>兑换积分数</span>
@@ -129,6 +132,7 @@
       :visible.sync="dialogVisible3"
       width="285px"
       :modal-append-to-body="false"
+      center
     >
       <div class="mobile">
         <span>提币地址</span>
@@ -208,9 +212,7 @@ export default {
   border-right: none !important;
   border-bottom: 2px solid #06476d !important;
 }
-.rightContainer{
-  padding-top: 0;
-}
+
 .container {
   height: 100%;
   width: 100%;
@@ -288,6 +290,14 @@ export default {
       }
     }
   }
+  .generalize{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    a {
+      color: #3986E2;
+    }
+  }
   .mobile {
     font-size: 12px;
     color: #5c6680;
@@ -318,8 +328,7 @@ export default {
   .tips {
     color: #047e65;
     font-size: 12px;
-    margin-bottom: 13px;
-    margin-top: 10px;
+    line-height: 22px; 
   }
   .password {
     color: #5c6680;
@@ -404,6 +413,9 @@ export default {
 .el-dialog {
   background-color: #12223b;
   margin-top: 30vh;
+}
+.el-dialog__body{
+  padding: 25px 25px 0px !important;
 }
 .el-dialog__title {
   color: #fff;

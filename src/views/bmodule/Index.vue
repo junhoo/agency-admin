@@ -58,4 +58,3 @@ export default {
   padding: 30px 28px 50px 58px;
 }
 </style>
-
