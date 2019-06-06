@@ -70,7 +70,7 @@
 
 <script>
 export default {
-  nama: "information",
+  nama: "Binformation",
   data() {
     return {
       dropdownList: ["黄金糕", "狮子头", "螺蛳粉", "双皮奶", "蚵仔煎"],

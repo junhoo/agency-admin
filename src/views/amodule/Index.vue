@@ -1,7 +1,7 @@
 <template>
   <div class="index">
     <LeftMenu @toindexData="sendleftData"></LeftMenu>
-    <div class="rrr">
+    <div class="wrapper">
       <HeadNav :headTitle='headtitleIndex'></HeadNav>
       <div class="rightContainer">
         <router-view></router-view>
@@ -39,12 +39,12 @@ export default {
   height: 100%;
 }
 
-.rrr {
+.wrapper {
   position: fixed;
   box-sizing: border-box;
   position: fixed;
   top: 0;
-  left: 200px;
+  left: 220px;
   right: 0;
   bottom: 0;
   overflow-y: scroll;

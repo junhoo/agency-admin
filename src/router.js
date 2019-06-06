@@ -36,8 +36,7 @@ const routes =  [
       { path: '/a_deal', name: 'deal', component: deal},
       { path: '/a_deal_data', name: 'dealData', component: dealData},
       { path: '/a_deal_detail', name: 'dealDetail', component: dealDetail},
-      { path: '/a_information', name: 'information', component: information},
-      { path: '/a_information', name: 'information', component: information},
+      { path: '/a_information', name: 'information', component: information}
     ]
   },
   {
@@ -46,10 +45,10 @@ const routes =  [
     component: BIndex,
     children: [
       { path: '/b_earnings', name: 'BEarnings', component: BEarnings },
-      { path: '/b_deal', name: 'deal', component: Bdeal},
+      { path: '/b_deal', name: 'Bdeal', component: Bdeal},
       { path: '/b_detail', name: 'detail', component: Bdetail},
       { path: '/b_manage', name: 'manage', component: manage},
-      { path: '/b_information', name: 'information', component: Binformation},
+      { path: '/b_information', name: 'Binformation', component: Binformation},
       { path: '/b_inforDtetail', name: 'InforDtetail', component: BInforDtetail},
       { path: '/b_generalize', name: 'generalize', component: generalize},
     ]
