@@ -29,7 +29,7 @@
           </el-date-picker>
       </li>
        <li class="iteminput iteminput5">
-         <span class="subSearch" @click="addMerchant()">添加商户</span>
+         <span class="subSearch" @click="addMerchant">添加商户</span>
       </li>
     </ul>
     <!-- 表格 -->
@@ -43,7 +43,7 @@
         >
           <el-table-column prop="date" label="机构ID" width="100%" align="center"></el-table-column>
           <el-table-column prop="name" label="联系人" width="100%" align="center"></el-table-column>
-          <el-table-column prop="address" label="联系电话" align="center"></el-table-column>
+          <el-table-column prop="address" label="联系电话"  align="center"></el-table-column>
           <el-table-column prop="address" label="电子地址" align="center"></el-table-column>
           <el-table-column prop="address" label="兑换时间" align="center"></el-table-column>
           <el-table-column prop="address" label="机构名称" align="center"></el-table-column>
@@ -78,22 +78,22 @@ export default {
         {
           date: "2016-05-02",
           name: "王小虎",
-          address: "上海市普陀区金沙江路 1518 弄"
+          address: "上海市普陀区金沙江"
         },
         {
           date: "2016-05-04",
           name: "王小虎",
-          address: "上海市普陀区金沙江路 1517 弄"
+          address: "上海市普陀区金沙江"
         },
         {
           date: "2016-05-01",
           name: "王小虎",
-          address: "上海市普陀区金沙江路 1519 弄"
+          address: "上海市普陀区金沙江"
         },
         {
           date: "2016-05-03",
           name: "王小虎",
-          address: "上海市普陀区金沙江路 1516 弄"
+          address: "上海市普陀区金沙江"
         }
       ],
       inputName: '',

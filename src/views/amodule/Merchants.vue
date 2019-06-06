@@ -1,6 +1,5 @@
 <template>
   <div class="merchants-body">
-
     <header class="container">
       <div class="content">
         <p class="money">1862,325</p>
@@ -26,6 +25,7 @@
       </div>
     </header>
 
+    <!-- 顶部图 -->
     <section class="chart-top">
       <div class="title-box">
         <div class="icon"></div>
@@ -34,11 +34,12 @@
         <div class="date-box">
           <div class="hint">起始日期</div>
           <div class="time-icon"></div>
-          <el-form ref="form" label-width="20px" class="my-form">
+
+          <el-form ref="topForm" label-width="20px" class="my-form">
             <el-date-picker
               type="date"
               placeholder="2018-05"
-              v-model="topFrom.date1"
+              v-model="topForm.date1"
               size="small"
               :editable="false"
             ></el-date-picker>
@@ -47,11 +48,11 @@
           <p class="black">—</p>
 
           <div class="time-icon"></div>
-          <el-form ref="form" label-width="20px" class="my-form" style="margin-right: 10px;">
+          <el-form ref="topForm" label-width="20px" class="my-form" style="margin-right: 10px;">
             <el-date-picker
               type="date"
               placeholder="2019-06"
-              v-model="topFrom.date2"
+              v-model="topForm.date2"
               size="small"
               :editable="false"
             ></el-date-picker>
@@ -60,9 +61,10 @@
       </div>
 
       <!-- 波浪图 -->
-      <top-chart :list="toplist"></top-chart>
+      <top-chart :list="topForm.toplist"></top-chart>
     </section>
 
+    <!-- 中部图-->
     <section class="chart-box chart-mid">
       <!-- 中左 -->
       <div class="content left">
@@ -73,11 +75,11 @@
           <div class="date-box">
             <div class="hint">日期</div>
             <div class="time-icon"></div>
-            <el-form ref="form" label-width="20px" class="my-form" style="margin-right: 10px;">
+            <el-form ref="midForm" label-width="20px" class="my-form" style="margin-right: 10px;">
               <el-date-picker
                 type="date"
                 placeholder="2019-06"
-                v-model="midFrom1.date"
+                v-model="midForm.date1"
                 size="small"
                 :editable="false"
               ></el-date-picker>
@@ -86,7 +88,7 @@
         </div>
 
         <!-- 柱状图 -->
-        <common-mid :objs="midlist1"></common-mid>
+        <common-mid :objs="midForm.list"></common-mid>
       </div>
 
       <!-- 中右 -->
@@ -99,11 +101,11 @@
           <div class="date-box">
             <div class="hint">日期</div>
             <div class="time-icon"></div>
-            <el-form ref="form" label-width="20px" class="my-form" style="margin-right: 10px;">
+            <el-form ref="midForm" label-width="20px" class="my-form" style="margin-right: 10px;">
               <el-date-picker
                 type="date"
                 placeholder="2019-06"
-                v-model="midFrom2.date"
+                v-model="midForm.date2"
                 size="small"
                 :editable="false"
               ></el-date-picker>
@@ -111,10 +113,11 @@
           </div>
         </div>
 
-        <common-right :objs="midlist2"></common-right>
+        <common-right :objs="midForm.list"></common-right>
       </div>
     </section>
 
+    <!-- 底部表格 -->
     <section class="chart-box chart-bottom">
       <!-- 下左 -->
       <div class="content left">
@@ -127,29 +130,31 @@
             <div class="time-icon"></div>
 
             <el-form
-              ref="form"
-              :model="midFrom1.date"
+              ref="bottForm"
+              :model="bottForm"
               label-width="20px"
               class="my-form"
-              style="margin-right: 10px;" >
+              style="margin-right: 10px;"
+            >
               <el-date-picker
                 type="date"
                 placeholder="2019-06"
-                v-model="midFrom2.date"
+                v-model="bottForm.date1"
                 size="small"
-                :editable="false" >
-              </el-date-picker>
+                :editable="false"
+              ></el-date-picker>
             </el-form>
           </div>
         </div>
 
         <el-table
-          :data="tableData"
+          :data="bottForm.tableData1"
           border
           height="250"
           style="width: 100%"
           :header-cell-style="{background:'#061220',color:'#fff'}"
-          align="center">
+          align="center"
+        >
           <el-table-column prop="date" label="排行" width="100%" align="center"></el-table-column>
           <el-table-column prop="name" label="项目方名称" width="100%" align="center"></el-table-column>
           <el-table-column prop="address" label="充值总金额" align="center"></el-table-column>
@@ -167,11 +172,11 @@
           <div class="date-box">
             <div class="hint">日期</div>
             <div class="time-icon"></div>
-            <el-form ref="form" label-width="20px" class="my-form" style="margin-right: 10px;">
+            <el-form ref="bottForm" label-width="20px" class="my-form" style="margin-right: 10px;">
               <el-date-picker
                 type="date"
                 placeholder="2019-06"
-                v-model="midFrom2.date"
+                v-model="bottForm.data2"
                 size="small"
                 :editable="false"
               ></el-date-picker>
@@ -184,61 +189,66 @@
 </template>
 
 <script>
-import TopChart from 'components/Apexchart'
-import CommonMid from 'components/midchart'
-import CommonRight from 'components/RightChart'
+import TopChart from "components/Apexchart";
+import CommonMid from "components/midchart";
+import CommonRight from "components/RightChart";
 export default {
-  name: 'merchants',
+  name: "merchants",
   components: {
     TopChart,
     CommonMid,
     CommonRight
   },
-  mounted () {
-    this.toplist = [100, 100, 80, 80, 50, 50, 70, 91]
-    this.midlist1 = {
-     data1: [20, 40, 80, 80, 50, 50, 70, 91],
-     data2: [50, 60, 80, 80, 50, 50, 70, 91]
-    }
-    this.midlist2 = {
-     data1: [20, 40, 80, 80, 50, 50, 70, 91],
-     data2: [50, 60, 80, 80, 50, 50, 70, 91]
-    }
+  mounted() {
+    // 顶部数据
+    this.topForm.toplist = [100, 100, 80, 80, 50, 50, 70, 91];
+    // 中部数据
+    this.midForm.list.midList1 = [20, 40, 80, 80, 50, 50, 70, 91];
+    this.midForm.list.midList2 = [50, 60, 80, 80, 50, 50, 70, 91];
+    // 底部数据
+    this.bottForm.tableData1 = this.tableData;
   },
-  data () {
+  data() {
     return {
-      toplist: [],
-      midlist1: {
+      // 顶部
+      topForm: {
+        date1: "",
+        date2: "",
+        toplist: []
+      },
+      // 中部
+      midForm: {
         data1: [],
-        data2: []
+        data2: [],
+        list: {
+          midList1: [],
+          midList2: []
+        }
       },
-      midlist2: {
+      // 底部表格
+      bottForm: {
         data1: [],
-        data2: []
+        data2: [],
+        tableData1: [],
+        tableData2: []
       },
-      topFrom: {
-        date1: '',
-        date2: ''
-      },
-      midFrom1: {
-        date: ''
-      },
-      midFrom2: {
-        date: ''
-      },
+      // 顶部图数据
       topseries: [],
       topchartOptions: {},
+
+      // 中间图数据
       midseries: [],
       midchartOptions: {},
+
       topchartData: {
-        columns: ['日期', '下单用户'],
+        columns: ["日期", "下单用户"],
         rows: [
-          { '日期': '1000', '下单用户': 1093 },
-          { '日期': '2000', '下单用户': 3230 },
-          { '日期': '5000', '下单用户': 2623 },
-          { '日期': '6000', '下单用户': 1423 },
-          { '日期': '8000', '下单用户': 3492 },
-          { '日期': '9000', '下单用户': 4293 }
+          { 日期: "1000", 下单用户: 1093 },
+          { 日期: "2000", 下单用户: 3230 },
+          { 日期: "5000", 下单用户: 2623 },
+          { 日期: "6000", 下单用户: 1423 },
+          { 日期: "8000", 下单用户: 3492 },
+          { 日期: "9000", 下单用户: 4293 }
         ]
       },
       tableData: [
@@ -288,13 +298,12 @@ export default {
           address: "3242342"
         }
       ]
-    }
+    };
   }
-}
+};
 </script>
 
 <style lang="scss" scoped>
-
 .merchants-body {
   width: 100%;
   height: 100%;
@@ -307,7 +316,8 @@ export default {
   // top: 0 !important;
 }
 
-/deep/ .el-table--border, .el-table--group {
+/deep/ .el-table--border,
+.el-table--group {
   border: 0;
 }
 
@@ -318,14 +328,15 @@ export default {
 }
 
 /deep/ .el-table__body-wrapper {
-  background-color: #061220 !important;  
+  background-color: #061220 !important;
 }
 
 /deep/ .el-table--enable-row-transition .el-table__body td {
   padding: 0;
 }
 
-/deep/ .el-table td, .el-table th.is-leaf {
+/deep/ .el-table td,
+.el-table th.is-leaf {
   padding-top: 32px;
 }
 
@@ -340,14 +351,14 @@ export default {
 
 /deep/ .el-input__inner {
   padding: 0 !important;
-  background: url('~imgurl/pulldown_icon.png') no-repeat center right;
+  background: url("~imgurl/pulldown_icon.png") no-repeat center right;
   background-size: 16px;
   height: 40px;
   line-height: 40px;
 }
 
 /deep/ .el-input__inner::placeholder {
-  color: #3884E0 !important;
+  color: #3884e0 !important;
   font-size: 15px;
 }
 
@@ -366,7 +377,7 @@ export default {
     position: relative;
     height: 60px;
     width: 22%;
-    border-right: 1.2px solid #051E33;
+    border-right: 1.2px solid #051e33;
     text-align: center;
     &:last-child {
       border: 0;
@@ -382,27 +393,27 @@ export default {
         top: 0;
         right: 25px;
         font-size: 8px;
-        background: url('~imgurl/go_up.png') no-repeat left top 46%;
+        background: url("~imgurl/go_up.png") no-repeat left top 46%;
         background-size: 15px;
         .text {
           padding-left: 15px;
-          color: #37EC6B;
+          color: #37ec6b;
         }
       }
     }
     .name {
       font-size: 12px;
-      color: #7380A0;
+      color: #7380a0;
       margin-bottom: 6px;
     }
     .green {
-      color: #37EC6B;
+      color: #37ec6b;
     }
     .purple {
-      color: #8C51F5;
+      color: #8c51f5;
     }
     .light-blue {
-      color: #3BCCC9;
+      color: #3bccc9;
     }
   }
 }
@@ -420,7 +431,7 @@ export default {
       float: left;
       width: 36px;
       height: 40px;
-      background: url('~imgurl/table_icon.png') no-repeat center;
+      background: url("~imgurl/table_icon.png") no-repeat center;
       background-size: 15px;
     }
     .text {
@@ -437,26 +448,26 @@ export default {
       }
       .time-icon {
         width: 15px;
-        background: url('~imgurl/time.png') no-repeat center;
+        background: url("~imgurl/time.png") no-repeat center;
         background-size: 15px;
       }
       .hint {
         font-size: 15px;
         margin-right: 10px;
-        color: #3884E0;
+        color: #3884e0;
       }
       .content {
         display: flex;
         .time-box {
           padding-left: 5px;
           padding-right: 16px;
-          background: url('~imgurl/pulldown_icon.png') no-repeat center right;
+          background: url("~imgurl/pulldown_icon.png") no-repeat center right;
           background-size: 16px;
         }
       }
       .black {
         margin: 0 5px;
-        color: #3884E0;
+        color: #3884e0;
       }
     }
   }
@@ -481,7 +492,7 @@ export default {
         float: left;
         width: 36px;
         height: 40px;
-        background: url('~imgurl/table_icon.png') no-repeat center;
+        background: url("~imgurl/table_icon.png") no-repeat center;
         background-size: 15px;
       }
       .text {
@@ -492,17 +503,17 @@ export default {
         display: flex;
         .time-icon {
           width: 15px;
-          background: url('~imgurl/time.png') no-repeat center;
+          background: url("~imgurl/time.png") no-repeat center;
           background-size: 15px;
         }
         .hint {
           font-size: 15px;
           margin-right: 5px;
-          color: #3884E0;
+          color: #3884e0;
         }
       }
       .date {
-        color: #3884E0;
+        color: #3884e0;
         float: right;
       }
     }
