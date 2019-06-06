@@ -9,8 +9,8 @@
               @select="handleSelect"
               class="el-menu-vertical-demo">
               <div class="meun-logo"></div>
+
               <router-link
-                v-show="item.index !== 5"
                 v-for="(item, index) in items"
                 :key="index"
                 :to="item.path">
@@ -33,7 +33,7 @@
 export default {
   name: "leftmenu",
   created () {
-    var picks = sessionStorage.getItem('activeItem')
+    var picks = sessionStorage.getItem('activaItem')
     this.items[picks].select = true
     this.addManagement = sessionStorage.getItem('addManagement')
   },
@@ -93,7 +93,7 @@ export default {
         iterator.select = false
       }
       this.items[atIndex].select = true
-      sessionStorage.setItem('activeItem', atIndex)
+      sessionStorage.setItem('activaItem', atIndex)
     },
     toindexData (index) {
       this.$emit("toindexData", index)

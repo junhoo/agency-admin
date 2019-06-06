@@ -13,6 +13,8 @@ import information from "./views/amodule/Information.vue";
 
 // B方后台
 import BIndex from './views/bmodule/Index.vue';
+import BTradingChart from './views/bmodule/TradingChart.vue';
+import BUserChart from './views/bmodule/UserChart.vue';
 import BEarnings from './views/bmodule/Earnings.vue';
 import Bdeal from "./views/bmodule/Deal.vue";
 import Bdetail from "./views/bmodule/DealDetail.vue";
@@ -45,6 +47,8 @@ const routes =  [
     component: BIndex,
     children: [
       { path: '/b_earnings', name: 'BEarnings', component: BEarnings },
+      { path: '/b_tradingchart', name: 'BTradingChart', component: BTradingChart },
+      { path: '/b_userchart', name: 'BUserChart', component: BUserChart },
       { path: '/b_deal', name: 'Bdeal', component: Bdeal},
       { path: '/b_detail', name: 'detail', component: Bdetail},
       { path: '/b_manage', name: 'manage', component: manage},

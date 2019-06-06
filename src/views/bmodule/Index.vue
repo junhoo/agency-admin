@@ -20,6 +20,9 @@ export default {
     HeadNav,
     LeftMenu
   },
+  created () {
+    sessionStorage.setItem('activbItem', 0)
+  },
   data() {
     return {
       headtitleIndex: 0

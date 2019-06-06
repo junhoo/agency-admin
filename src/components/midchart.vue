@@ -1,6 +1,5 @@
 <template>
   <div>
-    <!-- <apexchart height="350" type="area" :options="chartOptions" :series="series" /> -->
     <apexchart type="bar" height="350" :options="chartOptions" :series="series"/>
   </div>
 </template>
@@ -12,13 +11,13 @@ export default {
   },
   watch: {
     objs: {
-       handler(newName) {
+      handler(newName) {
         this.series[0].data = newName.midList1
         this.series[1].data = newName.midList2
+        this.chartOptions.plotOptions.bar.columnWidth = newName.columnWidth
       },
-       deep:true
+        deep: true
       }
-
   },
   data () {
     return {
