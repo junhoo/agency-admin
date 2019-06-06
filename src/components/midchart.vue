@@ -9,27 +9,39 @@
 export default {
   data: function() {
     return {
-      chartOptions: {
-        chart: {
-          id: 'vuechart-example2'
+      // 1
+      // chartOptions: {
+      //   chart: {
+      //     id: 'vuechart-example2'
+      //   },
+      //   xaxis: {
+      //     categories: [1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998]
+      //   }
+      // },
+      // series: [{
+      //   name: 'series-1',
+      //   data: [30, 40, 35, 50, 49, 60, 70, 91]
+      // }],
+      series: [{
+        name: '买入金额',
+        itemStyle : {  
+          normal : { 
+            color: '#f5f5f5',
+            // color: function(){  
+            //   return '#f5f5f5';   
+            // },  
+            label : {
+              show : false  
+            },  
+            labelLine : {  
+              show : false  
+            }
+          }
         },
-        xaxis: {
-          categories: [1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998]
-        }
-      },
-      series: [{
-        name: 'series-1',
-        data: [30, 40, 35, 50, 49, 60, 70, 91]
-      }],
-      series: [{
-        name: 'Net Profit',
-        data: [44, 55, 57, 56, 61, 58, 63, 60, 66]
+        data: [40, 55, 57, 56, 61, 58, 63, 60, 66]
       }, {
-        name: 'Revenue',
+        name: '卖出金额',
         data: [76, 85, 101, 98, 87, 105, 91, 114, 94]
-      }, {
-        name: 'Free Cash Flow',
-        data: [35, 41, 36, 26, 45, 48, 52, 53, 41]
       }],
       chartOptions: {
         plotOptions: {
@@ -54,7 +66,14 @@ export default {
         yaxis: {
           title: {
             text: '$ (thousands)'
-          }
+          },
+          // axisLine: {
+          //   lineStyle: {
+          //       type: 'solid',
+          //       color: '#fff',
+          //       width: '8'
+          //   }
+          // }
         },
         fill: {
           opacity: 1

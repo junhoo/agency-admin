@@ -1,6 +1,7 @@
 <template>
   <div class="merchants-body">
-    <section class="container">
+
+    <header class="container">
       <div class="content">
         <p class="money">1862,325</p>
         <p class="name">用户数量</p>
@@ -23,39 +24,94 @@
         </div>
         <p class="name">用户数量</p>
       </div>
-    </section>
+    </header>
 
     <section class="chart-top">
       <div class="title-box">
         <div class="icon"></div>
         <div class="text">代理收益趋势</div>
-        <div class="date">日期</div>
+
+        <div class="date-box">
+          <div class="hint">起始日期</div>
+          <div class="time-icon"></div>
+          <el-form ref="form" :model="form" label-width="20px" class="my-form">
+            <el-date-picker
+              type="date"
+              placeholder="2018-05"
+              v-model="topFrom.date1"
+              size="small"
+              :editable="false"
+            ></el-date-picker>
+          </el-form>
+
+          <p class="black">—</p>
+
+          <div class="time-icon"></div>
+          <el-form ref="form" :model="form" label-width="20px" class="my-form" style="margin-right: 10px;">
+            <el-date-picker
+              type="date"
+              placeholder="2019-06"
+              v-model="topFrom.date2"
+              size="small"
+              :editable="false"
+            ></el-date-picker>
+          </el-form>
+        </div>
       </div>
-      <!-- :background-color="backgroundColor" -->
 
       <!-- 波浪图 -->
       <common-apexchart></common-apexchart>
     </section>
 
     <section class="chart-box chart-mid">
-      <!-- 上左 -->
+      <!-- 中左 -->
       <div class="content left">
         <div class="title-box">
           <div class="icon"></div>
           <div class="text">项目方充值提现额排行</div>
-          <div class="date">日期</div>
+
+          <div class="date-box">
+            <div class="hint">日期</div>
+            <div class="time-icon"></div>
+            <el-form ref="form" :model="form" label-width="20px" class="my-form" style="margin-right: 10px;">
+              <el-date-picker
+                type="date"
+                placeholder="2019-06"
+                v-model="midFrom1"
+                size="small"
+                :editable="false"
+              ></el-date-picker>
+            </el-form>
+          </div>
         </div>
 
         <!-- 柱状图 -->
         <common-mid></common-mid>
       </div>
-      <!-- 上右 -->
+
+      <!-- 中右 -->
       <div class="content">
         <div class="title-box">
           <div class="icon"></div>
           <div class="text">充值提现趋势</div>
-          <div class="date">日期</div>
+          <div class="time-icon"></div>
+
+          <div class="date-box">
+            <div class="hint">日期</div>
+            <div class="time-icon"></div>
+            <el-form ref="form" :model="form" label-width="20px" class="my-form" style="margin-right: 10px;">
+              <el-date-picker
+                type="date"
+                placeholder="2019-06"
+                v-model="midFrom2"
+                size="small"
+                :editable="false"
+              ></el-date-picker>
+            </el-form>
+          </div>
         </div>
+
+        <common-right></common-right>
       </div>
     </section>
 
@@ -65,15 +121,35 @@
         <div class="title-box">
           <div class="icon"></div>
           <div class="text">收益贡献明细</div>
-          <div class="date">日期</div>
+
+          <div class="date-box">
+            <div class="hint">日期</div>
+            <div class="time-icon"></div>
+
+            <el-form
+              ref="form"
+              :model="form"
+              label-width="20px"
+              class="my-form"
+              style="margin-right: 10px;" >
+              <el-date-picker
+                type="date"
+                placeholder="2019-06"
+                v-model="midFrom2"
+                size="small"
+                :editable="false" >
+              </el-date-picker>
+            </el-form>
+          </div>
         </div>
+
         <el-table
           :data="tableData"
           border
+          height="250"
           style="width: 100%"
           :header-cell-style="{background:'#061220',color:'#fff'}"
-          align="center"
-        >
+          align="center">
           <el-table-column prop="date" label="排行" width="100%" align="center"></el-table-column>
           <el-table-column prop="name" label="项目方名称" width="100%" align="center"></el-table-column>
           <el-table-column prop="address" label="充值总金额" align="center"></el-table-column>
@@ -81,12 +157,26 @@
           <el-table-column prop="address" label="贡献利润" align="center"></el-table-column>
         </el-table>
       </div>
+
       <!-- 下右 -->
       <div class="content right">
         <div class="title-box">
           <div class="icon"></div>
           <div class="text">充值提现笔数</div>
-          <div class="date">日期</div>
+
+          <div class="date-box">
+            <div class="hint">日期</div>
+            <div class="time-icon"></div>
+            <el-form ref="form" :model="form" label-width="20px" class="my-form" style="margin-right: 10px;">
+              <el-date-picker
+                type="date"
+                placeholder="2019-06"
+                v-model="midFrom2"
+                size="small"
+                :editable="false"
+              ></el-date-picker>
+            </el-form>
+          </div>
         </div>
       </div>
     </section>
@@ -96,18 +186,24 @@
 <script>
 import CommonApexchart from 'components/Apexchart'
 import CommonMid from 'components/midchart'
+import CommonRight from 'components/RightChart'
 export default {
   name: 'merchants',
   components: {
     CommonApexchart,
-    CommonMid
+    CommonMid,
+    CommonRight
   },
   mounted () {
-    // this.getTop()
-    // this.getMid()
   },
   data () {
     return {
+      topFrom: {
+        date1: '',
+        date2: ''
+      },
+      midFrom1: '',
+      midFrom2: '',
       topseries: [],
       topchartOptions: {},
       midseries: [],
@@ -158,104 +254,33 @@ export default {
           date: "7",
           name: "ASDAS",
           address: "3242342"
+        },
+        {
+          date: "8",
+          name: "ASDAS",
+          address: "3242342"
+        },
+        {
+          date: "9",
+          name: "ASDAS",
+          address: "3242342"
+        },
+        {
+          date: "10",
+          name: "ASDAS",
+          address: "3242342"
+        },
+        {
+          date: "11",
+          name: "ASDAS",
+          address: "3242342"
+        },
+        {
+          date: "7",
+          name: "ASDAS",
+          address: "3242342"
         }
       ]
-    }
-  },
-  methods: {
-    getTop () {
-      this.topseries = [{
-        name: "STOCK ABC",
-        data: topseries.monthDataSeries1.prices
-      }],
-      this.topchartOptions = {
-        chart: {
-          zoom: {
-            enabled: false
-          }
-        },
-        dataLabels: {
-          enabled: false
-        },
-        stroke: {
-          curve: 'straight'
-        },
-        series: [{
-          name: "STOCK ABC",
-          data: topseries.monthDataSeries1.prices
-        }],
-        title: {
-          text: 'Fundamental Analysis of Stocks',
-          align: 'left'
-        },
-        subtitle: {
-          text: 'Price Movements',
-          align: 'left'
-        },
-        labels: topseries.monthDataSeries1.dates,
-        xaxis: {
-          type: 'datetime',
-        },
-        yaxis: {
-          opposite: true
-        },
-        legend: {
-          horizontalAlign: 'left'
-        }
-      }
-    },
-
-    getMid () {
-      this.midseries = [
-        {
-          name: 'Net Profit',
-          data: [44, 55, 57, 56, 61, 58, 63, 60, 66]
-        }, {
-          name: 'Revenue',
-          data: [76, 85, 101, 98, 87, 105, 91, 114, 94]
-        }
-        // , {
-        //   name: 'Free Cash Flow',
-        //   data: [35, 41, 36, 26, 45, 48, 52, 53, 41]
-        // }
-      ],
-      this.midchartOptions = {
-        // colors: '#008FFB',
-        plotOptions: {
-          bar: {
-            horizontal: false,
-            columnWidth: '55%',
-            endingShape: 'rounded'
-          },
-        },
-        dataLabels: {
-          enabled: false
-        },
-        stroke: {
-          show: true,
-          width: 2,
-          colors: ['transparent']
-        },
-        xaxis: {
-          categories: ['小米', '小米', '小米', '小米', '小米', '小米', '小米', '小米', '小米'],
-        },
-        yaxis: {
-          title: {
-            text: '$ (thousands)'
-          }
-        },
-        fill: {
-          opacity: 1
-
-        },
-        tooltip: {
-          y: {
-            formatter: function (val) {
-              return "$ " + val + " thousands"
-            }
-          }
-        }
-      }
     }
   }
 }
@@ -266,6 +291,13 @@ export default {
 .merchants-body {
   width: 100%;
   height: 100%;
+}
+
+/deep/ .apexcharts-legend {
+  // position: absolute !important;
+  // top: -300px !important;
+  // position: fixed !important;
+  // top: 0 !important;
 }
 
 /deep/ .el-table--border, .el-table--group {
@@ -288,6 +320,36 @@ export default {
 
 /deep/ .el-table td, .el-table th.is-leaf {
   padding-top: 32px;
+}
+
+/deep/ .el-date-editor.el-input {
+  padding-left: 5px;
+  width: 72px;
+}
+
+/deep/ .my-form {
+  margin-top: -2px;
+}
+
+/deep/ .el-input__inner {
+  padding: 0 !important;
+  background: url('~imgurl/pulldown_icon.png') no-repeat center right;
+  background-size: 16px;
+  height: 40px;
+  line-height: 40px;
+}
+
+/deep/ .el-input__inner::placeholder {
+  color: #3884E0 !important;
+  font-size: 15px;
+}
+
+/deep/ .el-input__prefix {
+  display: none;
+}
+
+/deep/ .el-table th.gutter {
+  background: #061220;
 }
 
 .container {
@@ -338,6 +400,7 @@ export default {
   }
 }
 
+// 顶部表格布局
 .chart-top {
   margin-top: 40px;
   border: 1.2px solid #06476d;
@@ -356,13 +419,43 @@ export default {
     .text {
       float: left;
     }
-    .date {
-      color: #3884E0;
+    .date-box {
+      display: flex;
       float: right;
+      .start {
+        margin-left: 10px;
+      }
+      .end {
+        margin-right: 10px;
+      }
+      .time-icon {
+        width: 15px;
+        background: url('~imgurl/time.png') no-repeat center;
+        background-size: 15px;
+      }
+      .hint {
+        font-size: 15px;
+        margin-right: 10px;
+        color: #3884E0;
+      }
+      .content {
+        display: flex;
+        .time-box {
+          padding-left: 5px;
+          padding-right: 16px;
+          background: url('~imgurl/pulldown_icon.png') no-repeat center right;
+          background-size: 16px;
+        }
+      }
+      .black {
+        margin: 0 5px;
+        color: #3884E0;
+      }
     }
   }
 }
 
+// 表格公共布局
 .chart-box {
   margin-top: 26px;
   display: flex;
@@ -387,6 +480,20 @@ export default {
       .text {
         float: left;
       }
+      .date-box {
+        float: right;
+        display: flex;
+        .time-icon {
+          width: 15px;
+          background: url('~imgurl/time.png') no-repeat center;
+          background-size: 15px;
+        }
+        .hint {
+          font-size: 15px;
+          margin-right: 5px;
+          color: #3884E0;
+        }
+      }
       .date {
         color: #3884E0;
         float: right;
@@ -398,10 +505,6 @@ export default {
 .chart-bottom {
   margin-top: 27px;
   .left {
-    overflow-y: scroll;
   }
 }
-// /deep/ .el-table__body-wrapper {
-//   overflow-y: scroll;
-// }
 </style>

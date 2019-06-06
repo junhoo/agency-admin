@@ -18,6 +18,7 @@
          </el-col>
     </el-row>
 </template>
+
 <script>
 export default {
   name: "leftmenu",
@@ -58,6 +59,7 @@ export default {
   },
 };
 </script>
+
 <style scoped>
 .menu_page {
   position: fixed;
