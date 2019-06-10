@@ -14,7 +14,7 @@ import {
   MenuItem,
   Tabs, TabPane, Select, Option,
   Table, TableColumn, Radio, RadioGroup,
-  Dialog, Input, Dropdown, DropdownMenu, DropdownItem, Form, FormItem, DatePicker
+  Dialog, Input, Dropdown, DropdownMenu, DropdownItem, Form, FormItem, DatePicker,Pagination
 } from 'element-ui'
 
 Vue.use(VueApexCharts)
@@ -40,6 +40,7 @@ Vue.use(FormItem)
 Vue.use(DatePicker)
 Vue.use(Radio)
 Vue.use(RadioGroup)
+Vue.use(Pagination)
 
 Vue.component('apexchart', VueApexCharts)
 // 导入请求
