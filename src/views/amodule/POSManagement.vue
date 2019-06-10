@@ -100,13 +100,9 @@ export default {
       startTime: '',
       endTime: '',
       dataShow: true
-    };
+    }
   },
   methods: {
-    getorder () {
-      const url = 'http://agency.service.168mi.cn' + '/api/auser/userList'
-      
-    },
     handleClick (row) {
       console.log(row)
       this.dialogVisible = true
@@ -125,12 +121,19 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+/* 样式框 */
 /deep/ .el-input__inner {
-  background-color: #0c2040;
+  height: 32px;
+  line-height: 32px;
+  background-color: transparent;
+  border-radius: 3px;
   color: #708193;
-  font-size: 12px;
-  border: none;
+  font-size: 12px !important;
+  border: 1px solid #555F79;
   padding: 0 30px !important;
+}
+/deep/ .el-input__inner::placeholder{
+    color: #555F79
 }
 
 .container {
@@ -252,19 +255,7 @@ export default {
 .el-dialog__body{
   padding: 25px 25px 60px !important;
 }
-.el-input__inner{
-  color: #555F79;
-  font-size: 12px !important;
-  padding: 15px 10px 15px 30px !important;
-  height: 26px;
-  line-height: 26px;
-  background-color: transparent;
-  border-radius: 3px;
-  border: 1px solid #555F79;
-}
-.el-input__inner::placeholder{
-    color: #555F79
-}
+
 .el-input__icon{
   color: #555F79;
   font-weight: 600;

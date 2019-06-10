@@ -6,6 +6,7 @@ import VCharts from 'v-charts'
 import './plugins/element.js'
 import '@/assets/styles/reset.css'
 import '@/assets/styles/border.css'
+import { getHttp, postHttp } from './plugins/http'
 
 import {
   Row, Col,
@@ -42,11 +43,7 @@ Vue.use(Radio)
 Vue.use(RadioGroup)
 
 Vue.component('apexchart', VueApexCharts)
-// 导入请求
-import {
-  getHttp,
-  postHttp,
-} from './plugins/http'
+
 Vue.prototype.$get = getHttp
 Vue.prototype.$post = postHttp
 

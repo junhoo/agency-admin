@@ -1,14 +1,19 @@
 <template>
   <div class="container">
     <el-form ref="form" :model="form" label-width="80px" class="my-form">
-      <el-input
-        placeholder="请输入内容"
+      <!-- <el-input
+        placeholder="请输入项目方名称"
         prefix-icon="el-icon-search"
         v-model="input2"
         size="small"
         class="my-btn"
-      ></el-input>
-      <div class="start">起始日期</div>
+      ></el-input> -->
+      <div class="iteminput">
+        <input type="text" v-model="input2" placeholder="输入联系人/机构名称">
+        <i slot="suffix" class="el-input__icon el-icon-search" @click="search"></i>
+      </div>
+      <div class="start" @click="getInfo">起始日期</div>
+
       <el-date-picker
         class="my-btn"
         type="date"
@@ -22,10 +27,11 @@
         class="my-btn"
         type="date"
         placeholder="选择日期"
-        v-model="form.date1"
+        v-model="form.date2"
         style="width: 100%;"
         size="small"
       ></el-date-picker>
+
       <el-dropdown>
         <el-button type="primary"  size="small">
           全部商户
@@ -45,13 +51,12 @@
       :header-cell-style="{background:'#12223B',color:'#606266'}"
       align="center"
     >
-      <el-table-column prop="date" label="订单号" width="100%" align="center"></el-table-column>
-      <el-table-column prop="name" label="总积分" width="100%" align="center"></el-table-column>
-      <el-table-column prop="address" label="兑换积分数" align="center"></el-table-column>
-      <el-table-column prop="address" label="获得USDT数" align="center"></el-table-column>
-      <el-table-column prop="address" label="兑换时间" align="center"></el-table-column>
-      <el-table-column prop="address" label="剩余积分" align="center"></el-table-column>
-      <el-table-column prop="address" label="兑换状态" align="center"></el-table-column>
+      <el-table-column prop="organization_name" label="项目方名称" align="center"></el-table-column>
+      <el-table-column prop="user_id" label="项目方ID" align="center"></el-table-column>
+      <el-table-column prop="add_time" label="加入时间" align="center"></el-table-column>
+      <el-table-column prop="recharge_amount" label="充值金额" align="center"></el-table-column>
+      <el-table-column prop="withdraw_amount" label="体现金额" align="center"></el-table-column>
+      <el-table-column prop="bonus_amount" label="代理提成" align="center"></el-table-column>
       <el-table-column prop="address" label="操作" align="center">
         <template scope>
           <router-link :to="{path:'/a_deal_detail'}">
@@ -65,8 +70,8 @@
 
 <script>
 export default {
-  nama: "deal",
-  data() {
+  nama: "dealData",
+  data () {
     return {
       dropdownList: ["黄金糕", "狮子头", "螺蛳粉", "双皮奶", "蚵仔煎"],
       input2: "",
@@ -74,37 +79,73 @@ export default {
         date1: "",
         date2: ""
       },
-      tableData: [
-        {
-          date: "2016-05-02",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1518 弄"
-        },
-        {
-          date: "2016-05-04",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1517 弄"
-        },
-        {
-          date: "2016-05-01",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1519 弄"
-        },
-        {
-          date: "2016-05-03",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1516 弄"
-        }
-      ]
-    };
+      name: '',
+      page: 1,
+      tableData: []
+    }
   },
-  methods: {},
-  mounted() {}
-};
+  mounted () {
+    this.getInfo()
+  },
+  methods: {
+    search () {
+      if (this.input2 !== '') {
+        this.getInfo()
+      }
+    },
+    getInfo () {
+      var param = {
+        name: this.input2,
+        page: this.page,
+        limit: 10,
+        token: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MjA0OTAwMDksInRpbWUiOiIxNTYwMTM1MjA1NDIwNyJ9.3Zs9-wpcWPBsJO5WGT8-gmMzhueVte_cLs36SZd3ZF4'
+      }
+      const url = 'http://agency.service.168mi.cn' + '/api/aorder/tradingFlow'
+      this.$post(url, param)
+        .then(res => {
+          this.tableData = res.data.data
+        })
+    }
+  }
+}
 </script>
 
 <style lang="scss" scoped>
 .container {
+  /* 默认列表背景样式 */
+  /deep/ .el-table__empty-block {
+    background: #061220;
+  }
+  /* 日期选择框 */
+  .el-input__inner {
+    background-color: #061220 !important;
+  }
+  .iteminput {
+    position: relative;
+    .el-input__icon {
+      position: absolute;
+      right: 0;
+      margin-top: -2px;
+      color: #555F79;
+      font-weight: 600;
+      font-size: 13px !important;
+    }
+  }
+  input {
+    box-sizing: border-box;
+    color: #555F79;
+    font-size: 12px;
+    height: 32px;
+    line-height: 32px;
+    padding-left: 12px;
+    padding-right: 20px;
+    background-color: transparent;
+    border-radius: 3px;
+    border: 1px solid #555F79;
+    &::placeholder{
+      color: #555F79
+    }
+  }
   width: 100%;
   height: 100%;
   padding: 16px 0 0 0;
@@ -116,6 +157,7 @@ export default {
     .el-input {
       width: 177px;
     }
+    /* 时间选择器 */
     .el-date-editor {
       width: 113px !important;
     }

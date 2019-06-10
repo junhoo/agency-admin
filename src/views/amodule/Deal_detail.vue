@@ -7,7 +7,7 @@
     <el-form ref="form" :model="form" label-width="80px" class="my-form">
       <div class="left">累计收益积分：568555.02</div>
       <div class="right">
-        <div class="start">起始日期</div>
+        <div class="start" @click="getInfo">起始日期</div>
         <el-date-picker
           class="my-btn"
           type="date"
@@ -104,10 +104,23 @@ export default {
           address: "上海市普陀区金沙江路 1516 弄"
         }
       ]
-    };
+    }
   },
-  methods: {},
-  mounted() {}
+  mounted () {
+  },
+  methods: {
+    getInfo () {
+      var data = {
+        token: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MjA0OTAwMDksInRpbWUiOiIxNTYwMTM1MjA1NDIwNyJ9.3Zs9-wpcWPBsJO5WGT8-gmMzhueVte_cLs36SZd3ZF4'
+      }
+      const url = 'http://agency.service.168mi.cn' + '/api/aorder/tradingFlow'
+      this.$post(url, data)
+        .then(res => {
+          console.log(res)
+          this.tableData = res.data.data
+        })
+    }
+  }
 };
 </script>
 

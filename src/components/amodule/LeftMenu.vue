@@ -58,7 +58,7 @@ export default {
         {
           icon: "icon-item3",
           name: "交易流水记录",
-          path: "a_deal",
+          path: "a_deal_data",
           index: 2,
           select: false
         },
