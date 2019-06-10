@@ -13,7 +13,7 @@ import {
   Submenu, Container,
   MenuItem, Aside,
   Tabs, TabPane, Select, Option,
-  Table, TableColumn, Radio, RadioGroup, Main,
+  Table, TableColumn, Radio, RadioGroup, Main, Pagination,
   Dialog, Input, Dropdown, DropdownMenu, DropdownItem, Form, FormItem, DatePicker
 } from 'element-ui'
 
@@ -43,13 +43,18 @@ Vue.use(RadioGroup)
 Vue.use(Main)
 Vue.use(Container)
 Vue.use(Aside)
+Vue.use(Pagination)
 
 Vue.component('apexchart', VueApexCharts)
-Vue.config.productionTip = false;
-
-import {getHttp, postHttp} from './plugins/http.js'
+// 导入请求
+import {
+  getHttp,
+  postHttp,
+} from './plugins/http'
 Vue.prototype.$get = getHttp
 Vue.prototype.$post = postHttp
+
+Vue.config.productionTip = false;
 
 new Vue({
   router,

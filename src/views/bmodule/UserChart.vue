@@ -63,128 +63,6 @@
       <!-- 波浪图 -->
       <top-chart :list="topForm.toplist"></top-chart>
     </section>
-
-    <!-- 中部图-->
-    <section class="chart-box chart-mid">
-      <!-- 中左 -->
-      <div class="content left">
-        <div class="title-box">
-          <div class="icon"></div>
-          <div class="text">项目方充值提现额排行</div>
-
-          <div class="date-box">
-            <div class="hint">日期</div>
-            <div class="time-icon"></div>
-            <el-form ref="midForm" label-width="20px" class="my-form" style="margin-right: 10px;">
-              <el-date-picker
-                type="date"
-                placeholder="2019-06"
-                v-model="midForm.date1"
-                size="small"
-                :editable="false"
-              ></el-date-picker>
-            </el-form>
-          </div>
-        </div>
-
-        <!-- 柱状图 -->
-        <common-mid :objs="midForm.list"></common-mid>
-      </div>
-
-      <!-- 中右 -->
-      <div class="content">
-        <div class="title-box">
-          <div class="icon"></div>
-          <div class="text">充值提现趋势</div>
-          <div class="time-icon"></div>
-
-          <div class="date-box">
-            <div class="hint">日期</div>
-            <div class="time-icon"></div>
-            <el-form ref="midForm" label-width="20px" class="my-form" style="margin-right: 10px;">
-              <el-date-picker
-                type="date"
-                placeholder="2019-06"
-                v-model="midForm.date2"
-                size="small"
-                :editable="false"
-              ></el-date-picker>
-            </el-form>
-          </div>
-        </div>
-
-        <common-right :objs="midForm.list"></common-right>
-      </div>
-    </section>
-
-    <!-- 底部表格 -->
-    <section class="chart-box chart-bottom">
-      <!-- 下左 -->
-      <div class="content left">
-        <div class="title-box">
-          <div class="icon"></div>
-          <div class="text">收益贡献明细</div>
-
-          <div class="date-box">
-            <div class="hint">日期</div>
-            <div class="time-icon"></div>
-
-            <el-form
-              ref="bottForm"
-              :model="bottForm"
-              label-width="20px"
-              class="my-form"
-              style="margin-right: 10px;"
-            >
-              <el-date-picker
-                type="date"
-                placeholder="2019-06"
-                v-model="bottForm.date1"
-                size="small"
-                :editable="false"
-              ></el-date-picker>
-            </el-form>
-          </div>
-        </div>
-
-        <el-table
-          :data="bottForm.tableData1"
-          border
-          height="250"
-          style="width: 100%"
-          :header-cell-style="{background:'#061220',color:'#fff'}"
-          align="center"
-        >
-          <el-table-column prop="date" label="排行" width="100%" align="center"></el-table-column>
-          <el-table-column prop="name" label="项目方名称" width="100%" align="center"></el-table-column>
-          <el-table-column prop="address" label="充值总金额" align="center"></el-table-column>
-          <el-table-column prop="address" label="体现总金额" align="center"></el-table-column>
-          <el-table-column prop="address" label="贡献利润" align="center"></el-table-column>
-        </el-table>
-      </div>
-
-      <!-- 下右 -->
-      <div class="content right">
-        <div class="title-box">
-          <div class="icon"></div>
-          <div class="text">充值提现笔数</div>
-
-          <div class="date-box">
-            <div class="hint">日期</div>
-            <div class="time-icon"></div>
-            <el-form ref="bottForm" label-width="20px" class="my-form" style="margin-right: 10px;">
-              <el-date-picker
-                type="date"
-                placeholder="2019-06"
-                v-model="bottForm.data2"
-                size="small"
-                :editable="false"
-              ></el-date-picker>
-            </el-form>
-          </div>
-        </div>
-      </div>
-    </section>
   </div>
 </template>
 
@@ -193,7 +71,7 @@ import TopChart from "components/Apexchart";
 import CommonMid from "components/midchart";
 import CommonRight from "components/RightChart";
 export default {
-  name: "merchants",
+  name: "BUserChart",
   components: {
     TopChart,
     CommonMid,

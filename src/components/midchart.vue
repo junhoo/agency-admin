@@ -1,36 +1,35 @@
 <template>
-   <div>
-     <!-- <apexchart height="350" type="area" :options="chartOptions" :series="series" /> -->
-     <apexchart type=bar height=350 :options="chartOptions" :series="series" />
-   </div>
+  <div>
+    <apexchart type="bar" height="350" :options="chartOptions" :series="series"/>
+  </div>
 </template>
 
 <script>
 export default {
-  data: function() {
-    return {
-      chartOptions: {
-        chart: {
-          id: 'vuechart-example2'
-        },
-        xaxis: {
-          categories: [1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998]
-        }
+  props: {
+    objs: Object
+  },
+  watch: {
+    objs: {
+      handler(newName) {
+        this.series[0].data = newName.midList1
+        this.series[1].data = newName.midList2
+        this.chartOptions.plotOptions.bar.columnWidth = newName.columnWidth
       },
-      series: [{
-        name: 'series-1',
-        data: [30, 40, 35, 50, 49, 60, 70, 91]
-      }],
-      series: [{
-        name: 'Net Profit',
-        data: [44, 55, 57, 56, 61, 58, 63, 60, 66]
-      }, {
-        name: 'Revenue',
-        data: [76, 85, 101, 98, 87, 105, 91, 114, 94]
-      }, {
-        name: 'Free Cash Flow',
-        data: [35, 41, 36, 26, 45, 48, 52, 53, 41]
-      }],
+        deep: true
+      }
+  },
+  data () {
+    return {
+      series: [
+        {
+          name: '买入金额',
+          data: []
+        }, {
+          name: '卖出金额',
+          data: []
+        }
+      ],
       chartOptions: {
         plotOptions: {
           bar: {
@@ -54,7 +53,14 @@ export default {
         yaxis: {
           title: {
             text: '$ (thousands)'
-          }
+          },
+          // axisLine: {
+          //   lineStyle: {
+          //       type: 'solid',
+          //       color: '#fff',
+          //       width: '8'
+          //   }
+          // }
         },
         fill: {
           opacity: 1

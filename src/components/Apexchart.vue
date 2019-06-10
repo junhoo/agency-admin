@@ -6,14 +6,22 @@
 
 <script>
 export default {
-  data: function() {
+  props: {
+    list: Array
+  },
+  watch: {
+    list (val) {
+      this.series[0].data = val
+    }
+  },
+  data () {
     return {
       chartOptions: {
         chart: {
           id: 'vuechart-example'
         },
         xaxis: {
-          categories: [1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998]
+          categories: [2500, 2500, 2500, 2500, 2500, 2500, 2500, 2500]
         }
       },
       series: [{

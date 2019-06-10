@@ -72,8 +72,9 @@ export function postHttp (url, data = {}) {
     axios.post(url, data)
       .then(res => {
         var code = parseInt(res.data.code)
+        var _res = res.data
         if (code === 0) {
-          resolve(res)
+          resolve(_res)
         } else if (code === -1) {
           Message.error(res.data.msg)
         } else if (code === 1 || code === 2) {
