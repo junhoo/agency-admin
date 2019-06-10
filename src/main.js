@@ -11,10 +11,10 @@ import { getHttp, postHttp } from './plugins/http'
 import {
   Row, Col,
   Menu,
-  Submenu,
-  MenuItem,
+  Submenu, Container,
+  MenuItem, Aside,
   Tabs, TabPane, Select, Option,
-  Table, TableColumn, Radio, RadioGroup,
+  Table, TableColumn, Radio, RadioGroup, Main, Pagination,
   Dialog, Input, Dropdown, DropdownMenu, DropdownItem, Form, FormItem, DatePicker
 } from 'element-ui'
 
@@ -41,6 +41,10 @@ Vue.use(FormItem)
 Vue.use(DatePicker)
 Vue.use(Radio)
 Vue.use(RadioGroup)
+Vue.use(Main)
+Vue.use(Container)
+Vue.use(Aside)
+Vue.use(Pagination)
 
 Vue.component('apexchart', VueApexCharts)
 

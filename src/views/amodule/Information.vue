@@ -22,28 +22,28 @@
         :label-position="labelPosition"
       >
         <el-form-item label="代理ID">
-          <el-input v-model="form.name" size="small"></el-input>
+          <el-input v-model="form.agency_id" size="small"></el-input>
         </el-form-item>
         <el-form-item label="联系人">
-          <el-input v-model="form.name" size="small"></el-input>
+          <el-input v-model="form.contacts" size="small"></el-input>
         </el-form-item>
         <el-form-item label="微信号">
-          <el-input v-model="form.name" size="small"></el-input>
+          <el-input v-model="form.WeChat" size="small"></el-input>
         </el-form-item>
         <el-form-item label="邮箱">
-          <el-input v-model="form.name" size="small"></el-input>
+          <el-input v-model="form.email" size="small"></el-input>
         </el-form-item>
         <el-form-item label="保证金">
-          <el-input v-model="form.name" size="small"></el-input>
+          <el-input v-model="form.cash" size="small"></el-input>
         </el-form-item>
         <el-form-item label="代理名称">
-          <el-input v-model="form.name" size="small"></el-input>
+          <el-input v-model="form.agency_name" size="small"></el-input>
         </el-form-item>
         <el-form-item label="奖励比例">
-          <el-input v-model="form.name" size="small"></el-input>
+          <el-input v-model="form.award" size="small"></el-input>
         </el-form-item>
         <el-form-item label="机构简介">
-          <el-input type="textarea" v-model="form.desc" size="small"></el-input>
+          <el-input type="textarea" v-model="form.brief" size="small"></el-input>
         </el-form-item>
       </el-form>
     </div>
@@ -127,17 +127,42 @@
 export default {
   data() {
     return {
+      token:'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MjA0OTAwMDksInRpbWUiOiIxNTYwMTM1MjA1NDIwNyJ9.3Zs9-wpcWPBsJO5WGT8-gmMzhueVte_cLs36SZd3ZF4',
       input3: "",
       dialogVisible1: false,
       dialogVisible2: false,
       dialogVisible3:false,
       labelPosition: "left",
       form: {
-        name: "",
-        desc: ""
+        agency_id:'',
+        contacts:'',
+        WeChat:'',
+        email:'',
+        cash:'',
+        agency_name:'',
+        award:'',
+        brief:''
       },
       input: ""
     };
+  },
+  created(){
+    this.getInfro();
+  },
+  methods:{
+    // 信息管理列表
+    getInfro(){
+     this.$post('/api/auser/agencyInfo',{token:this.token}).then(res=>{
+       this.form.agency_id = res.data.id
+       this.form.contacts = res.data.contacts
+       this.form.WeChat = res.data.wechat_no
+       this.form.email = res.data.email
+       this.form.cash = res.data.deposit
+       this.form.agency_name = res.data.agency_name
+       this.form.award = res.data.bonus_rate
+       this.form.brief = res.data.agency_info
+     })
+    }
   }
 };
 </script>

@@ -436,4 +436,5 @@ export default {
     padding: 15px 10px 15px 30px !important;
   }
 }
+
 </style>

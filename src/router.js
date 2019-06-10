@@ -22,10 +22,15 @@ import manage from "./views/bmodule/Manage.vue";
 import Binformation from "./views/bmodule/Information.vue";
 import BInforDtetail from "./views/bmodule/InforDtetail.vue";
 import generalize from "./views/bmodule/Generalize.vue";
+// PC 官 网
+import Mobile from './views/pcmodule/mobile.vue'
+import Home from './views/pcmodule/Home.vue'
+import Register from './views/pcmodule/tabitem/register.vue'
+import Bond from './views/pcmodule/tabitem/bond.vue'
 
 Vue.use(Router)
 const routes =  [
-  { path: '/', redirect: '/aindex' },
+  { path: '/', redirect: '/home' },
   {
     path: '/aindex',
     name: 'aindex',
@@ -56,6 +61,26 @@ const routes =  [
       { path: '/b_inforDtetail', name: 'InforDtetail', component: BInforDtetail},
       { path: '/b_generalize', name: 'generalize', component: generalize},
     ]
+  },
+  {
+    path: '/home',
+    name: 'home',
+    component: Home
+  },
+  {
+    path: '/mobile',
+    name: 'mobile',
+    component: Mobile
+  },
+  {
+    path: '/register',
+    name: 'Register',
+    component: Register
+  },
+  {
+    path: '/bond',
+    name: 'Bond',
+    component: Bond
   }
 ]
 
