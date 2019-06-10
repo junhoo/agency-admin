@@ -99,6 +99,7 @@ export default {
 }
 </style>
 <style lang='scss'>
+.container{
 .el-dialog{
     background-color: #12223B;
     margin-top: 30vh;
@@ -195,5 +196,6 @@ export default {
       color: #2F71BF
     }
   }
+}
 }
 </style>

@@ -10,10 +10,10 @@ import '@/assets/styles/border.css'
 import {
   Row, Col,
   Menu,
-  Submenu,
-  MenuItem,
+  Submenu, Container,
+  MenuItem, Aside,
   Tabs, TabPane, Select, Option,
-  Table, TableColumn, Radio, RadioGroup,
+  Table, TableColumn, Radio, RadioGroup, Main,
   Dialog, Input, Dropdown, DropdownMenu, DropdownItem, Form, FormItem, DatePicker
 } from 'element-ui'
 
@@ -40,9 +40,16 @@ Vue.use(FormItem)
 Vue.use(DatePicker)
 Vue.use(Radio)
 Vue.use(RadioGroup)
+Vue.use(Main)
+Vue.use(Container)
+Vue.use(Aside)
 
 Vue.component('apexchart', VueApexCharts)
 Vue.config.productionTip = false;
+
+import {getHttp, postHttp} from './plugins/http.js'
+Vue.prototype.$get = getHttp
+Vue.prototype.$post = postHttp
 
 new Vue({
   router,
