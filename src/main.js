@@ -42,6 +42,14 @@ Vue.use(Radio)
 Vue.use(RadioGroup)
 
 Vue.component('apexchart', VueApexCharts)
+// 导入请求
+import {
+  getHttp,
+  postHttp,
+} from './plugins/http'
+Vue.prototype.$get = getHttp
+Vue.prototype.$post = postHttp
+
 Vue.config.productionTip = false;
 
 new Vue({
