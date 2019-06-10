@@ -68,15 +68,11 @@
 </template>
 
 <script>
-import TopChart from "components/Apexchart";
 import CommonMid from "components/midchart";
-import CommonRight from "components/RightChart";
 export default {
   name: "BTradingChart",
   components: {
-    TopChart,
-    CommonMid,
-    CommonRight
+    CommonMid
   },
   mounted() {
     // 顶部数据

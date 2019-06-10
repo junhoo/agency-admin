@@ -54,17 +54,44 @@ export default {
           title: {
             text: '$ (thousands)'
           },
-          // axisLine: {
-          //   lineStyle: {
-          //       type: 'solid',
-          //       color: '#fff',
-          //       width: '8'
-          //   }
-          // }
+          labels: {
+            show: true,
+            align: 'right',
+            minWidth: 0,
+            maxWidth: 160,
+            style: {
+                color: '#f5f5f5',
+                fontSize: '12px',
+                fontFamily: 'Helvetica, Arial, sans-serif',
+                cssClass: 'apexcharts-yaxis-label',
+            }
+          },
+          axisBorder: {
+            show: true,
+            color: '#f5f5f5',
+            offsetX: 0,
+            offsetY: 0
+          },
+          axisTicks: {
+            show: true,
+            borderType: 'solid',
+            color: '#f5f5f5',
+            width: 6,
+            offsetX: 0,
+            offsetY: 0
+          },
+          crosshairs: {
+            show: true,
+            position: 'back',
+            stroke: {
+                color: '#f5f5f5',
+                width: 1,
+                dashArray: 0,
+            },
+          }
         },
         fill: {
           opacity: 1
-
         },
         tooltip: {
           y: {

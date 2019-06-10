@@ -73,7 +73,7 @@ export default {
   name: "POSManagement",
   data() {
     return {
-      dialogVisible:false,
+      dialogVisible: false,
       tableData: [
         {
           date: "2016-05-02",
@@ -103,6 +103,10 @@ export default {
     };
   },
   methods: {
+    getorder () {
+      const url = 'http://agency.service.168mi.cn' + '/api/auser/userList'
+      
+    },
     handleClick (row) {
       console.log(row)
       this.dialogVisible = true
@@ -121,6 +125,14 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+/deep/ .el-input__inner {
+  background-color: #0c2040;
+  color: #708193;
+  font-size: 12px;
+  border: none;
+  padding: 0 30px !important;
+}
+
 .container {
   height: 100%;
   width: 100%;
