@@ -130,6 +130,7 @@ export default {
 .mobile{
   height: 100%;
   width: 100%;
+  text-align: center;
   .head{
       text-align: left;
       padding: 18px 0 0 25px;

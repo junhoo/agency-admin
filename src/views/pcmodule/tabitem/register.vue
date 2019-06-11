@@ -159,6 +159,7 @@ html, body, #app{
   background-color: #fff !important
 }
 .register{
+  text-align: center;
   min-width: 1008px;
   background-color: #fff;
   height: 100%;
@@ -172,10 +173,10 @@ html, body, #app{
   }
   .formBox{
       position: absolute;
-      left: 50%;
+      left: 48%;
       transform: translateX(-50%);
       width: 25%;
-    .el-form{
+    /deep/ .el-form{
       .el-form-item{
         margin-bottom: 18px !important;
         .el-select{

@@ -239,7 +239,8 @@ export default {
         type: this.form.value,
         rand_num: this.number
       }
-
+      console.log(this.form.value, 'az')
+      return false
       this.$post('/api/agency/login', data).then(res => {
         if (res.data.code === 0) {
           this.ondialogVal = false
@@ -250,6 +251,16 @@ export default {
           localStorage.setItem('token', data.token)
           localStorage.setItem('userMsg', JSON.stringify(data))
           this.$emit('userMsg', JSON.stringify(data))
+          if (this.form.value == 1) {
+            this.$router.push({
+              path: '/aindex'
+            })
+          } else {
+            this.$router.push({
+              path: '/bindex'
+            })
+          }
+
         }
       })
     },
@@ -303,8 +314,30 @@ export default {
 
 <style lang="scss" scoped>
 .Dialog {
-  .el-dialog {
+  /deep/ .el-dialog {
     border-radius: 8px !important;
+    border-radius: 8px !important;
+    background-color: #fff;
+    .el-dialog__header{
+      .el-dialog__title{
+        font-size: 18px !important;
+        color: #010000 !important;
+        font-weight: 600 !important
+      }
+    }
+    .el-dialog__body{
+      padding: 25px 25px 40px !important;
+      .el-input__inner {
+        padding: 21px 10px 21px 30px !important;
+        background-color: #fff !important;
+        color: #606060 !important;
+        border: 1px solid #AAAAAA !important;
+        padding-left: 26px !important;
+        &::placeholder{
+          color: #606060 !important;
+        }
+      }
+    }
   }
   .el-select {
     width: 100%;
@@ -360,32 +393,6 @@ export default {
     font-size: 14px;
     color: #1087fd;
     z-index: 33;
-  }
-}
-</style>
-<style lang='scss'>
-.el-dialog {
-  border-radius: 8px !important;
-  background-color: #fff;
-  .el-dialog__header{
-    .el-dialog__title{
-      font-size: 18px !important;
-      color: #010000 !important;
-      font-weight: 600 !important
-    }
-  }
-  .el-dialog__body{
-    padding: 25px 25px 40px !important;
-    .el-input__inner {
-      padding: 21px 10px 21px 30px !important;
-      background-color: #fff !important;
-      color: #606060 !important;
-      border: 1px solid #AAAAAA !important;
-      padding-left: 26px !important;
-      &::placeholder{
-        color: #606060 !important;
-      }
-    }
   }
 }
 </style>
