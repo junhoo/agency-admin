@@ -57,17 +57,17 @@
       center
     >
       <div class="mobile">
-        <span>验证手机：153****4544</span>
+        <span>验证手机：{{setPassword.mobile}}</span>
       </div>
       <div class="text">
-        <el-input size="small" placeholder="输入验证码" v-model="input"></el-input>
-        <el-button type="primary">获取验证码</el-button>
+        <el-input size="small" placeholder="输入验证码" v-model="setPassword.code"></el-input>
+        <el-button type="primary" @click="getCcode(setPassword.mobile,1)">获取验证码</el-button>
       </div>
       <div class="tips" style="marginTop:16px;">注：为确保资金安全，请先验证手机，并设置您的资金密码。</div>
       <div class="password" style="marginTop:20px;">设置资金密码</div>
-      <el-input size="small" placeholder="请输入6位数密码" v-model="input3" class="input"></el-input>
+      <el-input size="small" placeholder="请输入6位数密码" v-model="setPassword.password" class="input"></el-input>
       <span slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="dialogVisible1 = false" style="marginTop:16px;">确 定</el-button>
+        <el-button type="primary" @click="setpassword" style="marginTop:16px;">确 定</el-button>
       </span>
     </el-dialog>
 
@@ -80,23 +80,29 @@
       center
     >
       <div class="mobile">
-        <span>验证手机：153****4544</span>
+        <span>验证手机：{{mobileChange.old_mobile}}</span>
       </div>
       <div class="text">
-        <el-input size="small" placeholder="输入验证码" v-model="input"></el-input>
-        <el-button type="primary">获取验证码</el-button>
+        <el-input size="small" placeholder="输入验证码" v-model="mobileChange.old_code"></el-input>
+        <el-button type="primary" @click="getCode(mobileChange.old_mobile,1)">获取验证码</el-button>
       </div>
       <div class="tips" style="marginTop:16px;">注：为确保资金安全，请先验证手机。</div>
       <div class="password" style="marginTop:16px;">新的手机号</div>
-      <el-input size="small" placeholder="请输入新的手机号码" v-model="input3" class="input"></el-input>
+      <el-input
+        size="small"
+        placeholder="请输入新的手机号码"
+        v-model="mobileChange.new_mobile"
+        class="input"
+      ></el-input>
       <div class="text1" style="marginTop:10px">
-        <el-input size="small" placeholder="输入新的手机验证码" v-model="input"></el-input>
-        <el-button type="primary" class="btn">获取验证码</el-button>
+        <el-input size="small" placeholder="输入新的手机验证码" v-model="mobileChange.new_code"></el-input>
+        <el-button type="primary" class="btn" @click="getCode(mobileChange.new_mobile,1)">获取验证码</el-button>
       </div>
       <span slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="dialogVisible2 = false" style="marginTop:16px;">确 定</el-button>
+        <el-button type="primary" @click="submitChange" style="marginTop:16px;">确 定</el-button>
       </span>
     </el-dialog>
+
     <!-- 修改登录密码弹框 -->
     <el-dialog
       title="修改登录密码"
@@ -106,17 +112,22 @@
       center
     >
       <div class="mobile">
-        <span>验证手机：153****4544</span>
+        <span>验证手机：{{changeLogin.mobile}}</span>
       </div>
       <div class="text">
-        <el-input size="small" placeholder="输入验证码" v-model="input"></el-input>
-        <el-button type="primary">获取验证码</el-button>
+        <el-input size="small" placeholder="输入验证码" v-model="changeLogin.code"></el-input>
+        <el-button type="primary" @click="getCode(changeLogin.mobile,1)">获取验证码</el-button>
       </div>
       <div class="tips" style="marginTop:16px;">注：为确保资金安全，请先验证手机。</div>
       <div class="password" style="marginTop:16px;">设置登录密码</div>
-      <el-input size="small" placeholder="请输入6-20位登录密码" v-model="input3" class="input"></el-input>
+      <el-input
+        size="small"
+        placeholder="请输入6-20位登录密码"
+        v-model="changeLogin.password"
+        class="input"
+      ></el-input>
       <span slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="dialogVisible3 = false" style="marginTop:16px;">确 定</el-button>
+        <el-button type="primary" @click="changePassword" style="marginTop:16px;">确 定</el-button>
       </span>
     </el-dialog>
   </div>
@@ -127,41 +138,122 @@
 export default {
   data() {
     return {
-      token:'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MjA0OTAwMDksInRpbWUiOiIxNTYwMTM1MjA1NDIwNyJ9.3Zs9-wpcWPBsJO5WGT8-gmMzhueVte_cLs36SZd3ZF4',
+      input: "",
       input3: "",
+      token:
+        "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MjA0OTAwMDksInRpbWUiOiIxNTYwMjIyMTg0Mjg2MSJ9.U5plEtm0k9I2WCzRp7qT7zd8_7gJuENc2ae3dcm5WtM",
       dialogVisible1: false,
       dialogVisible2: false,
-      dialogVisible3:false,
+      dialogVisible3: false,
       labelPosition: "left",
       form: {
-        agency_id:'',
-        contacts:'',
-        WeChat:'',
-        email:'',
-        cash:'',
-        agency_name:'',
-        award:'',
-        brief:''
+        agency_id: "",
+        contacts: "",
+        WeChat: "",
+        email: "",
+        cash: "",
+        agency_name: "",
+        award: "",
+        brief: ""
       },
-      input: ""
+      // 手机换绑
+      mobileChange: {
+        old_mobile: "153****4544",
+        old_code: "",
+        new_mobile: "",
+        new_code: ""
+      },
+      // 修改登录密码
+      changeLogin: {
+        code: "",
+        password: "",
+        mobile: "153****4544"
+      },
+      // 设置资金密码
+      setPassword:{
+        code: "",
+        password: "",
+        mobile: "153****4544"
+      }
     };
   },
-  created(){
+  created() {
     this.getInfro();
   },
-  methods:{
+  methods: {
     // 信息管理列表
-    getInfro(){
-     this.$post('/api/auser/agencyInfo',{token:this.token}).then(res=>{
-       this.form.agency_id = res.data.id
-       this.form.contacts = res.data.contacts
-       this.form.WeChat = res.data.wechat_no
-       this.form.email = res.data.email
-       this.form.cash = res.data.deposit
-       this.form.agency_name = res.data.agency_name
-       this.form.award = res.data.bonus_rate
-       this.form.brief = res.data.agency_info
-     })
+    getInfro() {
+      this.$post("/api/auser/agencyInfo", { token: this.token }).then(res => {
+        this.form.agency_id = res.data.id;
+        this.form.contacts = res.data.contacts;
+        this.form.WeChat = res.data.wechat_no;
+        this.form.email = res.data.email;
+        this.form.cash = res.data.deposit;
+        this.form.agency_name = res.data.agency_name;
+        this.form.award = res.data.bonus_rate;
+        this.form.brief = res.data.agency_info;
+      });
+    },
+    // 获取验证码
+    getCode(mob, tp) {
+      this.$post("/api/agency/sendsms", { mobile: mob, type: tp }).then(
+        res => {}
+      );
+    },
+    // 手机换绑提交事件
+    submitChange() {
+      this.dialogVisible2 = false;
+      const data = {
+        token: this.token,
+        old_mobile: this.mobileChange.old_mobile,
+        old_code: this.mobileChange.old_code,
+        new_mobile: this.mobileChange.new_mobile,
+        new_code: this.mobileChange.new_code
+      };
+      this.$post("/api/auser/modifyMobile", data).then(res => {
+        if (res.code === 0) {
+          this.$message({
+            message: res.msg,
+            type: "success"
+          });
+        }
+      });
+    },
+    // 修改登陆密码
+    changePassword() {
+      this.dialogVisible3 = false;
+      const data = {
+        token: this.token,
+        mobile:this.changeLogin.mobile,
+        code:this.changeLogin.code,
+        password:this.changeLogin.password
+      };
+      this.$post('/api/auser/modifyLoginPassword',data).then(res=>{
+        if (res.code === 0) {
+          this.$message({
+            message: res.msg,
+            type: "success"
+          });
+        }
+      })
+    },
+    // 设置资金密码
+    setpassword(){
+      this.dialogVisible1 = false;
+      const data = {
+        token:this.token,
+        mobile:this.setPassword.mobile,
+        code:this.setPassword.code,
+        pay_password:this.setPassword.password
+      }
+      this.$post('/api/auser/modifyPayPassword',data).then(res=>{
+        if (res.code === 0) {
+          this.$message({
+            message: res.msg,
+            type: "success"
+          });
+        }
+      })
     }
   }
 };
@@ -285,7 +377,7 @@ export default {
     .tips {
       color: #047e65;
       font-size: 12px;
-      // 
+      //
       line-height: 14px;
       height: 14px;
     }

@@ -72,7 +72,7 @@ export default {
     return {
       dialogVisible: false,
       token:
-        "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MjA0OTAwMDksInRpbWUiOiIxNTYwMTM1MjA1NDIwNyJ9.3Zs9-wpcWPBsJO5WGT8-gmMzhueVte_cLs36SZd3ZF4",
+        "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MjA0OTAwMDksInRpbWUiOiIxNTYwMjIyMTg0Mjg2MSJ9.U5plEtm0k9I2WCzRp7qT7zd8_7gJuENc2ae3dcm5WtM",
       addForm: {
         email: "",
         Contacts: "",
@@ -95,7 +95,6 @@ export default {
   },
   methods: {
     handleClick(row) {
-      console.log(row);
       this.dialogVisible = true;
     },
     // 添加表单提交
@@ -108,16 +107,21 @@ export default {
         code: formName.yzcode,
         contacts: formName.Contacts,
         wechat_no: formName.wechat,
-        recharge_rate_type:formName.radio2,
+        recharge_rate_type: formName.radio2,
         withdraw_rate_type: formName.radio,
         organization_name: formName.name,
         organization_info: formName.ref,
         website: formName.link
       };
-      this.$post('/api/auser/add',data).then(res=>{
+      this.$post("/api/auser/add", data).then(res => {
         console.log(res);
-
-      })
+        if (res.code === 0) {
+          this.$message({
+            message: res.msg,
+            type: "success"
+          });
+        }
+      });
     },
 
     // 获取验证码
@@ -127,7 +131,7 @@ export default {
         type: 1
       };
       this.$post("/api/agency/sendsms", data).then(res => {
-        console.log(res);
+        // console.log(res);
       });
     },
     submit(index) {}
@@ -141,8 +145,8 @@ export default {
   width: 40%;
   position: relative;
   padding-top: 30px;
-  .tips{
-    color: #2A65AC;
+  .tips {
+    color: #2a65ac;
     margin-left: 41px;
     font-size: 12px;
   }

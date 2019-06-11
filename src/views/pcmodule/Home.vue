@@ -54,7 +54,7 @@ export default {
     if (sessionStorage.getItem('activeName')) {
       this.activeName = sessionStorage.getItem('activeName')
     } else {
-      this.activeName = 'third'
+      this.activeName = 'first'
     }
     if (JSON.parse(localStorage.getItem('userMsg'))) {
       this.userMsg = JSON.parse(localStorage.getItem('userMsg'))

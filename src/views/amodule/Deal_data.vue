@@ -21,7 +21,7 @@
         v-model="form.date1"
         size="small"
       ></el-date-picker>
-      <div class="symbol">1</div>
+      <div class="symbol"></div>
       <el-date-picker
         class="my-btn"
         type="date"
@@ -71,11 +71,11 @@ export default {
   nama: "dealData",
   data () {
     return {
-      dropdownList: ["黄金糕", "狮子头", "螺蛳粉", "双皮奶", "蚵仔煎"],
-      input2: "",
+      dropdownList: [],
+      input2: '',
       form: {
-        date1: "",
-        date2: ""
+        date1: '',
+        date2: ''
       },
       name: '',
       page: 1,
@@ -93,15 +93,18 @@ export default {
     },
     getInfo () {
       var param = {
+        start: this.form.date1,
+        end: this.form.date2,
         name: this.input2,
         page: this.page,
         limit: 10,
-        token: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MjA0OTAwMDksInRpbWUiOiIxNTYwMTM1MjA1NDIwNyJ9.3Zs9-wpcWPBsJO5WGT8-gmMzhueVte_cLs36SZd3ZF4'
+        token: localStorage.getItem('token')
       }
       const url = 'http://agency.service.168mi.cn' + '/api/aorder/tradingFlow'
       this.$post(url, param)
         .then(res => {
           this.tableData = res.data.data
+          this.input2 = ''
         })
     }
   }
@@ -179,10 +182,11 @@ export default {
       color: #555f79;
     }
     .symbol {
-      width: 17px;
-      height: 10px;
-      border: #059e7e;
-      text-align: center;
+      display: inline-block;
+      width: 15px;
+      height: 1px;
+      margin: 0 5px;
+      background-color: #555f79;
     }
     .el-button--primary {
       width: 100px;

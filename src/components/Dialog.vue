@@ -156,15 +156,15 @@ export default {
         yzcode: '',
         region: [
           {
-            value: '1',
+            value: 1,
             label: '盾付宝 项目方代理'
           },
           {
-            value: '2',
+            value: 2,
             label: '盾付宝 交易端代理'
           }
         ],
-        value: ''
+        value: null
       },
       // 忘记密码验证
       form1: {
@@ -191,7 +191,8 @@ export default {
       isShowPwd: false,
       forgetPwds: false,
       codeText: '发送验证码',
-      totalTime: 60
+      totalTime: 60,
+      topath: '/aindex'
     }
   },
 
@@ -239,10 +240,13 @@ export default {
         type: this.form.value,
         rand_num: this.number
       }
-      console.log(this.form.value, 'az')
-      return false
+      if(this.form.value === 1){
+        this.topath = '/bindex'
+      }
       this.$post('/api/agency/login', data).then(res => {
+        alert(res)
         if (res.data.code === 0) {
+          alert(1)
           this.ondialogVal = false
           localStorage.setItem('token', res.data.data.token)
           this.form.phone = ''
@@ -251,15 +255,10 @@ export default {
           localStorage.setItem('token', data.token)
           localStorage.setItem('userMsg', JSON.stringify(data))
           this.$emit('userMsg', JSON.stringify(data))
-          if (this.form.value == 1) {
-            this.$router.push({
-              path: '/bindex'
-            })
-          } else {
-            this.$router.push({
-              path: '/aindex'
-            })
-          }
+          alert(2)
+          this.$router.push({
+            path: this.topath
+          })
 
         }
       })

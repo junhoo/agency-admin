@@ -101,13 +101,7 @@ export default {
         mobile: this.form.phone,
         type: 1
       }
-      this.$post('/api/agency/sendsms', data).then(res => {
-        this.$message({
-          message: '恭喜你，这是一条成功消息',
-          type: 'success'
-        })
-        // console.log(res, 'az')
-      })
+      this.$post('/api/agency/sendsms', data).then(res => {})
 
     },
     checkData () {
@@ -133,7 +127,6 @@ export default {
     onSubmit () {
       if(this.form.value === 1){
         this.topath = '/bindex'
-
       }
       var data = {
         mobile: this.form.phone,
@@ -147,10 +140,6 @@ export default {
         agency_type: this.form.value
       }
       this.$post('/api/agency/register', data).then(res => {
-        this.$message({
-          message: '注册成功',
-          type: 'success'
-        })
         sessionStorage.setItem('activeName', 'five')
         this.$router.push({
            path: this.topath
