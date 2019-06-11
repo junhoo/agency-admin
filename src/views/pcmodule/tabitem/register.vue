@@ -144,7 +144,6 @@ export default {
         this.$router.push({
            path: this.topath
          })
-         console.log(res)
         var data = res.data
         localStorage.setItem('token', data.token)
         localStorage.setItem('userMsg', JSON.stringify(data))

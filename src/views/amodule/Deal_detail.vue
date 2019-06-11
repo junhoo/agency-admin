@@ -15,6 +15,7 @@
           v-model="form.date1"
           style="width: 100%;"
           size="small"
+          value-format="yyyy-MM-dd"
         ></el-date-picker>
         <div class="symbol">一</div>
         <el-date-picker
@@ -24,9 +25,11 @@
           v-model="form.date1"
           style="width: 100%;"
           size="small"
+          value-format="yyyy-MM-dd"
+          @change="handleDatePick"
         ></el-date-picker>
         <el-input
-          placeholder="请输入内容"
+          placeholder="输入用户ID"
           prefix-icon="el-icon-search"
           v-model="input2"
           size="small"
@@ -42,6 +45,8 @@
             <el-dropdown-item v-for="(item,index) in dropdownList" :key="index">{{item}}</el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
+
+        <div class="search-box" @click="seek">搜索</div>
       </div>
     </el-form>
 
@@ -53,21 +58,30 @@
       :header-cell-style="{background:'#12223B',color:'#606266'}"
       align="center"
     >
-      <el-table-column prop="date" label="订单号" width="100%" align="center"></el-table-column>
-      <el-table-column prop="name" label="总积分" width="100%" align="center"></el-table-column>
-      <el-table-column prop="address" label="兑换积分数" align="center"></el-table-column>
-      <el-table-column prop="address" label="获得USDT数" align="center"></el-table-column>
-      <el-table-column prop="address" label="兑换时间" align="center"></el-table-column>
-      <el-table-column prop="address" label="剩余积分" align="center"></el-table-column>
-      <el-table-column prop="address" label="兑换状态" align="center"></el-table-column>
-      <el-table-column prop="address" label="操作" align="center">
-        <template scope>
-          <router-link :to="{path:'/a_deal_detail'}">
-            <span style="color:#3986E2">查看详细流水</span>
-          </router-link>
-        </template>
-      </el-table-column>
+      <el-table-column prop="order_no" label="订单号" align="center"></el-table-column>
+      <el-table-column prop="organization_name" label="项目方名称" width="100%" align="center"></el-table-column>
+      <el-table-column prop="id" label="项目方id" align="center"></el-table-column>
+      <el-table-column prop="uid" label="用户id" width="100%" align="center"></el-table-column>
+      <el-table-column prop="user_name" label="用户名" align="center"></el-table-column>
+      <el-table-column prop="order_type" label="交易类型" align="center"></el-table-column>
+      <el-table-column prop="bonus_amount" label="交易金额" align="center"></el-table-column>
+      <el-table-column prop="add_time" label="添加时间" align="center"></el-table-column>
+      <el-table-column prop="order_amount" label="代理提成" align="center"></el-table-column>
     </el-table>
+
+    <!-- 分页 -->
+    <div class="paging">
+      <div class="block">
+        <span class="demonstration"></span>
+        <el-pagination
+          layout="prev, pager, next"
+          :pager-count="5"
+          :total="totalPage"
+          @current-change="currentPage"
+          style="background: transparent;">
+        </el-pagination>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -82,42 +96,48 @@ export default {
         date1: "",
         date2: ""
       },
-      tableData: [
-        {
-          date: "2016-05-02",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1518 弄"
-        },
-        {
-          date: "2016-05-04",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1517 弄"
-        },
-        {
-          date: "2016-05-01",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1519 弄"
-        },
-        {
-          date: "2016-05-03",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1516 弄"
-        }
-      ]
+      page: 0,
+      totalPage: 0,
+      tableData: [],
+      reqParam: {}
     }
   },
   mounted () {
+    this.reqParam = this.$route.query
+    this.getInfo()
   },
   methods: {
-    getInfo () {
-      var data = {
-        token: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MjA0OTAwMDksInRpbWUiOiIxNTYwMjIyMTg0Mjg2MSJ9.U5plEtm0k9I2WCzRp7qT7zd8_7gJuENc2ae3dcm5WtM'
+    currentPage (index) {
+      this.page = index
+      this.getInfo()
+    },
+    handleDatePick () {
+      this.getInfo()
+    },
+    seek () {
+      if (this.input2 !== '') {
+        this.getInfo()
       }
-      const url = 'http://agency.service.168mi.cn' + '/api/aorder/tradingFlow'
-      this.$post(url, data)
+    },
+    getInfo () {
+      var param = {
+        id: (this.reqParam.id).toString(),
+        user_id: (this.reqParam.userId).toString(),
+        name: this.input2,
+        page: this.page,
+        // order_type: 1,
+        limit: 10,
+        start: this.form.date1,
+        end: this.form.date2,
+        token: localStorage.getItem('token')
+      }
+      const url = 'http://agency.service.168mi.cn' + '/api/aorder/tradingDetail'
+      this.$post(url, param)
         .then(res => {
-          console.log(res)
-          this.tableData = res.data.data
+          var _res = res.data
+          this.tableData = _res.data
+          this.totalPage = _res.total
+          this.input2 = ''
         })
     }
   }
@@ -125,11 +145,58 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+/** 基础页数 */
+/deep/ .el-pagination button:disabled {
+  background-color: transparent;
+}
+/deep/ .el-pager li {
+  color: #C0C4CC;
+  background-color: transparent;
+}
+/deep/ .el-pager li.active {
+  color: #409EFF;
+}
+/deep/ .el-pagination .btn-next {
+  color: #C0C4CC;
+  background-color: transparent;
+}
+/deep/ .el-pagination .btn-prev {
+  color: #C0C4CC;
+  background-color: transparent;
+}
+
+/deep/ .el-input--small .el-input__inner {
+  background: transparent;
+  border-radius: 3px;
+  padding-right: 0;
+  border: 1px solid #555F79;
+}
+
 .container {
   width: 100%;
   height: 100%;
-  padding: 16px 0 0 0;
   box-sizing: border-box;
+  /* 默认列表背景样式 */
+  /deep/ .el-table__empty-block {
+    background: #061220;
+  }
+    /* 日期选择框 */
+  /deep/ .my-btn, .start {
+    .el-input__inner {
+      height: 32px;
+      line-height: 32px;
+      background-color: transparent;
+      border-radius: 3px;
+      color: #555f79 !important;
+      font-size: 12px !important;
+      border: 1px solid #555F79;
+      padding-left: 30px !important;
+      padding-right: 0 !important;
+      &::placeholder{
+        color: #555f79 !important;
+      }
+    }
+  }
   .el-icon-back {
     font-size: 18px;
     font-weight: bold;
@@ -151,12 +218,13 @@ export default {
         width: 177px;
       }
       .el-date-editor {
-        width: 113px !important;
+        width: 150px !important;
       }
       .start {
         width: 67px;
         font-size: 12px;
         text-align: center;
+        color: #555f79;
       }
       .symbol {
         width: 17px;
@@ -174,6 +242,24 @@ export default {
         }
       }
     }
+    .search-box {
+      width: 60px;
+      height: 25px;
+      line-height: 25px;
+      font-size: 13px;
+      text-align: center;
+      color: #fff;
+      background-color: #3986e2;
+      border-color: #3986e2;
+      margin-left: 10px;
+      border-radius: 2px;
+    }
+  }
+  .paging {
+    display: flex;
+    align-items: center;
+    margin-top: 30px;
+    flex-direction: row-reverse;
   }
 }
 </style>

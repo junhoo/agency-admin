@@ -43,6 +43,7 @@ axios.interceptors.response.use(response => {
     Message.error('登录超时，请重新登录')
     // 清除token
     localStorage.removeItem('token')
+    localStorage.removeItem('userMsg')
     // 页面跳转
     router.push('/home')
   }
@@ -72,14 +73,12 @@ export function postHttp (url, data = {}) {
     axios.post(url, data)
       .then(res => {
         var code = parseInt(res.data.code)
-        var _res = res.data
-          
+        var _res = res.data  
         if (code === 0) {
           resolve(_res)
         } else if (code === -1) {
           Message.error(res.data.msg)
-        } 
-       
+        }
       }, (err) => {
         reject(err)
       })

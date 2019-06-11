@@ -61,8 +61,8 @@
       <el-table-column prop="withdraw_amount" label="体现金额" align="center"></el-table-column>
       <el-table-column prop="bonus_amount" label="代理提成" align="center"></el-table-column>
       <el-table-column prop="address" label="操作" align="center">
-        <template scope>
-          <router-link :to="{path:'/a_deal_detail'}">
+        <template scope="scope">
+          <router-link :to="{ path:'/a_deal_detail' , query: { id: scope.row.id, userId: scope.row.user_id }}">
             <span style="color:#3986E2">查看详细流水</span>
           </router-link>
         </template>
@@ -102,7 +102,7 @@ export default {
       tableData: []
     }
   },
-  mounted () {
+  created () {
     this.getInfo()
   },
   methods: {
