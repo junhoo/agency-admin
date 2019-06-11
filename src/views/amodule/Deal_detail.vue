@@ -123,9 +123,8 @@ export default {
       var param = {
         id: (this.reqParam.id).toString(),
         user_id: (this.reqParam.userId).toString(),
-        name: this.input2,
+        uid: this.input2,
         page: this.page,
-        // order_type: 1,
         limit: 10,
         start: this.form.date1,
         end: this.form.date2,
