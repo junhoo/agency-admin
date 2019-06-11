@@ -19,16 +19,14 @@
         type="date"
         placeholder="选择日期"
         v-model="form.date1"
-        style="width: 100%;"
         size="small"
       ></el-date-picker>
-      <div class="symbol">一</div>
+      <div class="symbol"></div>
       <el-date-picker
         class="my-btn"
         type="date"
         placeholder="选择日期"
         v-model="form.date2"
-        style="width: 100%;"
         size="small"
       ></el-date-picker>
 
@@ -98,7 +96,7 @@ export default {
         name: this.input2,
         page: this.page,
         limit: 10,
-        token: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MjA0OTAwMDksInRpbWUiOiIxNTYwMTM1MjA1NDIwNyJ9.3Zs9-wpcWPBsJO5WGT8-gmMzhueVte_cLs36SZd3ZF4'
+        token: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MjA0OTAwMDksInRpbWUiOiIxNTYwMjIyMTg0Mjg2MSJ9.U5plEtm0k9I2WCzRp7qT7zd8_7gJuENc2ae3dcm5WtM'
       }
       const url = 'http://agency.service.168mi.cn' + '/api/aorder/tradingFlow'
       this.$post(url, param)
@@ -117,14 +115,27 @@ export default {
     background: #061220;
   }
   /* 日期选择框 */
-  .el-input__inner {
-    background-color: #061220 !important;
+  /deep/ .my-btn, .start {
+    .el-input__inner {
+      height: 32px;
+      line-height: 32px;
+      background-color: transparent;
+      border-radius: 3px;
+      color: #555f79 !important;
+      font-size: 12px !important;
+      border: 1px solid #555F79;
+      padding-left: 30px !important;
+      padding-right: 0 !important;
+      &::placeholder{
+        color: #555f79 !important;
+      }
+    }
   }
   .iteminput {
     position: relative;
     .el-input__icon {
       position: absolute;
-      right: 0;
+      right: 3px;
       margin-top: -2px;
       color: #555F79;
       font-weight: 600;
@@ -143,7 +154,7 @@ export default {
     border-radius: 3px;
     border: 1px solid #555F79;
     &::placeholder{
-      color: #555F79
+      color: #555F79 !important;
     }
   }
   width: 100%;
@@ -153,26 +164,30 @@ export default {
   .my-form {
     display: flex;
     align-items: center;
-    margin-bottom: 10px;
+    margin-bottom: 15px;
     .el-input {
       width: 177px;
     }
     /* 时间选择器 */
     .el-date-editor {
-      width: 113px !important;
+      width: 150px !important;
     }
     .start {
       width: 67px;
       font-size: 12px;
       text-align: center;
+      color: #555f79;
     }
     .symbol {
-      width: 17px;
-      text-align: center;
+      display: inline-block;
+      width: 15px;
+      height: 1px;
+      margin: 0 5px;
+      background-color: #555f79;
     }
     .el-button--primary {
-      width: 77px;
-      height: 25px;
+      width: 100px;
+      height: 32px;
       padding: 0;
       border-radius: 2px;
       background-color: #059e7e;

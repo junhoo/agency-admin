@@ -152,12 +152,12 @@ export default {
   }
 }
 </style>
-<style lang='scss'>
-.container {
-  .el-dialog {
-    background-color: #12223b;
-    margin-top: 30vh;
-    border-radius: 6px;
+<style lang='scss' scoped>
+.container{
+  .el-dialog{
+      background-color: #12223B;
+      margin-top: 30vh;
+      border-radius: 6px
   }
   .el-dialog__title {
     color: #fff;

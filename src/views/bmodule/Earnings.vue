@@ -200,6 +200,20 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+/* 输入框样式 */
+/deep/ .el-input__inner {
+  background-color:  #0C2040;
+  color: #708193;
+  font-size: 12px;
+  border: none;
+}
+/deep/ .el-input__inner::placeholder {
+  color: #2b374f;
+}
+/deep/ .el-input__inner:hover {
+  border-color: none;
+}
+
 /deep/ .el-table--border, .el-table--group {
   border: 2px solid #06476d;
 }
@@ -355,19 +369,7 @@ export default {
 .el-dialog__footer {
   text-align: left;
 }
-/* 输入框样式 */
-.el-input__inner {
-  background-color:  #0C2040;
-  color: #708193;
-  font-size: 12px;
-  border: none;
-}
-.el-input__inner::placeholder {
-  color: #2b374f;
-}
-.el-input__inner:hover {
-  border-color: none;
-}
+
 /* tab栏样式 */
 .el-tabs__item.is-active {
   color: #fff;
