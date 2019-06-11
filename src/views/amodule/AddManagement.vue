@@ -72,7 +72,7 @@ export default {
     return {
       dialogVisible: false,
       token:
-        "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MjA0OTAwMDksInRpbWUiOiIxNTYwMTM1MjA1NDIwNyJ9.3Zs9-wpcWPBsJO5WGT8-gmMzhueVte_cLs36SZd3ZF4",
+        "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MjA0OTAwMDksInRpbWUiOiIxNTYwMjIyMTg0Mjg2MSJ9.U5plEtm0k9I2WCzRp7qT7zd8_7gJuENc2ae3dcm5WtM",
       addForm: {
         email: "",
         Contacts: "",
@@ -95,7 +95,6 @@ export default {
   },
   methods: {
     handleClick(row) {
-      console.log(row);
       this.dialogVisible = true;
     },
     // 添加表单提交
@@ -108,16 +107,21 @@ export default {
         code: formName.yzcode,
         contacts: formName.Contacts,
         wechat_no: formName.wechat,
-        recharge_rate_type:formName.radio2,
+        recharge_rate_type: formName.radio2,
         withdraw_rate_type: formName.radio,
         organization_name: formName.name,
         organization_info: formName.ref,
         website: formName.link
       };
-      this.$post('/api/auser/add',data).then(res=>{
+      this.$post("/api/auser/add", data).then(res => {
         console.log(res);
-
-      })
+        if (res.code === 0) {
+          this.$message({
+            message: res.msg,
+            type: "success"
+          });
+        }
+      });
     },
 
     // 获取验证码
@@ -127,7 +131,7 @@ export default {
         type: 1
       };
       this.$post("/api/agency/sendsms", data).then(res => {
-        console.log(res);
+        // console.log(res);
       });
     },
     submit(index) {}
@@ -141,113 +145,113 @@ export default {
   width: 40%;
   position: relative;
   padding-top: 30px;
-  .tips{
-    color: #2A65AC;
+  .tips {
+    color: #2a65ac;
     margin-left: 41px;
     font-size: 12px;
   }
 }
 </style>
 <style lang='scss'>
-.container{
-.el-dialog{
-    background-color: #12223B;
+.container {
+  .el-dialog {
+    background-color: #12223b;
     margin-top: 30vh;
-    border-radius: 6px
-}
-.el-dialog__title {
-  color: #fff;
-}
-.el-dialog__body {
-  padding: 25px 25px 60px !important;
-}
-/* 输入框 */
-.el-form-item {
-  .el-form-item__label {
+    border-radius: 6px;
+  }
+  .el-dialog__title {
     color: #fff;
-    font-size: 12px;
   }
-  .el-form-item__content {
-    .el-input,
-    .el-textarea {
-      .el-input__inner,
-      .el-textarea__inner {
-        font-size: 12px;
-        color: #fff;
-        background-color: #12223b;
-        border: 1px solid #06476d;
-        border-radius: 2px;
-        padding-left: 15px !important;
-        &::placeholder {
-          color: #4a556e;
-        }
-      }
-    }
+  .el-dialog__body {
+    padding: 25px 25px 60px !important;
   }
-}
-.phoneT {
-  position: relative;
-  .el-form-item__content {
-    display: flex;
-    .el-input {
-      margin-right: 8px;
-      width: 50%;
-    }
-    .code {
-      width: 30%;
-    }
-  }
-  .el-button--success {
-    background-color: #059e7e;
-    border-radius: 2px;
-    color: #fefeff;
-    font-size: 12px;
-    border: none;
-    height: 30px;
-    position: absolute;
-    top: 6px;
-    right: 2px;
-  }
-}
-.payWay {
-  .el-radio {
-    .el-radio__label {
-      font-size: 12px;
-      color: #47526b;
-    }
-    .el-radio__input {
-      .el-radio__inner {
-        background-color: transparent;
-        border-color: #06476d;
-      }
-    }
-    .is-checked {
-      .el-radio__inner {
-        background-color: #214e84;
-        &::after {
-          background-color: #3986e2;
-        }
-      }
-    }
-  }
-}
-.submitbtn {
-  .el-form-item__content {
-    display: flex;
-    .el-button {
-      flex: 1;
-      margin-right: 30px;
-      background-color: #2f71bf;
-      border-color: #2f71bf;
-      font-size: 12px;
+  /* 输入框 */
+  .el-form-item {
+    .el-form-item__label {
       color: #fff;
+      font-size: 12px;
+    }
+    .el-form-item__content {
+      .el-input,
+      .el-textarea {
+        .el-input__inner,
+        .el-textarea__inner {
+          font-size: 12px;
+          color: #fff;
+          background-color: #12223b;
+          border: 1px solid #06476d;
+          border-radius: 2px;
+          padding-left: 15px !important;
+          &::placeholder {
+            color: #4a556e;
+          }
+        }
+      }
+    }
+  }
+  .phoneT {
+    position: relative;
+    .el-form-item__content {
+      display: flex;
+      .el-input {
+        margin-right: 8px;
+        width: 50%;
+      }
+      .code {
+        width: 30%;
+      }
     }
     .el-button--success {
-      background-color: transparent;
-      border-color: #2f71bf;
-      color: #2f71bf;
+      background-color: #059e7e;
+      border-radius: 2px;
+      color: #fefeff;
+      font-size: 12px;
+      border: none;
+      height: 30px;
+      position: absolute;
+      top: 6px;
+      right: 2px;
     }
   }
-}
+  .payWay {
+    .el-radio {
+      .el-radio__label {
+        font-size: 12px;
+        color: #47526b;
+      }
+      .el-radio__input {
+        .el-radio__inner {
+          background-color: transparent;
+          border-color: #06476d;
+        }
+      }
+      .is-checked {
+        .el-radio__inner {
+          background-color: #214e84;
+          &::after {
+            background-color: #3986e2;
+          }
+        }
+      }
+    }
+  }
+  .submitbtn {
+    .el-form-item__content {
+      display: flex;
+      .el-button {
+        flex: 1;
+        margin-right: 30px;
+        background-color: #2f71bf;
+        border-color: #2f71bf;
+        font-size: 12px;
+        color: #fff;
+      }
+      .el-button--success {
+        background-color: transparent;
+        border-color: #2f71bf;
+        color: #2f71bf;
+      }
+    }
+  }
 }
 </style>

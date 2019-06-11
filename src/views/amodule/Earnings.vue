@@ -34,7 +34,7 @@
     </div>
 
     <!-- tab切换 -->
-    <el-tabs v-model="activeName">
+    <el-tabs v-model="activeName" @tab-click="handleClick">
       <el-tab-pane label="积分兑换记录" name="first">
         <el-table
           :data="tableData"
@@ -43,15 +43,16 @@
           :header-cell-style="{background:'#12223B',color:'#606266'}"
           align="center"
         >
-          <el-table-column prop="date" label="订单号" width="100%" align="center"></el-table-column>
-          <el-table-column prop="name" label="总积分" width="100%" align="center"></el-table-column>
-          <el-table-column prop="address" label="兑换积分数" align="center"></el-table-column>
-          <el-table-column prop="address" label="获得USDT数" align="center"></el-table-column>
-          <el-table-column prop="address" label="兑换时间" align="center"></el-table-column>
-          <el-table-column prop="address" label="剩余积分" align="center"></el-table-column>
-          <el-table-column prop="address" label="兑换状态" align="center"></el-table-column>
+          <el-table-column prop="id" label="订单号" width="100%" align="center"></el-table-column>
+          <el-table-column prop="amount_all_income" label="总积分" width="100%" align="center"></el-table-column>
+          <el-table-column prop="operating_amount" label="兑换积分数" align="center"></el-table-column>
+          <el-table-column prop="operating_amount" label="获得USDT数" align="center"></el-table-column>
+          <el-table-column prop="add_time" label="兑换时间" align="center"></el-table-column>
+          <el-table-column prop="amount_income" label="剩余积分" align="center"></el-table-column>
+          <el-table-column prop="status" label="兑换状态" align="center"></el-table-column>
         </el-table>
       </el-tab-pane>
+
       <el-tab-pane label="USDT提现记录" name="second">
         <el-table
           :data="tableData"
@@ -60,8 +61,8 @@
           :header-cell-style="{background:'#12223B',color:'#606266'}"
           align="center"
         >
-          <el-table-column prop="date" label="订单号" width="100%" align="center"></el-table-column>
-          <el-table-column prop="name" label="发起时间" width="100%" align="center"></el-table-column>
+          <el-table-column prop="date" label="订单号"  align="center"></el-table-column>
+          <el-table-column prop="name" label="发起时间"  align="center"></el-table-column>
           <el-table-column prop="address" label="提现金额" align="center"></el-table-column>
           <el-table-column prop="address" label="矿工费" align="center"></el-table-column>
           <el-table-column prop="address" label="实际到账" align="center"></el-table-column>
@@ -160,41 +161,53 @@
 </template>
 
 <script>
+import { log } from 'util';
 export default {
   name: "earnings",
   data() {
     return {
+      token:'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MjA0OTAwMDksInRpbWUiOiIxNTYwMjIyMTg0Mjg2MSJ9.U5plEtm0k9I2WCzRp7qT7zd8_7gJuENc2ae3dcm5WtM',
       input: "",
       dialogVisible1: false,
       dialogVisible2: false,
       dialogVisible3: false,
       activeName: "first",
       input3: "",
-      tableData: [
-        {
-          date: "2016-05-02",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1518 弄"
-        },
-        {
-          date: "2016-05-04",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1517 弄"
-        },
-        {
-          date: "2016-05-01",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1519 弄"
-        },
-        {
-          date: "2016-05-03",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1516 弄"
-        }
-      ]
+      tableData: [],
+      // 页码
+      pageSize:1,
+      // 页容量
+      pageNum:10,
+      total:0
     };
   },
- 
+  created(){
+    this.getList(1)
+  },
+  methods: {
+    // tab栏切换事件
+    handleClick(event) {
+      var index = parseInt(event.index)
+      if(index === 0){
+        
+        this.getList(1)
+      }else if (index === 1){
+        this.getList(2)
+      }
+    },
+    // 获取钱包列表
+    getList(tp){
+      const data = {
+        token:this.token,
+        page:this.pageSize,
+        limit:this.pageNum,
+        type:tp
+      }
+      this.$post('/api/awallet/wallet',data).then(res=>{
+        this.tableData = res.data.data
+      })
+    }
+  }
 };
 </script>
 
@@ -436,5 +449,4 @@ export default {
     padding: 15px 10px 15px 30px !important;
   }
 }
-
 </style>
