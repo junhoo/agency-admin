@@ -8,7 +8,7 @@
         size="small"
         class="my-btn"
       ></el-input>
-      <div class="start">起始日期</div>
+      <div class="start" @click="getInfo">起始日期</div>
       <el-date-picker
         class="my-btn"
         type="date"
@@ -27,12 +27,14 @@
         size="small"
       ></el-date-picker>
       <el-dropdown>
-        <el-button type="primary"  size="small" @click.native="toData">
+        <el-button type="primary" size="small" @click.native="toData">
           全部商户
           <i class="el-icon-caret-bottom el-icon--right"></i>
         </el-button>
         <el-dropdown-menu slot="dropdown">
-          <el-dropdown-item v-for="(item,index) in dropdownList" :key="index">{{item}}</el-dropdown-item>
+          <el-dropdown-item v-for="(item,index) in dropdownList" :key="index">
+            {{item}}
+          </el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
     </el-form>
@@ -52,15 +54,28 @@ export default {
       form: {
         date1: "",
         date2: ""
-      }
-    };
-  },
-  methods: {
-    toData() {
-      this.$router.push("/a_deal_data");
+      },
+      list: []
     }
   },
-  mounted() {}
+  mounted() {
+  },
+  methods: {
+    getInfo () {
+      var data = {
+        token: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MjA0OTAwMDksInRpbWUiOiIxNTYwMTM1MjA1NDIwNyJ9.3Zs9-wpcWPBsJO5WGT8-gmMzhueVte_cLs36SZd3ZF4'
+      }
+      const url = 'http://agency.service.168mi.cn' + '/api/aorder/tradingFlow'
+      this.$post(url, data)
+        .then(res => {
+          console.log(res)
+          this.list = res.data.data
+        })
+    },
+    toData() {
+      this.$router.push("/a_deal_data")
+    }
+  }
 };
 </script>
 

@@ -199,6 +199,12 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+/deep/ .my-btn, .start {
+  .el-input__inner {
+    padding: 15px 10px 15px 30px !important;
+  }
+}
+
 /deep/ .el-table--border,
 .el-table--group {
   border: 2px solid #06476d;
@@ -430,11 +436,12 @@ export default {
   background-color: #0c2040;
   border-color: #0c2040;
 }
-.my-btn,
-.start {
-  .el-input__inner {
-    padding: 15px 10px 15px 30px !important;
-  }
-}
+// .my-btn,
+// .start {
+//   .el-input__inner {
+//     padding: 15px 10px 15px 30px !important;
+//     background-color: transparent;
+//   }
+// }
 
 </style>

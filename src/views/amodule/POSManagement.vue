@@ -7,7 +7,7 @@
         <i slot="suffix" class="el-input__icon el-icon-search" @click="queryUser"></i>
       </li>
       <li class="iteminput">
-        <span>起始日期</span>
+        <span class="date-span">起始日期</span>
       </li>
       <li class="iteminput">
         <el-date-picker popper-class="xiala" v-model="startTime" type="date" placeholder="选择日期"></el-date-picker>
@@ -178,29 +178,55 @@ export default {
     }
   },
   created() {
-    this.getUserList();
+    this.getUserList()
   }
 };
 </script>
 
 <style lang="scss" scoped>
+/* 样式框 */
+/deep/ .el-input__inner {
+  height: 32px;
+  line-height: 32px;
+  background-color: transparent;
+  border-radius: 3px;
+  color: #708193;
+  font-size: 12px !important;
+  border: 1px solid #555F79;
+  padding: 0 30px !important;
+}
+
+/deep/ .el-input__inner::placeholder{
+    color: #555F79
+}
+
+/deep/ .el-date-editor.el-input {
+  width: 150px;
+}
+
 .container {
   height: 100%;
   width: 100%;
   position: relative;
   .search {
-    height: 100px;
-    line-height: 100px;
+    height: 60;
+    line-height: 60px;
     display: flex;
     .iteminput {
       font-size: 12px;
       color: #555f79;
       position: relative;
-      margin-right: 20px;
+      // margin-right: 20px;
+      .date-span {
+        display: inline-block;
+        width: 70px;
+        text-align: center;
+      }
       input {
         color: #555f79;
         font-size: 12px;
         padding: 2px 12px;
+        padding-right: 20px;
         height: 26px;
         line-height: 26px;
         background-color: transparent;
@@ -226,20 +252,22 @@ export default {
         color: #fff;
         background-color: #059e7e;
         border-radius: 3px;
-        width: 118px;
+        width: 100px;
         height: 30px;
         line-height: 30px;
         text-align: center;
       }
       .line {
         display: inline-block;
-        width: 25px;
+        width: 15px;
         height: 1px;
+        margin: 0 5px;
         background-color: #555f79;
       }
     }
     .iteminput5 {
       padding-top: 2px;
+      margin-left: 10px;
     }
   }
   .dialogContant {
@@ -311,21 +339,9 @@ export default {
 .el-dialog__body {
   padding: 25px 25px 60px !important;
 }
-.el-input__inner {
-  color: #555f79;
-  font-size: 12px !important;
-  padding: 15px 10px 15px 30px !important;
-  height: 26px;
-  line-height: 26px;
-  background-color: transparent;
-  border-radius: 3px;
-  border: 1px solid #555f79;
-}
-.el-input__inner::placeholder {
-  color: #555f79;
-}
-.el-input__icon {
-  color: #555f79;
+
+.el-input__icon{
+  color: #555F79;
   font-weight: 600;
   font-size: 13px !important;
 }

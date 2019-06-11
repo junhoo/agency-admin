@@ -82,17 +82,8 @@ export function postHttp (url, data = {}) {
           localStorage.removeItem('token')
           router.push('/home')
         } else {
-          reject(res)
+          reject(_res)
         }
-        // if (code === 0) {
-        //   resolve(res)
-        // } else if (code === 1 || code === 2) {
-        //   Message.error('登录失效，请重新登录')
-        //   localStorage.removeItem('token')
-        //   router.push('/login')
-        // } else {
-        //   reject(res)
-        // }
       }, (err) => {
         reject(err)
       })

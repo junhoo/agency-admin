@@ -142,7 +142,7 @@ export default {
         }
       ],
       value: ''
-    };
+    }
   },
   methods: {
     handleClick (row) {
@@ -154,11 +154,26 @@ export default {
         this.rank = !rank
       }
     }
-  },
-};
+  }
+}
 </script>
 
 <style lang="scss" scoped>
+/deep/ .el-input__inner{
+  color: #555F79;
+  font-size: 12px;
+  padding: 15px 10px 15px 30px !important;
+  height: 26px;
+  line-height: 26px;
+  background-color: transparent;
+  border-radius: 3px;
+  border: 1px solid #555F79;
+}
+
+/deep/ .el-input__inner::placeholder{
+  color: #555F79
+}
+
 .container {
   height: 100%;
   width: 100%;
@@ -286,19 +301,19 @@ export default {
   .el-dialog__body{
   padding: 25px 25px 60px !important;
   }
-  .el-input__inner{
-  color: #555F79;
-  font-size: 12px;
-  padding: 15px 10px 15px 30px !important;
-  height: 26px;
-  line-height: 26px;
-  background-color: transparent;
-  border-radius: 3px;
-  border: 1px solid #555F79;
-  }
-  .el-input__inner::placeholder{
-      color: #555F79
-  }
+  // .el-input__inner{
+  //   color: #555F79;
+  //   font-size: 12px;
+  //   padding: 15px 10px 15px 30px !important;
+  //   height: 26px;
+  //   line-height: 26px;
+  //   background-color: transparent;
+  //   border-radius: 3px;
+  //   border: 1px solid #555F79;
+  // }
+  // .el-input__inner::placeholder{
+  //     color: #555F79
+  // }
   .el-input__icon{
     color: #555F79;
     font-weight: 600;
