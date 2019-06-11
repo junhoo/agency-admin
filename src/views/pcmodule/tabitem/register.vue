@@ -55,13 +55,13 @@ export default {
         email: '',
         wechat: '',
         region: [{
-          value: 1,
+          value: '1',
           label: '盾付宝 项目方代理'
         }, {
-          value: 2,
+          value: '2',
           label: '盾付宝 交易端代理'
         }],
-        value: null, // 代理类型 1项目方 2交易端
+        value: '', // 代理类型 1项目方 2交易端
         dlName: '',
         ref: ''
       },
@@ -125,7 +125,7 @@ export default {
       }
     },
     onSubmit () {
-      if(this.form.value === 1){
+      if(this.form.value === '1'){
         this.topath = '/bindex'
       }
       var data = {
@@ -144,7 +144,8 @@ export default {
         this.$router.push({
            path: this.topath
          })
-        var data = res.data.data
+         console.log(res)
+        var data = res.data
         localStorage.setItem('token', data.token)
         localStorage.setItem('userMsg', JSON.stringify(data))
       })
