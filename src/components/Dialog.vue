@@ -244,18 +244,15 @@ export default {
         this.topath = '/bindex'
       }
       this.$post('/api/agency/login', data).then(res => {
-        alert(res)
-        if (res.data.code === 0) {
-          alert(1)
+        var data = res.data
+        if (res.code === 0) {
           this.ondialogVal = false
-          localStorage.setItem('token', res.data.data.token)
           this.form.phone = ''
           this.form.password = ''
           this.form.yzcode = ''
           localStorage.setItem('token', data.token)
           localStorage.setItem('userMsg', JSON.stringify(data))
           this.$emit('userMsg', JSON.stringify(data))
-          alert(2)
           this.$router.push({
             path: this.topath
           })
