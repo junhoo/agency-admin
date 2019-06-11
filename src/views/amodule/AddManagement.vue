@@ -72,7 +72,7 @@ export default {
     return {
       dialogVisible: false,
       token:
-        "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MjA0OTAwMDksInRpbWUiOiIxNTYwMTM1MjA1NDIwNyJ9.3Zs9-wpcWPBsJO5WGT8-gmMzhueVte_cLs36SZd3ZF4",
+        "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MjA0OTAwMDksInRpbWUiOiIxNTYwMjIyMTg0Mjg2MSJ9.U5plEtm0k9I2WCzRp7qT7zd8_7gJuENc2ae3dcm5WtM",
       addForm: {
         email: "",
         Contacts: "",
@@ -116,7 +116,6 @@ export default {
       };
       this.$post('/api/auser/add',data).then(res=>{
         console.log(res);
-
       })
     },
 

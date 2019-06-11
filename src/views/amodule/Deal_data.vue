@@ -21,7 +21,7 @@
         v-model="form.date1"
         size="small"
       ></el-date-picker>
-      <div class="symbol">1</div>
+      <div class="symbol"></div>
       <el-date-picker
         class="my-btn"
         type="date"
@@ -96,7 +96,7 @@ export default {
         name: this.input2,
         page: this.page,
         limit: 10,
-        token: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MjA0OTAwMDksInRpbWUiOiIxNTYwMTM1MjA1NDIwNyJ9.3Zs9-wpcWPBsJO5WGT8-gmMzhueVte_cLs36SZd3ZF4'
+        token: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MjA0OTAwMDksInRpbWUiOiIxNTYwMjIyMTg0Mjg2MSJ9.U5plEtm0k9I2WCzRp7qT7zd8_7gJuENc2ae3dcm5WtM'
       }
       const url = 'http://agency.service.168mi.cn' + '/api/aorder/tradingFlow'
       this.$post(url, param)
@@ -179,10 +179,11 @@ export default {
       color: #555f79;
     }
     .symbol {
-      width: 17px;
-      height: 10px;
-      border: #059e7e;
-      text-align: center;
+      display: inline-block;
+      width: 15px;
+      height: 1px;
+      margin: 0 5px;
+      background-color: #555f79;
     }
     .el-button--primary {
       width: 100px;

@@ -86,7 +86,7 @@ export default {
   data() {
     return {
       token:
-        "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MjA0OTAwMDksInRpbWUiOiIxNTYwMTM1MjA1NDIwNyJ9.3Zs9-wpcWPBsJO5WGT8-gmMzhueVte_cLs36SZd3ZF4",
+        "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MjA0OTAwMDksInRpbWUiOiIxNTYwMjIyMTg0Mjg2MSJ9.U5plEtm0k9I2WCzRp7qT7zd8_7gJuENc2ae3dcm5WtM",
       dialogVisible: false,
       userList: [],
       inputName: "",
@@ -184,7 +184,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-/* 样式框 */
+/* 输入样式框 */
 /deep/ .el-input__inner {
   height: 32px;
   line-height: 32px;
@@ -200,8 +200,32 @@ export default {
     color: #555F79
 }
 
+/** 时间选择框 */
 /deep/ .el-date-editor.el-input {
   width: 150px;
+}
+
+/** 页数选择器 */
+/deep/ .el-pagination .el-select .el-input {
+  width: 110px;
+}
+/deep/ .el-pagination.is-background .el-pager li:not(.disabled).active {
+  background: #12223B;
+  border: 1px solid #555F79;
+}
+/** 上页选择器 */
+/deep/ .el-pagination.is-background .btn-next {
+  background: #061220;
+}
+/** 下页选择器 */
+/deep/ .el-pagination.is-background .btn-prev {
+  background: #061220;
+}
+/deep/ .el-pagination__editor.el-input {
+  width: 80px;
+}
+/deep/ .el-pagination__jump {
+  opacity: 0;
 }
 
 .container {
