@@ -142,7 +142,7 @@ export default {
         }
       ],
       value: ''
-    };
+    }
   },
   methods: {
     handleClick (row) {
@@ -154,8 +154,8 @@ export default {
         this.rank = !rank
       }
     }
-  },
-};
+  }
+}
 </script>
 
 <style lang="scss" scoped>

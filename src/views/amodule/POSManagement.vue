@@ -7,7 +7,7 @@
         <i slot="suffix" class="el-input__icon el-icon-search" @click="queryUser"></i>
       </li>
       <li class="iteminput">
-        <span>起始日期</span>
+        <span class="date-span">起始日期</span>
       </li>
       <li class="iteminput">
         <el-date-picker popper-class="xiala" v-model="startTime" type="date" placeholder="选择日期"></el-date-picker>
@@ -178,7 +178,7 @@ export default {
     }
   },
   created() {
-    this.getUserList();
+    this.getUserList()
   }
 };
 </script>
@@ -195,8 +195,13 @@ export default {
   border: 1px solid #555F79;
   padding: 0 30px !important;
 }
+
 /deep/ .el-input__inner::placeholder{
     color: #555F79
+}
+
+/deep/ .el-date-editor.el-input {
+  width: 150px;
 }
 
 .container {
@@ -204,18 +209,24 @@ export default {
   width: 100%;
   position: relative;
   .search {
-    height: 100px;
-    line-height: 100px;
+    height: 60;
+    line-height: 60px;
     display: flex;
     .iteminput {
       font-size: 12px;
       color: #555f79;
       position: relative;
-      margin-right: 20px;
+      // margin-right: 20px;
+      .date-span {
+        display: inline-block;
+        width: 70px;
+        text-align: center;
+      }
       input {
         color: #555f79;
         font-size: 12px;
         padding: 2px 12px;
+        padding-right: 20px;
         height: 26px;
         line-height: 26px;
         background-color: transparent;
@@ -241,20 +252,22 @@ export default {
         color: #fff;
         background-color: #059e7e;
         border-radius: 3px;
-        width: 118px;
+        width: 100px;
         height: 30px;
         line-height: 30px;
         text-align: center;
       }
       .line {
         display: inline-block;
-        width: 25px;
+        width: 15px;
         height: 1px;
+        margin: 0 5px;
         background-color: #555f79;
       }
     }
     .iteminput5 {
       padding-top: 2px;
+      margin-left: 10px;
     }
   }
   .dialogContant {
