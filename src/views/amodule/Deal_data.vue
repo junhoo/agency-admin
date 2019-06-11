@@ -10,7 +10,7 @@
       ></el-input> -->
       <div class="iteminput">
         <input type="text" v-model="input2" placeholder="输入联系人/机构名称">
-        <i slot="suffix" class="el-input__icon el-icon-search" @click="search"></i>
+        <i slot="suffix" class="el-input__icon el-icon-search"></i>
       </div>
       <div class="start" @click="getInfo">起始日期</div>
 
@@ -20,6 +20,7 @@
         placeholder="选择日期"
         v-model="form.date1"
         size="small"
+        value-format="yyyy-MM-dd"
       ></el-date-picker>
       <div class="symbol"></div>
       <el-date-picker
@@ -28,6 +29,8 @@
         placeholder="选择日期"
         v-model="form.date2"
         size="small"
+        value-format="yyyy-MM-dd"
+        @change="handleDatePick"
       ></el-date-picker>
 
       <el-dropdown>
@@ -39,6 +42,8 @@
           <el-dropdown-item v-for="(item,index) in dropdownList" :key="index">{{item}}</el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
+
+      <div class="search-box" @click="seek">搜索</div>
     </el-form>
 
     <!-- 表格 -->
@@ -63,6 +68,20 @@
         </template>
       </el-table-column>
     </el-table>
+
+    <!-- 分页 -->
+    <div class="paging">
+      <div class="block">
+        <span class="demonstration"></span>
+        <el-pagination
+          layout="prev, pager, next"
+          :pager-count="5"
+          :total="totalPage"
+          @current-change="currentPage"
+          style="background: transparent;">
+        </el-pagination>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -79,6 +98,7 @@ export default {
       },
       name: '',
       page: 1,
+      totalPage: 0,
       tableData: []
     }
   },
@@ -86,7 +106,14 @@ export default {
     this.getInfo()
   },
   methods: {
-    search () {
+    currentPage (index) {
+      this.page = index
+      this.getInfo()
+    },
+    handleDatePick () {
+      this.getInfo()
+    },
+    seek () {
       if (this.input2 !== '') {
         this.getInfo()
       }
@@ -100,10 +127,13 @@ export default {
         limit: 10,
         token: localStorage.getItem('token')
       }
+      console.log(param)
       const url = 'http://agency.service.168mi.cn' + '/api/aorder/tradingFlow'
       this.$post(url, param)
         .then(res => {
-          this.tableData = res.data.data
+          var _res = res.data
+          this.tableData = _res.data
+          this.totalPage = _res.total
           this.input2 = ''
         })
     }
@@ -112,6 +142,26 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+/** 基础页数 */
+/deep/ .el-pagination button:disabled {
+  background-color: transparent;
+}
+/deep/ .el-pager li {
+  color: #C0C4CC;
+  background-color: transparent;
+}
+/deep/ .el-pager li.active {
+  color: #409EFF;
+}
+/deep/ .el-pagination .btn-next {
+  color: #C0C4CC;
+  background-color: transparent;
+}
+/deep/ .el-pagination .btn-prev {
+  color: #C0C4CC;
+  background-color: transparent;
+}
+
 .container {
   /* 默认列表背景样式 */
   /deep/ .el-table__empty-block {
@@ -200,6 +250,24 @@ export default {
         margin-left: 0;
       }
     }
+    .search-box {
+      width: 60px;
+      height: 32px;
+      font-size: 13px;
+      line-height: 32px;
+      text-align: center;
+      border-radius: 2px;
+      color: #fff;
+      background-color: #059e7e;
+      border-color: #059e7e;
+      margin-left: 10px;
+    }
+  }
+  .paging {
+    display: flex;
+    align-items: center;
+    margin-top: 30px;
+    flex-direction: row-reverse;
   }
 }
 </style>

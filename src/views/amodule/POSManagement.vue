@@ -21,6 +21,9 @@
       <li class="iteminput iteminput5">
         <span class="subSearch" @click="addMerchant">添加商户</span>
       </li>
+      <li class="iteminput iteminput5">
+        <span class="search-box">搜索</span>
+      </li>
     </ul>
     <!-- 表格 -->
     <div v-if="dataShow" class="tableBox">
@@ -48,16 +51,16 @@
       </el-table>
 
       <!-- 分页 -->
-      <div class="pages">
-        <el-pagination
-          :current-page="1"
-          :page-sizes="[10]"
-          :page-size="10"
-          layout="total, sizes, prev, pager, next, jumper"
-          :total="total"
-          background
-          @current-change="handleCurrentChange"
-        ></el-pagination>
+      <div class="paging">
+        <div class="block">
+          <span class="demonstration"></span>
+          <el-pagination
+            layout="prev, pager, next"
+            :pager-count="5"
+            :total="total"
+            style="background: transparent;">
+          </el-pagination>
+        </div>
       </div>
     </div>
 
@@ -205,27 +208,24 @@ export default {
   width: 150px;
 }
 
-/** 页数选择器 */
-/deep/ .el-pagination .el-select .el-input {
-  width: 110px;
+/** 基础页数 */
+/deep/ .el-pagination button:disabled {
+  background-color: transparent;
 }
-/deep/ .el-pagination.is-background .el-pager li:not(.disabled).active {
-  background: #12223B;
-  border: 1px solid #555F79;
+/deep/ .el-pager li {
+  color: #C0C4CC;
+  background-color: transparent;
 }
-/** 上页选择器 */
-/deep/ .el-pagination.is-background .btn-next {
-  background: #061220;
+/deep/ .el-pager li.active {
+  color: #409EFF;
 }
-/** 下页选择器 */
-/deep/ .el-pagination.is-background .btn-prev {
-  background: #061220;
+/deep/ .el-pagination .btn-next {
+  color: #C0C4CC;
+  background-color: transparent;
 }
-/deep/ .el-pagination__editor.el-input {
-  width: 80px;
-}
-/deep/ .el-pagination__jump {
-  opacity: 0;
+/deep/ .el-pagination .btn-prev {
+  color: #C0C4CC;
+  background-color: transparent;
 }
 
 .container {
@@ -281,6 +281,17 @@ export default {
         line-height: 30px;
         text-align: center;
       }
+      .search-box {
+        display: inline-block;
+        font-size: 12px;
+        color: #fff;
+        background-color: #059e7e;
+        border-radius: 3px;
+        width: 60px;
+        height: 30px;
+        line-height: 30px;
+        text-align: center;
+      }
       .line {
         display: inline-block;
         width: 15px;
@@ -311,10 +322,11 @@ export default {
   /deep/ .el-table__empty-block {
     background: #061220;
   }
-  .pages {
+  .paging {
     display: flex;
     align-items: center;
     margin-top: 30px;
+    flex-direction: row-reverse;
   }
 }
 </style>
