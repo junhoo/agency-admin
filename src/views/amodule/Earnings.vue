@@ -166,8 +166,7 @@ export default {
   name: "earnings",
   data() {
     return {
-      token:
-        "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MjA0OTAwMDksInRpbWUiOiIxNTYwMjIyMTg0Mjg2MSJ9.U5plEtm0k9I2WCzRp7qT7zd8_7gJuENc2ae3dcm5WtM",
+      
       input: "",
       dialogVisible1: false,
       dialogVisible2: false,
@@ -192,7 +191,7 @@ export default {
       setPassword: {
         code: "",
         password: "",
-        mobile: "153****4544"
+        mobile: ''
       },
       // 兑换usdt
       usdtData:{
@@ -222,6 +221,8 @@ export default {
         type: tp
       };
       this.$post("/api/awallet/wallet", data).then(res => {
+        let mobile = localStorage.getItem('userMsg')
+        this.setPassword.mobile = JSON.parse(mobile).mobile
         this.setStatus = res.data.pay_password;
         this.tableData = res.data.data;
         this.rate = res.data.rate

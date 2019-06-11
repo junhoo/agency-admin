@@ -140,8 +140,6 @@ export default {
     return {
       input: "",
       input3: "",
-      token:
-        "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MjA0OTAwMDksInRpbWUiOiIxNTYwMjIyMTg0Mjg2MSJ9.U5plEtm0k9I2WCzRp7qT7zd8_7gJuENc2ae3dcm5WtM",
       dialogVisible1: false,
       dialogVisible2: false,
       dialogVisible3: false,
@@ -183,7 +181,7 @@ export default {
   methods: {
     // 信息管理列表
     getInfro() {
-      this.$post("/api/auser/agencyInfo", { token: this.token }).then(res => {
+      this.$post("/api/auser/agencyInfo", { token: localStorage.getItem('token') }).then(res => {
         this.form.agency_id = res.data.id;
         this.form.contacts = res.data.contacts;
         this.form.WeChat = res.data.wechat_no;
@@ -204,7 +202,7 @@ export default {
     submitChange() {
       this.dialogVisible2 = false;
       const data = {
-        token: this.token,
+        token: localStorage.getItem('token'),
         old_mobile: this.mobileChange.old_mobile,
         old_code: this.mobileChange.old_code,
         new_mobile: this.mobileChange.new_mobile,
@@ -223,7 +221,7 @@ export default {
     changePassword() {
       this.dialogVisible3 = false;
       const data = {
-        token: this.token,
+        token: localStorage.getItem('token'),
         mobile:this.changeLogin.mobile,
         code:this.changeLogin.code,
         password:this.changeLogin.password
@@ -241,7 +239,7 @@ export default {
     setpassword(){
       this.dialogVisible1 = false;
       const data = {
-        token:this.token,
+        token:localStorage.getItem('token'),
         mobile:this.setPassword.mobile,
         code:this.setPassword.code,
         pay_password:this.setPassword.password

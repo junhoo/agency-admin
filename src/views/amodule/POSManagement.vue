@@ -88,9 +88,7 @@ export default {
   name: "POSManagement",
   data() {
     return {
-      token:
-        "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MjA0OTAwMDksInRpbWUiOiIxNTYwMjIyMTg0Mjg2MSJ9.U5plEtm0k9I2WCzRp7qT7zd8_7gJuENc2ae3dcm5WtM",
-      dialogVisible: false,
+      dialogVisible:false,
       userList: [],
       inputName: "",
       startTime: "",
@@ -123,7 +121,7 @@ export default {
     // 商户管理列表篇
     getUserList() {
       const data = {
-        token: this.token,
+        token: localStorage.getItem('token'),
         page: this.pageSize,
         limit: this.pageNum
       };
@@ -163,7 +161,7 @@ export default {
           this.endTime.getDate();
       }
       const data = {
-        token: this.token,
+        token: localStorage.getItem('token'),
         page: this.pageSize,
         limit: this.pageNum,
         start: start,

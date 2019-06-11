@@ -44,7 +44,7 @@ axios.interceptors.response.use(response => {
     // 清除token
     localStorage.removeItem('token')
     // 页面跳转
-    router.push('/login')
+    router.push('/home')
   }
   return response
 }, error => {
@@ -73,17 +73,13 @@ export function postHttp (url, data = {}) {
       .then(res => {
         var code = parseInt(res.data.code)
         var _res = res.data
+          
         if (code === 0) {
           resolve(_res)
         } else if (code === -1) {
           Message.error(res.data.msg)
-        } else if (code === 1 || code === 2) {
-          Message.error('登录失效，请重新登录')
-          localStorage.removeItem('token')
-          router.push('/home')
-        } else {
-          reject(_res)
-        }
+        } 
+       
       }, (err) => {
         reject(err)
       })

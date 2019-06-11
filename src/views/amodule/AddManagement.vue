@@ -71,8 +71,6 @@ export default {
   data() {
     return {
       dialogVisible: false,
-      token:
-        "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MjA0OTAwMDksInRpbWUiOiIxNTYwMjIyMTg0Mjg2MSJ9.U5plEtm0k9I2WCzRp7qT7zd8_7gJuENc2ae3dcm5WtM",
       addForm: {
         email: "",
         Contacts: "",
@@ -101,7 +99,7 @@ export default {
     submitForm(formName) {
       console.log(formName);
       const data = {
-        token: this.token,
+        token: localStorage.getItem('token'),
         mobile: formName.mobile,
         email: formName.email,
         code: formName.yzcode,
