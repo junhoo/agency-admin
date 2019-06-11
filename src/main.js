@@ -12,7 +12,7 @@ import {
   Row, Col,
   Menu,
   Submenu, Container,
-  MenuItem, Aside,
+  MenuItem, Aside, Message,
   Tabs, TabPane, Select, Option,
   Table, TableColumn, Radio, RadioGroup, Main, Pagination,
   Dialog, Input, Dropdown, DropdownMenu, DropdownItem, Form, FormItem, DatePicker
@@ -26,6 +26,7 @@ Vue.use(Submenu)
 Vue.use(MenuItem)
 Vue.use(Tabs)
 Vue.use(TabPane)
+Vue.use(Message)
 Vue.use(Table)
 Vue.use(TableColumn)
 Vue.use(Dialog)

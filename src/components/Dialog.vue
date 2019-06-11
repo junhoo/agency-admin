@@ -253,11 +253,11 @@ export default {
           this.$emit('userMsg', JSON.stringify(data))
           if (this.form.value == 1) {
             this.$router.push({
-              path: '/aindex'
+              path: '/bindex'
             })
           } else {
             this.$router.push({
-              path: '/bindex'
+              path: '/aindex'
             })
           }
 

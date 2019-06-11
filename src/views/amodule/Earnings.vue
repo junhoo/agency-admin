@@ -352,87 +352,87 @@ export default {
   }
 }
 </style>
-<style lang="scss">
-.el-dialog__footer {
+<style lang="scss" scoped>
+/deep/ .el-dialog__footer {
   text-align: left;
 }
-.el-form-item__label {
+/deep/ .el-form-item__label {
   color: #fff;
 }
 
 /* 输入框样式 */
-.el-input__inner {
+/deep/ .el-input__inner {
   background-color: #0c2040;
   color: #708193;
   font-size: 12px;
   border: none;
   padding: 0 15px !important;
 }
-.el-input__inner::placeholder {
+/deep/ .el-input__inner::placeholder {
   color: #2b374f;
 }
-.el-input__inner:hover {
+/deep/ .el-input__inner:hover {
   border-color: none;
 }
 /* tab栏样式 */
-.el-tabs__item.is-active {
+/deep/ .el-tabs__item.is-active {
   color: #fff;
 }
-.el-tabs__nav-wrap::after {
+/deep/ .el-tabs__nav-wrap::after {
   display: none;
 }
 /* 表格样式 */
-.el-table--border,
+/deep/ .el-table--border,
 .el-table--group {
   border: 2px solid #06476d;
 }
-.el-table__header-wrapper th:nth-last-of-type(2) {
+/deep/ .el-table__header-wrapper th:nth-last-of-type(2) {
   border-right: 2px solid #06476d;
 }
-.is-leaf {
+/deep/ .is-leaf {
   border-right: none !important;
   border-bottom: 2px solid #06476d !important;
 }
-.el-table tr {
+/deep/ .el-table tr {
   background-color: #061220;
 }
-.el-table--border td {
+/deep/ .el-table--border td {
   border: none;
 }
-.el-table .hidden-columns {
+/deep/ .el-table .hidden-columns {
   display: none;
 }
-.el-table::before {
+/deep/ .el-table::before {
   display: none;
 }
-.el-table--border::after,
-.el-table--group::after {
+/deep/ .el-table--border::after,
+/deep/ .el-table--group::after {
   display: none;
 }
-.el-table {
+/deep/ .el-table {
   color: #7380a0;
 }
-.el-table--enable-row-hover .el-table__body tr:hover > td {
+/deep/ .el-table--enable-row-hover .el-table__body tr:hover > td {
   background-color: #212e3e !important;
 }
 /* 弹框样式 */
-.el-dialog {
+/deep/ .el-dialog {
   background-color: #12223b;
   margin-top: 30vh;
 }
-.el-dialog__body {
+/deep/ .el-dialog__body {
   padding: 25px 25px 0px !important;
 }
-.el-dialog__title {
+/deep/ .el-dialog__title {
   color: #fff;
   font-size: 12px;
 }
-.el-dialog--center .el-dialog__footer {
+/deep/ .el-dialog--center .el-dialog__footer {
   text-align: left;
 }
 // 文本域样式
 
-.el-textarea__inner {
+/deep/ .el-textarea__inner {
   background-color: #0c2040;
   border-color: #0c2040;
 }
