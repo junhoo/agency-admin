@@ -71,11 +71,11 @@ export default {
   nama: "dealData",
   data () {
     return {
-      dropdownList: ["黄金糕", "狮子头", "螺蛳粉", "双皮奶", "蚵仔煎"],
-      input2: "",
+      dropdownList: [],
+      input2: '',
       form: {
-        date1: "",
-        date2: ""
+        date1: '',
+        date2: ''
       },
       name: '',
       page: 1,
@@ -93,15 +93,18 @@ export default {
     },
     getInfo () {
       var param = {
+        start: this.form.date1,
+        end: this.form.date2,
         name: this.input2,
         page: this.page,
         limit: 10,
-        token: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MjA0OTAwMDksInRpbWUiOiIxNTYwMjIyMTg0Mjg2MSJ9.U5plEtm0k9I2WCzRp7qT7zd8_7gJuENc2ae3dcm5WtM'
+        token: localStorage.getItem('token')
       }
       const url = 'http://agency.service.168mi.cn' + '/api/aorder/tradingFlow'
       this.$post(url, param)
         .then(res => {
           this.tableData = res.data.data
+          this.input2 = ''
         })
     }
   }
