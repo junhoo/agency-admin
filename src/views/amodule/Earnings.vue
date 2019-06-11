@@ -216,7 +216,7 @@ export default {
     // 获取钱包列表
     getList(tp) {
       const data = {
-        token: this.token,
+        token: localStorage.getItem('token'),
         page: this.pageSize,
         limit: this.pageNum,
         type: tp
@@ -240,7 +240,7 @@ export default {
     setpassword(){
       this.dialogVisible1 = false;
       const data = {
-        token:this.token,
+        token:localStorage.getItem('token'),
         mobile:this.setPassword.mobile,
         code:this.setPassword.code,
         pay_password:this.setPassword.password
@@ -273,7 +273,7 @@ export default {
     usdtAffirm(){
       this.dialogVisible2 = false 
       const data = {
-        token:this.token,
+        token:localStorage.getItem('token'),
         convert_num:this.usdtData.jf_num
       }
       this.$post('/api/awallet/exchangeUsdt',data).then(res=>{
