@@ -55,19 +55,20 @@ export default {
         email: '',
         wechat: '',
         region: [{
-          value: '1',
+          value: 1,
           label: '盾付宝 项目方代理'
         }, {
-          value: '2',
+          value: 2,
           label: '盾付宝 交易端代理'
         }],
-        value: '', // 代理类型 1项目方 2交易端
+        value: null, // 代理类型 1项目方 2交易端
         dlName: '',
         ref: ''
       },
       content: '发送验证码', // 按钮里显示的内容
       totalTime: 60,
-      isShow: null
+      isShow: null,
+      topath: '/aindex'
     }
   },
   created () {
@@ -100,9 +101,8 @@ export default {
         mobile: this.form.phone,
         type: 1
       }
-      this.$post('/api/agency/sendsms', data).then(res => {
-        console.log(res, 'az')
-      })
+      this.$post('/api/agency/sendsms', data).then(res => {})
+
     },
     checkData () {
       if (this.form.name === '') {
@@ -125,6 +125,9 @@ export default {
       }
     },
     onSubmit () {
+      if(this.form.value === 1){
+        this.topath = '/bindex'
+      }
       var data = {
         mobile: this.form.phone,
         email: this.form.email,
@@ -137,14 +140,10 @@ export default {
         agency_type: this.form.value
       }
       this.$post('/api/agency/register', data).then(res => {
-        this.$message({
-          message: '注册成功',
-          type: 'success'
-        })
         sessionStorage.setItem('activeName', 'five')
         this.$router.push({
-          path: '/home'
-        })
+           path: this.topath
+         })
         var data = res.data.data
         localStorage.setItem('token', data.token)
         localStorage.setItem('userMsg', JSON.stringify(data))
@@ -159,6 +158,7 @@ html, body, #app{
   background-color: #fff !important
 }
 .register{
+  text-align: center;
   min-width: 1008px;
   background-color: #fff;
   height: 100%;
@@ -172,10 +172,10 @@ html, body, #app{
   }
   .formBox{
       position: absolute;
-      left: 50%;
+      left: 48%;
       transform: translateX(-50%);
       width: 25%;
-    .el-form{
+    /deep/ .el-form{
       .el-form-item{
         margin-bottom: 18px !important;
         .el-select{
@@ -185,7 +185,7 @@ html, body, #app{
             position: relative;
             .code{
                 position: absolute;
-                width: 20%;
+                width: 23%;
                 right: 0;
                 font-size: 14px;
                 color: #fff;
@@ -197,7 +197,7 @@ html, body, #app{
             .codeinput{
               position: absolute;
               left: 0;
-              width: 65%
+              width: 55%
             }
             .el-button--primary{
               width: 100%

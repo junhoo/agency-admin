@@ -34,10 +34,14 @@
                         <input type="text" v-model="wechat" placeholder="请填写商户微信">
                     </li>
                     <li>
+                        <p><i class="inputicon"></i><span>邀请码</span></p>
+                        <input type="text" v-model="agency_code" placeholder="请填写商户微信">
+                    </li>
+                    <li>
                         <p><i class="inputicon"></i><span>机构简介</span></p>
                         <textarea name="" id="" cols="30" rows="10" v-model="refs" placeholder="请填写机构简介"></textarea>
                     </li>
-                    <li class="submit"><span>确认提交</span></li>
+                    <li class="submit"><span @click="submit()">确认提交</span></li>
                 </ul>
             </div>
         </div>
@@ -118,10 +122,35 @@ export default {
       contacts: '',
       phone: '',
       wechat: '',
-      refs: ''
+      refs: '',
+      agency_code: null
     }
   },
+  created() {
+      this.agency_code = this.$route.query.agency_code
+  },
   methods: {
+    checkMsg () {
+        if (this.phone === '') {
+            this.$message({
+              message: '警告哦，这是一条警告消息',
+              type: 'warning'
+            });
+        }
+    },
+    submit () {
+      var data = {
+        mobile: this.phone,
+        agency_code: this.agency_code,
+        contacts: this.contacts,
+        wechat_no: this.wechat,
+        organization_info: this.refs
+      }
+      this.$post('/api/agency/apply', data).then(res => {
+
+      })
+
+    },
   }
 }
 </script>
@@ -130,10 +159,13 @@ export default {
 .mobile{
   height: 100%;
   width: 100%;
+  text-align: center;
+  background-color: #252744;
   .head{
       text-align: left;
-      padding: 18px 0 0 25px;
+      padding: 18px 0 13px 25px;
       position: relative;
+      background-color: #252744;
       img{
           width: 58px
       }
@@ -210,9 +242,11 @@ export default {
                   input, textarea{
                       width: 100%;
                       background-color: transparent;
-                      border: 1px solid #fff;
+                      border: 1px dashed #fff;
                       box-sizing: border-box;
                       padding: 17px 9px 15px;
+                      margin:  15px 0;
+                      color: #4A556E;
                       &::placeholder{
                           font-size: 12px;
                           color: #4A556E

@@ -25,8 +25,8 @@
           <div class="usdt">
             <span>1</span>
             <span>USDT</span>
-            <span>≈6.878/</span>
-            <span>积分</span>
+            <span>≈积分/</span>
+            <span>6.878</span>
           </div>
           <div class="jf">USDT实时价格</div>
         </div>
@@ -200,6 +200,11 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+// 文本域样式
+/deep/ .el-textarea__inner{
+  background-color: #0C2040;
+  border-color: #0C2040;
+}
 /* 输入框样式 */
 /deep/ .el-input__inner {
   background-color:  #0C2040;
@@ -342,7 +347,7 @@ export default {
   .tips {
     color: #047e65;
     font-size: 12px;
-    line-height: 22px; 
+    line-height: 22px;
   }
   .password {
     color: #5c6680;
@@ -423,9 +428,5 @@ export default {
   color: #fff;
   font-size: 12px;
 }
-// 文本域样式
-.el-textarea__inner{
-  background-color: #0C2040;
-  border-color: #0C2040;
-}
+
 </style>

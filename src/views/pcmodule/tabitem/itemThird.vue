@@ -95,16 +95,14 @@ export default {
       }
     }
   }
-}
-</style>
-<style>
-  .el-header {
-    background-color: #B3C0D1;
-    color: #333;
-    line-height: 60px;
-  }
+    /deep/ .el-header {
+      background-color: #B3C0D1;
+      color: #333;
+      line-height: 60px;
+    }
 
-  .el-aside {
-    color: #333;
-  }
+    /deep/ .el-aside {
+      color: #333;
+    }
+}
 </style>

@@ -54,7 +54,7 @@ export default {
     if (sessionStorage.getItem('activeName')) {
       this.activeName = sessionStorage.getItem('activeName')
     } else {
-      this.activeName = 'third'
+      this.activeName = 'first'
     }
     if (JSON.parse(localStorage.getItem('userMsg'))) {
       this.userMsg = JSON.parse(localStorage.getItem('userMsg'))
@@ -116,30 +116,30 @@ export default {
    }
 }
 </style>
-<style lang="scss">
-#tab-fourth{
+<style lang="scss" scoped>
+/deep/ #tab-fourth{
   color: #23E0C7 !important
 }
-.el-tabs__header{
+/deep/ .el-tabs__header{
   position: absolute !important;
   width: 40%;
   right: 0;
   padding-top: 30px !important;
 }
-.el-tabs__item{
+/deep/ .el-tabs__item{
   color: #FFFFFF !important
 }
-.el-tabs__nav-wrap::after{
+/deep/ .el-tabs__nav-wrap::after{
   background-color: transparent !important
 }
-.el-tabs__item.is-active{
+/deep/ .el-tabs__item.is-active{
   color: #fff !important
 }
-.el-tabs__active-bar{
+/deep/ .el-tabs__active-bar{
   background-color: #00CAD8 !important;
   height: 1px !important
 }
-.el-tabs__header{
+/deep/ .el-tabs__header{
   z-index: 9999;
 }
 </style>
