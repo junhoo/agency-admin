@@ -8,7 +8,7 @@
           <span>积分余额</span>
         </div>
         <div class="right">
-          <el-button type="primary" @click="dialogVisible2 = true">兑换USDT</el-button>
+          <el-button type="primary" @click="chengeUsdt">兑换USDT</el-button>
         </div>
       </div>
       <div class="box">
@@ -17,7 +17,7 @@
           <span style="color:#059E7E;">积分余额</span>
         </div>
         <div class="right">
-          <el-button type="primary" @click="dialogVisible3 = true">提现USDT</el-button>
+          <el-button type="primary" @click="getCash">提现USDT</el-button>
         </div>
       </div>
       <div class="box three">
@@ -61,8 +61,8 @@
           :header-cell-style="{background:'#12223B',color:'#606266'}"
           align="center"
         >
-          <el-table-column prop="date" label="订单号"  align="center"></el-table-column>
-          <el-table-column prop="name" label="发起时间"  align="center"></el-table-column>
+          <el-table-column prop="date" label="订单号" align="center"></el-table-column>
+          <el-table-column prop="name" label="发起时间" align="center"></el-table-column>
           <el-table-column prop="address" label="提现金额" align="center"></el-table-column>
           <el-table-column prop="address" label="矿工费" align="center"></el-table-column>
           <el-table-column prop="address" label="实际到账" align="center"></el-table-column>
@@ -70,7 +70,7 @@
           <el-table-column prop="address" label="区块确认数" align="center"></el-table-column>
           <el-table-column prop="address" label="交易状态" align="center">
             <template>
-              <span style="color:red;" @click="dialogVisible1 = true">审核中</span>
+              <span style="color:red;">审核中</span>
             </template>
           </el-table-column>
         </el-table>
@@ -86,17 +86,17 @@
       center
     >
       <div class="mobile">
-        <span>验证手机：153****4544</span>
+        <span>验证手机：{{setPassword.mobile}}</span>
       </div>
       <div class="text">
-        <el-input size="small" placeholder="输入验证码" v-model="input"></el-input>
-        <el-button type="primary">获取验证码</el-button>
+        <el-input size="small" placeholder="输入验证码" v-model="setPassword.code"></el-input>
+        <el-button type="primary" @click="getCode(setPassword.mobile,1)">获取验证码</el-button>
       </div>
       <div class="tips" style="marginTop:16px;">注：为确保资金安全，请先验证手机，并设置您的资金密码。</div>
       <div class="password" style="marginTop:16px;">设置资金密码</div>
-      <el-input size="small" placeholder="请输入6位数密码" v-model="input3" class="input"></el-input>
+      <el-input size="small" placeholder="请输入6位数密码" v-model="setPassword.password" class="input"></el-input>
       <span slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="dialogVisible1" style="marginTop:16px;">确 定</el-button>
+        <el-button type="primary" @click="dialogVisible1=false" style="marginTop:16px;">确 定</el-button>
       </span>
     </el-dialog>
 
@@ -161,12 +161,13 @@
 </template>
 
 <script>
-import { log } from 'util';
+import { log } from "util";
 export default {
   name: "earnings",
   data() {
     return {
-      token:'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MjA0OTAwMDksInRpbWUiOiIxNTYwMjIyMTg0Mjg2MSJ9.U5plEtm0k9I2WCzRp7qT7zd8_7gJuENc2ae3dcm5WtM',
+      token:
+        "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MjA0OTAwMDksInRpbWUiOiIxNTYwMjIyMTg0Mjg2MSJ9.U5plEtm0k9I2WCzRp7qT7zd8_7gJuENc2ae3dcm5WtM",
       input: "",
       dialogVisible1: false,
       dialogVisible2: false,
@@ -175,44 +176,77 @@ export default {
       input3: "",
       tableData: [],
       // 页码
-      pageSize:1,
+      pageSize: 1,
       // 页容量
-      pageNum:10,
-      total:0
+      pageNum: 10,
+      total: 0,
+      // 是否设置资金密码
+      setStatus: "",
+      // 设置资金密码
+      setPassword: {
+        code: "",
+        password: "",
+        mobile: "153****4544"
+      }
     };
   },
-  created(){
-    this.getList(1)
+  created() {
+    this.getList(1);
   },
   methods: {
     // tab栏切换事件
     handleClick(event) {
-      var index = parseInt(event.index)
-      if(index === 0){
-        
-        this.getList(1)
-      }else if (index === 1){
-        this.getList(2)
+      var index = parseInt(event.index);
+      if (index === 0) {
+        this.getList(1);
+      } else if (index === 1) {
+        this.getList(2);
       }
     },
     // 获取钱包列表
-    getList(tp){
+    getList(tp) {
       const data = {
-        token:this.token,
-        page:this.pageSize,
-        limit:this.pageNum,
-        type:tp
+        token: this.token,
+        page: this.pageSize,
+        limit: this.pageNum,
+        type: tp
+      };
+      this.$post("/api/awallet/wallet", data).then(res => { 
+        this.setStatus = res.data.pay_password;
+        this.tableData = res.data.data;
+      });
+    },
+    // 获取验证码
+    getCode(mob, tp) {
+      this.$post("/api/agency/sendsms", { mobile: mob, type: tp }).then(
+        res => {}
+      );
+    },
+    // 兑换USDT
+    chengeUsdt() {
+      let status = parseInt(this.setStatus);
+      if (status === 0) {
+        this.dialogVisible1 = true;
+      } else if (status === 1) {
+        this.dialogVisible2 = true;
       }
-      this.$post('/api/awallet/wallet',data).then(res=>{
-        this.tableData = res.data.data
-      })
+    },
+    // 提币
+    getCash() {
+      let status = parseInt(this.setStatus);
+      if (status === 0) {
+        this.dialogVisible1 = true;
+      } else if (status === 1) {
+        this.dialogVisible3 = true;
+      }
     }
   }
 };
 </script>
 
 <style lang="scss" scoped>
-/deep/ .my-btn, .start {
+/deep/ .my-btn,
+.start {
   .el-input__inner {
     padding: 15px 10px 15px 30px !important;
   }
@@ -456,5 +490,4 @@ export default {
 //     background-color: transparent;
 //   }
 // }
-
 </style>
