@@ -25,8 +25,8 @@
           <div class="usdt">
             <span>1</span>
             <span>USDT</span>
-            <span>≈6.878/</span>
-            <span>积分</span>
+            <span>≈积分/</span>
+            <span>6.878</span>
           </div>
           <div class="jf">USDT实时价格</div>
         </div>

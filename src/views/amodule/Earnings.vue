@@ -4,7 +4,7 @@
     <div class="content">
       <div class="box">
         <div class="left">
-          <span>9500</span>
+          <span>{{totalNum}}</span>
           <span>积分余额</span>
         </div>
         <div class="right">
@@ -13,8 +13,8 @@
       </div>
       <div class="box">
         <div class="left">
-          <span>9500</span>
-          <span style="color:#059E7E;">积分余额</span>
+          <span>{{totalUsdt}}</span>
+          <span style="color:#059E7E;">USDT余额</span>
         </div>
         <div class="right">
           <el-button type="primary" @click="getCash">提现USDT</el-button>
@@ -25,8 +25,8 @@
           <div class="usdt">
             <span>1</span>
             <span>USDT</span>
-            <span>≈6.878/</span>
-            <span>积分</span>
+            <span>≈积分/</span>
+            <span>6.878</span>
           </div>
           <div class="jf">USDT实时价格</div>
         </div>
@@ -43,8 +43,8 @@
           :header-cell-style="{background:'#12223B',color:'#606266'}"
           align="center"
         >
-          <el-table-column prop="id" label="订单号" width="100%" align="center"></el-table-column>
-          <el-table-column prop="amount_all_income" label="总积分" width="100%" align="center"></el-table-column>
+          <el-table-column prop="id" label="订单号"  align="center"></el-table-column>
+          <el-table-column prop="amount_all_income" label="总积分"  align="center"></el-table-column>
           <el-table-column prop="operating_amount" label="兑换积分数" align="center"></el-table-column>
           <el-table-column prop="operating_amount" label="获得USDT数" align="center"></el-table-column>
           <el-table-column prop="add_time" label="兑换时间" align="center"></el-table-column>
@@ -96,7 +96,7 @@
       <div class="password" style="marginTop:16px;">设置资金密码</div>
       <el-input size="small" placeholder="请输入6位数密码" v-model="setPassword.password" class="input"></el-input>
       <span slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="dialogVisible1=false" style="marginTop:16px;">确 定</el-button>
+        <el-button type="primary" @click="setpassword" style="marginTop:16px;">确 定</el-button>
       </span>
     </el-dialog>
 
@@ -113,15 +113,15 @@
         <span>兑换积分数</span>
       </div>
       <div class="text">
-        <el-input size="small" placeholder="输入要兑换的数量" v-model="input"></el-input>
-        <el-button type="primary">全部兑换</el-button>
+        <el-input size="small" placeholder="输入要兑换的数量" v-model="usdtData.jf_num"></el-input>
+        <el-button type="primary" @click="allChange">全部兑换</el-button>
       </div>
       <!-- <div class="tips">注：为确保资金安全，请先验证手机，并设置您的资金密码。</div> -->
       <div class="password" style="marginTop:16px">可获得USDT个数</div>
-      <el-input size="small" placeholder="数量（USDT)" v-model="input3" class="input"></el-input>
+      <el-input size="small" placeholder="数量（USDT)" v-model="usdtNum" class="input"></el-input>
       <div class="tips" style="marginTop:16px;">可用积分数：123124</div>
       <span slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="dialogVisible2 = false">确 定</el-button>
+        <el-button type="primary" @click="usdtAffirm">确 定</el-button>
       </span>
     </el-dialog>
 
@@ -182,11 +182,21 @@ export default {
       total: 0,
       // 是否设置资金密码
       setStatus: "",
+      // usdt费率
+      rate:'',
+      // 积分余额
+      totalNum:'',
+      // usdt余额
+      totalUsdt:'',
       // 设置资金密码
       setPassword: {
         code: "",
         password: "",
         mobile: "153****4544"
+      },
+      // 兑换usdt
+      usdtData:{
+        jf_num:'',
       }
     };
   },
@@ -214,6 +224,9 @@ export default {
       this.$post("/api/awallet/wallet", data).then(res => {
         this.setStatus = res.data.pay_password;
         this.tableData = res.data.data;
+        this.rate = res.data.rate
+        this.totalNum = res.data.amount_total
+        this.totalUsdt = res.data.usdt_num
       });
     },
     // 获取验证码
@@ -222,8 +235,29 @@ export default {
         res => {}
       );
     },
+
+     // 设置资金密码
+    setpassword(){
+      this.dialogVisible1 = false;
+      const data = {
+        token:this.token,
+        mobile:this.setPassword.mobile,
+        code:this.setPassword.code,
+        pay_password:this.setPassword.password
+      }
+      this.$post('/api/auser/modifyPayPassword',data).then(res=>{
+        if (res.code === 0) {
+          this.setStatus = 1
+          this.$message({
+            message: res.msg,
+            type: "success"
+          });
+        }
+      })
+    },
     // 兑换USDT
     chengeUsdt() {
+      // this.dialogVisible2 = true;
       let status = parseInt(this.setStatus);
       if (status === 0) {
         this.dialogVisible1 = true;
@@ -231,7 +265,22 @@ export default {
         this.dialogVisible2 = true;
       }
     },
-    // 提币
+    // 全部兑换积分
+    allChange(){
+      this.usdtData.jf_num = this.totalNum
+    },
+    // 兑换USDT确认提交
+    usdtAffirm(){
+      this.dialogVisible2 = false 
+      const data = {
+        token:this.token,
+        convert_num:this.usdtData.jf_num
+      }
+      this.$post('/api/awallet/exchangeUsdt',data).then(res=>{
+        console.log(res);
+      })
+    },
+    // 提币USDT
     getCash() {
       let status = parseInt(this.setStatus);
       if (status === 0) {
@@ -239,6 +288,17 @@ export default {
       } else if (status === 1) {
         this.dialogVisible3 = true;
       }
+    }
+  },
+  computed:{
+    usdtNum(){
+      let usdtNum = ''
+      if(this.usdtData.jf_num === ''){
+        usdtNum = ''
+      }else {
+        usdtNum = (this.usdtData.jf_num/this.rate).toFixed(2)
+      } 
+      return usdtNum
     }
   }
 };

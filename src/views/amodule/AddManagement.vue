@@ -140,6 +140,23 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+/deep/ .el-input__inner,
+.el-textarea__inner {
+  background-color: #0c2040 !important;
+  border-color: #0c2040;
+  color: #91a4b6;
+  &::placeholder{
+    color: #91a4b6;
+  }
+}
+/deep/ .el-textarea__inner {
+  background-color: #0c2040 !important;
+  border-color: #0c2040;
+  color: #91a4b6;
+  &::placeholder{
+    color: #91a4b6
+  }
+}
 .container {
   height: 100%;
   width: 40%;
@@ -153,11 +170,11 @@ export default {
 }
 </style>
 <style lang='scss' scoped>
-.container{
-  .el-dialog{
-      background-color: #12223B;
-      margin-top: 30vh;
-      border-radius: 6px
+.container {
+  .el-dialog {
+    background-color: #12223b;
+    margin-top: 30vh;
+    border-radius: 6px;
   }
   .el-dialog__title {
     color: #fff;

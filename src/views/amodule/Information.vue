@@ -261,6 +261,16 @@ export default {
 
 
 <style lang="scss" scoped>
+/deep/ .el-input__inner{
+  background-color: #0C2040 !important;
+  border-color: #0C2040;
+  color: #91A4B6
+}
+/deep/ .el-textarea__inner{
+  background-color: #0C2040 !important;
+  border-color: #0C2040;
+  color: #91A4B6;
+}
 .container {
   width: 100%;
   height: 100%;
