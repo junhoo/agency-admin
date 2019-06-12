@@ -8,14 +8,27 @@
 export default {
   props: {
     objs: Object,
-    per: String
+    ccc: Array
   },
   watch: {
     objs: {
       handler(newName) {
         this.series[0].data = newName.midList1
         this.series[1].data = newName.midList2
-        // this.chartOptions.plotOptions.bar.columnWidth = newName.columnWidth
+        this.chartOptions.xaxis.categories = newName.name_list
+        // console.log('====')
+        // console.log(newName.name_list)
+        // console.log(this.chartOptions.xaxis.categories)
+      },
+        deep: true
+      },
+    ccc: {
+      handler(newName) {
+        console.log('====')
+        console.log(newName)
+        this.chartOptions.xaxis.categories = newName
+        console.log('+++')
+        console.log(this.chartOptions.xaxis.categories)
       },
         deep: true
       }
@@ -50,6 +63,7 @@ export default {
 
         xaxis: {
           categories: ['Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct'],
+          // categories: []
         },
         yaxis: {
           title: {

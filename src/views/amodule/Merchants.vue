@@ -2,26 +2,26 @@
   <div class="merchants-body">
     <header class="container">
       <div class="content">
-        <p class="money">1862,325</p>
+        <p class="money">{{user_num}}</p>
         <p class="name">用户数量</p>
       </div>
       <div class="content">
-        <p class="money green">1862,325</p>
-        <p class="name">用户数量</p>
+        <p class="money green">{{recharge_amount}}</p>
+        <p class="name">本月充值</p>
       </div>
       <div class="content">
-        <p class="money purple">1862,325</p>
-        <p class="name">用户数量</p>
+        <p class="money purple">{{withdraw_amount}}</p>
+        <p class="name">本月提现</p>
       </div>
       <div class="content">
         <div class="money light-blue">
-          1862,325
+          {{bonus_amount}}
           <div class="percent">
             <!-- 30% -->
             <p class="text">30%</p>
           </div>
         </div>
-        <p class="name">用户数量</p>
+        <p class="name">本月收益</p>
       </div>
     </header>
 
@@ -61,7 +61,7 @@
       </div>
 
       <!-- 波浪图 -->
-      <top-chart :list="topForm.toplist"></top-chart>
+      <top-chart :list="top_trend_list"></top-chart>
     </section>
 
     <!-- 中部图-->
@@ -88,7 +88,7 @@
         </div>
 
         <!-- 柱状图 -->
-        <common-mid :objs="midForm.list"></common-mid>
+        <bar-chart :objs="bonus_ranking_list" :ccc="bonus_ranking_list.name_list"></bar-chart>
       </div>
 
       <!-- 中右 -->
@@ -113,7 +113,7 @@
           </div>
         </div>
 
-        <common-right :objs="midForm.list"></common-right>
+        <common-right :objs="bonus_trend_list"></common-right>
       </div>
     </section>
 
@@ -147,19 +147,19 @@
           </div>
         </div>
 
+        <!-- :data="bottForm.tableData1" -->
         <el-table
-          :data="bottForm.tableData1"
+          :data="bonus_detail_list"
           border
           height="250"
           style="width: 100%"
           :header-cell-style="{background:'#061220',color:'#fff'}"
-          align="center"
-        >
-          <el-table-column prop="date" label="排行" width="100%" align="center"></el-table-column>
+          align="center">
+          <el-table-column prop="index" label="排行" width="100%" align="center"></el-table-column>
           <el-table-column prop="name" label="项目方名称" width="100%" align="center"></el-table-column>
-          <el-table-column prop="address" label="充值总金额" align="center"></el-table-column>
-          <el-table-column prop="address" label="体现总金额" align="center"></el-table-column>
-          <el-table-column prop="address" label="贡献利润" align="center"></el-table-column>
+          <el-table-column prop="recharge_amount" label="充值总金额" align="center"></el-table-column>
+          <el-table-column prop="withdraw_amount" label="体现总金额" align="center"></el-table-column>
+          <el-table-column prop="bonus_amount" label="贡献利润" align="center"></el-table-column>
         </el-table>
       </div>
 
@@ -183,6 +183,8 @@
             </el-form>
           </div>
         </div>
+
+        <two-areachart :objs="bonus_num_list"></two-areachart>
       </div>
     </section>
   </div>
@@ -190,29 +192,46 @@
 
 <script>
 import TopChart from "components/AreaChart";
-import CommonMid from "components/BarChart";
+import BarChart from "components/BarChart";
 import CommonRight from "components/RightChart";
+import TwoAreachart from "components/TwoAreaChart";
 export default {
   name: "merchants",
   components: {
     TopChart,
-    CommonMid,
-    CommonRight
-  },
-  created () {
-    this.getMerInfo()
-  },
-  mounted() {
-    // 顶部数据
-    this.topForm.toplist = [100, 100, 80, 80, 50, 50, 70, 91];
-    // 中部数据
-    this.midForm.list.midList1 = [20, 40, 80, 80, 50, 50, 70, 91];
-    this.midForm.list.midList2 = [50, 60, 80, 80, 50, 50, 70, 91];
-    // 底部数据
-    this.bottForm.tableData1 = this.tableData;
+    BarChart,
+    CommonRight,
+    TwoAreachart
   },
   data() {
     return {
+      // 顶部金额部分
+      user_num: '', // 用户数量
+      recharge_amount: '', // 本月充值
+      withdraw_amount: '', // 本月提现
+      bonus_amount: '', // 本月收益
+
+      // 顶部表格数据
+      top_trend_list: [], // 代理收益趋势
+
+      // 中间表格数据
+      bonus_ranking_list: { // 充值提现额排行
+        midList1: [],
+        midList2: [],
+        name_list: []
+      },
+      bonus_trend_list: { // 充值提现趋势
+        midList1: [],
+        midList2: []
+      },
+
+      // 底部表格数据
+      bonus_detail_list: [], // 收益贡献明细
+      bonus_num_list: { // 收益贡献明细
+        midList1: [],
+        midList2: []
+      },
+
       // 顶部
       topForm: {
         date1: "",
@@ -301,15 +320,210 @@ export default {
           address: "3242342"
         }
       ]
-    };
+    }
+  },
+  created () {
+    this.getMerInfo()
+  },
+  mounted() {
+    // 顶部数据
+    this.topForm.toplist = [100, 100, 80, 80, 50, 50, 70, 91];
+    // 中部数据
+    this.midForm.list.midList1 = [20, 40, 80, 80, 50, 50, 70, 91];
+    this.midForm.list.midList2 = [50, 60, 80, 80, 50, 50, 70, 91];
+    // 底部数据
+    // this.bottForm.tableData1 = this.tableData;
   },
   methods: {
     getMerInfo () {
       const path = '/api/awallet/getStatics'
       const data = { token: localStorage.getItem('token') }
       this.$post(path, data).then(res => {
-        console.log(res)
+        let _res = res
+        console.log('getMerInfo')
+        console.log(_res)
+        _res = _res.data
+        this.user_num = _res.user_num
+        this.recharge_amount = _res.recharge_amount
+        this.withdraw_amount = _res.withdraw_amount
+        this.bonus_amount = _res.bonus_amount
+
+        // 代理收益趋势
+        // this.top_trend_list = _res.trend_list
+        this.top_trend_list = [100, 90, 80, 70, 50, 40, 20, 20];
+
+        // 充值提现额排行
+        // this.bonus_ranking_list.midList1  = _res.bonus_ranking_list.recharge_amount_list
+        // this.bonus_ranking_list.midList2  = _res.bonus_ranking_list.withdraw_amount_list
+        this.bonus_ranking_list.midList1 = [10, 20, 30, 40, 50, 60, 70, 91];
+        this.bonus_ranking_list.midList2 = [10, 20, 30, 40, 50, 60, 70, 91];
+        this.bonus_ranking_list.name_list = ['mz','mz','mz','mz','mz','mz','mz','mz'];
+
+        // 充值提现趋势
+        // this.bonus_trend_list.midList1  = _res.bonus_trend_list.recharge_amount_list
+        // this.bonus_trend_list.midList2  = _res.bonus_trend_list.withdraw_amount_list
+        this.bonus_trend_list.midList1 = [10, 20, 30, 40, 50, 60, 70, 91];
+        this.bonus_trend_list.midList2 = [90, 60, 50, 40, 30, 20, 50, 91];
+        this.bonus_trend_list.day_list =  _res.bonus_trend_list.day_list
+
+        // 收益贡献明细
+        this.bonus_detail_list = _res.bonus_detail_list
+
+        // 充值提现笔数
+        this.bonus_num_list.midList1 = _res.bonus_num_list.recharge_num_list
+        this.bonus_num_list.midList2 = _res.bonus_num_list.withdraw_num_list
+        console.log(this.bonus_num_list)
       })
+    },
+    ddd () {
+      return {
+          "code": 0,
+          "msg": "sucess",
+          "data": {
+              "user_num": 2,
+              "recharge_amount": "99.00",
+              "withdraw_amount": "0.00",
+              "bonus_amount": 0.0099,
+              "trend_list": {
+                  "bonus_amount_list": [
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0
+                  ],
+                  "day_list": [
+                      "06-01",
+                      "06-02",
+                      "06-03",
+                      "06-04",
+                      "06-05",
+                      "06-06",
+                      "06-07",
+                      "06-08",
+                      "06-09",
+                      "06-10",
+                      "06-11",
+                      "06-12"
+                  ]
+              },
+              "bonus_ranking_list": {
+                  "recharge_amount_list": [
+                      "99.00"
+                  ],
+                  "withdraw_amount_list": [
+                      "0.00"
+                  ],
+                  "name_list": [
+                      "深圳明治项目方"
+                  ]
+              },
+              "bonus_detail_list": [
+                  {
+                      "index": 1,
+                      "recharge_amount": "99.00",
+                      "withdraw_amount": "0.00",
+                      "bonus_amount": 0.0099,
+                      "name": "深圳明治项目方"
+                  }
+              ],
+              "bonus_trend_list": {
+                  "recharge_amount_list": [
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0
+                  ],
+                  "withdraw_amount_list": [
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0
+                  ],
+                  "day_list": [
+                      "06-01",
+                      "06-02",
+                      "06-03",
+                      "06-04",
+                      "06-05",
+                      "06-06",
+                      "06-07",
+                      "06-08",
+                      "06-09",
+                      "06-10",
+                      "06-11",
+                      "06-12"
+                  ]
+              },
+              "bonus_num_list": {
+                  "recharge_num_list": [
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0
+                  ],
+                  "withdraw_num_list": [
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0
+                  ],
+                  "day_list": [
+                      "06-01",
+                      "06-02",
+                      "06-03",
+                      "06-04",
+                      "06-05",
+                      "06-06",
+                      "06-07",
+                      "06-08",
+                      "06-09",
+                      "06-10",
+                      "06-11",
+                      "06-12"
+                  ]
+              }
+          }
+      }
     }
   }
 };
