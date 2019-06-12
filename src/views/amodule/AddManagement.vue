@@ -20,7 +20,7 @@
       <el-form-item label="联系电话" prop="name" class="phoneT">
         <el-input v-model="addForm.phone" placeholder="请填写商户手机号码"></el-input>
         <el-input v-model="addForm.yzcode" class="code" placeholder="输入验证码"></el-input>
-        <el-button size="small" type="success" @click="getCode()">获取验证码</el-button>
+        <el-button size="small" type="success" @click="getCode">获取验证码</el-button>
       </el-form-item>
       <el-form-item label="机构名称" prop="name">
         <el-input v-model="addForm.name" placeholder="请填写机构名称"></el-input>
@@ -46,7 +46,7 @@
         <span class="tips">注：充值手续费费率 2%</span>
       </el-form-item>
       <el-form-item label class="submitbtn">
-        <el-button type="success">取消</el-button>
+        <el-button type="success" @click="toBack">取消</el-button>
         <el-button type="primary" @click="submitForm(addForm)">确定添加</el-button>
       </el-form-item>
     </el-form>
@@ -66,8 +66,10 @@
 </template>
 
 <script>
+import { Message } from "element-ui";
 export default {
   name: "AddManagement",
+  
   data() {
     return {
       dialogVisible: false,
@@ -81,7 +83,8 @@ export default {
         ref: "",
         radio: 2,
         radio2: 2,
-        yzcode: ""
+        yzcode: "",
+        mobile:""
       },
       rules: {
         email: [
@@ -100,9 +103,9 @@ export default {
       console.log(formName);
       const data = {
         token: localStorage.getItem('token'),
-        mobile: formName.mobile,
+        mobile: formName.phone,
         email: formName.email,
-        code: formName.yzcode,
+        code: parseInt(formName.yzcode),
         contacts: formName.Contacts,
         wechat_no: formName.wechat,
         recharge_rate_type: formName.radio2,
@@ -114,10 +117,11 @@ export default {
       this.$post("/api/auser/add", data).then(res => {
         console.log(res);
         if (res.code === 0) {
-          this.$message({
-            message: res.msg,
+          Message({
+            message: res.data,
             type: "success"
           });
+          this.$router.push('/a_pos_management')
         }
       });
     },
@@ -129,10 +133,14 @@ export default {
         type: 1
       };
       this.$post("/api/agency/sendsms", data).then(res => {
-        // console.log(res);
+        console.log(res);
       });
     },
-    submit(index) {}
+    // 取消添加
+    toBack(){
+      this.$router.push('/a_pos_management')
+    },
+   
   }
 };
 </script>

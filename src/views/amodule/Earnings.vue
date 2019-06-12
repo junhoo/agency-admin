@@ -43,8 +43,8 @@
           :header-cell-style="{background:'#12223B',color:'#606266'}"
           align="center"
         >
-          <el-table-column prop="id" label="订单号"  align="center"></el-table-column>
-          <el-table-column prop="amount_all_income" label="总积分"  align="center"></el-table-column>
+          <el-table-column prop="id" label="订单号" align="center"></el-table-column>
+          <el-table-column prop="amount_all_income" label="总积分" align="center"></el-table-column>
           <el-table-column prop="operating_amount" label="兑换积分数" align="center"></el-table-column>
           <el-table-column prop="operating_amount" label="获得USDT数" align="center"></el-table-column>
           <el-table-column prop="add_time" label="兑换时间" align="center"></el-table-column>
@@ -90,7 +90,7 @@
       </div>
       <div class="text">
         <el-input size="small" placeholder="输入验证码" v-model="setPassword.code"></el-input>
-        <el-button type="primary" @click="getCode(setPassword.mobile,1)">获取验证码</el-button>
+        <el-button type="primary" @click="getCode(setPassword.mobile,2)">获取验证码</el-button>
       </div>
       <div class="tips" style="marginTop:16px;">注：为确保资金安全，请先验证手机，并设置您的资金密码。</div>
       <div class="password" style="marginTop:16px;">设置资金密码</div>
@@ -157,16 +157,18 @@
         <div class="tips" style="color: #5c6680;">3.提现到上述地址后，将在2个区块确认后到账</div>
       </span>
     </el-dialog>
+    
+    
   </div>
 </template>
 
 <script>
 import { log } from "util";
+import { Message } from "element-ui";
 export default {
   name: "earnings",
   data() {
     return {
-      
       input: "",
       dialogVisible1: false,
       dialogVisible2: false,
@@ -182,20 +184,20 @@ export default {
       // 是否设置资金密码
       setStatus: "",
       // usdt费率
-      rate:'',
+      rate: "",
       // 积分余额
-      totalNum:'',
+      totalNum: "",
       // usdt余额
-      totalUsdt:'',
+      totalUsdt: "",
       // 设置资金密码
       setPassword: {
         code: "",
         password: "",
-        mobile: ''
+        mobile: ""
       },
       // 兑换usdt
-      usdtData:{
-        jf_num:'',
+      usdtData: {
+        jf_num: ""
       }
     };
   },
@@ -215,71 +217,80 @@ export default {
     // 获取钱包列表
     getList(tp) {
       const data = {
-        token: localStorage.getItem('token'),
+        token: localStorage.getItem("token"),
         page: this.pageSize,
         limit: this.pageNum,
         type: tp
       };
       this.$post("/api/awallet/wallet", data).then(res => {
-        let mobile = localStorage.getItem('userMsg')
-        this.setPassword.mobile = JSON.parse(mobile).mobile
+        let mobile = localStorage.getItem("userMsg");
+        this.setPassword.mobile = JSON.parse(mobile).mobile;
         this.setStatus = res.data.pay_password;
         this.tableData = res.data.data;
-        this.rate = res.data.rate
-        this.totalNum = res.data.amount_total
-        this.totalUsdt = res.data.usdt_num
+        this.rate = res.data.rate;
+        this.totalNum = res.data.amount_total;
+        this.totalUsdt = res.data.usdt_num;
       });
     },
     // 获取验证码
     getCode(mob, tp) {
-      this.$post("/api/agency/sendsms", { mobile: mob, type: tp }).then(
-        res => {}
-      );
+      this.$post("/api/agency/sendsms", { mobile: mob, type: tp }).then(res => {
+        console.log(res);
+      });
     },
 
-     // 设置资金密码
-    setpassword(){
+    // 设置资金密码
+    setpassword() {
       this.dialogVisible1 = false;
       const data = {
-        token:localStorage.getItem('token'),
-        mobile:this.setPassword.mobile,
-        code:this.setPassword.code,
-        pay_password:this.setPassword.password
-      }
-      this.$post('/api/auser/modifyPayPassword',data).then(res=>{
+        token: localStorage.getItem("token"),
+        mobile: this.setPassword.mobile,
+        code: parseInt(this.setPassword.code),
+        pay_password: this.setPassword.password
+      };
+      this.$post("/api/auser/modifyPayPassword", data).then(res => {
         if (res.code === 0) {
-          this.setStatus = 1
-          this.$message({
-            message: res.msg,
+          this.setPassword.code = "";
+          this.setPassword.password = "";
+          this.setStatus = 1;
+          Message({
+            message: res.data,
             type: "success"
           });
         }
-      })
+      });
     },
     // 兑换USDT
     chengeUsdt() {
       // this.dialogVisible2 = true;
+
       let status = parseInt(this.setStatus);
       if (status === 0) {
+        console.log("333");
         this.dialogVisible1 = true;
       } else if (status === 1) {
         this.dialogVisible2 = true;
       }
     },
     // 全部兑换积分
-    allChange(){
-      this.usdtData.jf_num = this.totalNum
+    allChange() {
+      this.usdtData.jf_num = this.totalNum;
     },
     // 兑换USDT确认提交
-    usdtAffirm(){
-      this.dialogVisible2 = false 
+    usdtAffirm() {
+      this.dialogVisible2 = false;
       const data = {
-        token:localStorage.getItem('token'),
-        convert_num:this.usdtData.jf_num
-      }
-      this.$post('/api/awallet/exchangeUsdt',data).then(res=>{
-        console.log(res);
-      })
+        token: localStorage.getItem("token"),
+        convert_num: this.usdtData.jf_num
+      };
+      this.$post("/api/awallet/exchangeUsdt", data).then(res => {
+        if (res.code === 0) {
+          Message({
+            message: res.msg,
+            type: "success"
+          });
+        }
+      });
     },
     // 提币USDT
     getCash() {
@@ -291,15 +302,15 @@ export default {
       }
     }
   },
-  computed:{
-    usdtNum(){
-      let usdtNum = ''
-      if(this.usdtData.jf_num === ''){
-        usdtNum = ''
-      }else {
-        usdtNum = (this.usdtData.jf_num/this.rate).toFixed(2)
-      } 
-      return usdtNum
+  computed: {
+    usdtNum() {
+      let usdtNum = "";
+      if (this.usdtData.jf_num === "") {
+        usdtNum = "";
+      } else {
+        usdtNum = (this.usdtData.jf_num / this.rate).toFixed(2);
+      }
+      return usdtNum;
     }
   }
 };
@@ -311,6 +322,9 @@ export default {
   .el-input__inner {
     padding: 15px 10px 15px 30px !important;
   }
+}
+/deep/ .el-table__empty-block {
+  background: #061220;
 }
 
 /deep/ .el-table--border,
