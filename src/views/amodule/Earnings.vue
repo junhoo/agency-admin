@@ -116,7 +116,6 @@
         <el-input size="small" placeholder="输入要兑换的数量" v-model="usdtData.jf_num"></el-input>
         <el-button type="primary" @click="allChange">全部兑换</el-button>
       </div>
-      <!-- <div class="tips">注：为确保资金安全，请先验证手机，并设置您的资金密码。</div> -->
       <div class="password" style="marginTop:16px">可获得USDT个数</div>
       <el-input size="small" placeholder="数量（USDT)" v-model="usdtNum" class="input"></el-input>
       <div class="tips" style="marginTop:16px;">可用积分数：123124</div>
@@ -157,8 +156,7 @@
         <div class="tips" style="color: #5c6680;">3.提现到上述地址后，将在2个区块确认后到账</div>
       </span>
     </el-dialog>
-    
-    
+
   </div>
 </template>
 
@@ -222,7 +220,10 @@ export default {
         limit: this.pageNum,
         type: tp
       };
+
       this.$post("/api/awallet/wallet", data).then(res => {
+        console.log(res);
+        
         let mobile = localStorage.getItem("userMsg");
         this.setPassword.mobile = JSON.parse(mobile).mobile;
         this.setStatus = res.data.pay_password;
@@ -262,8 +263,6 @@ export default {
     },
     // 兑换USDT
     chengeUsdt() {
-      // this.dialogVisible2 = true;
-
       let status = parseInt(this.setStatus);
       if (status === 0) {
         console.log("333");
@@ -292,6 +291,7 @@ export default {
         }
       });
     },
+
     // 提币USDT
     getCash() {
       let status = parseInt(this.setStatus);
