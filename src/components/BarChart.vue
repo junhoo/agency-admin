@@ -7,14 +7,15 @@
 <script>
 export default {
   props: {
-    objs: Object
+    objs: Object,
+    per: String
   },
   watch: {
     objs: {
       handler(newName) {
         this.series[0].data = newName.midList1
         this.series[1].data = newName.midList2
-        this.chartOptions.plotOptions.bar.columnWidth = newName.columnWidth
+        // this.chartOptions.plotOptions.bar.columnWidth = newName.columnWidth
       },
         deep: true
       }
@@ -35,7 +36,7 @@ export default {
           bar: {
             horizontal: false,
             columnWidth: '55%',
-            endingShape: 'rounded'	
+            endingShape: 'rounded'
           },
         },
         dataLabels: {

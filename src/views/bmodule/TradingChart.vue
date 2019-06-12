@@ -25,7 +25,7 @@
       </div>
     </header>
 
-    <!-- 顶部图 -->
+    <!-- 时间控件 -->
     <section class="chart-top">
       <div class="title-box">
         <div class="icon"></div>
@@ -39,7 +39,7 @@
             <el-date-picker
               type="date"
               placeholder="2018-05"
-              v-model="topForm.date1"
+              v-model="formInfo.date1"
               size="small"
               :editable="false"
             ></el-date-picker>
@@ -52,7 +52,7 @@
             <el-date-picker
               type="date"
               placeholder="2019-06"
-              v-model="topForm.date2"
+              v-model="formInfo.date2"
               size="small"
               :editable="false"
             ></el-date-picker>
@@ -60,120 +60,73 @@
         </div>
       </div>
 
-      <!-- 波浪图 -->
-      <common-mid :objs="midForm.list"></common-mid>
+      <!-- 图形 -->
+      <apexchart type="bar" height="350" :options="chartOptions" :series="series"/>
     </section>
 
   </div>
 </template>
 
 <script>
-import CommonMid from "components/midchart";
 export default {
   name: "BTradingChart",
-  components: {
-    CommonMid
-  },
   mounted() {
     // 顶部数据
-    this.topForm.toplist = [100, 100, 80, 80, 50, 50, 70, 91];
-    // 中部数据
-    this.midForm.list.midList1 = [20, 40, 80, 80, 50, 50, 70, 91];
-    this.midForm.list.midList2 = [50, 60, 80, 80, 50, 50, 70, 91];
-    // 底部数据
-    this.bottForm.tableData1 = this.tableData;
+    this.formInfo.toplist = [100, 100, 80, 80, 50, 50, 70, 91];
+    this.series[0].data = [20, 40, 80, 80, 50, 50, 70, 91];
+    this.series[1].data = [50, 60, 80, 80, 50, 50, 70, 91];
   },
   data() {
     return {
-      // 顶部
-      topForm: {
+      formInfo: {
         date1: "",
         date2: "",
         toplist: []
       },
-      // 中部
-      midForm: {
-        data1: [],
-        data2: [],
-        list: {
-          midList1: [],
-          midList2: [],
-          columnWidth: '22%'
+      series: [
+        {
+          name: '买入金额',
+          data: []
+        }, {
+          name: '卖出金额',
+          data: []
         }
-      },
-      // 底部表格
-      bottForm: {
-        data1: [],
-        data2: [],
-        tableData1: [],
-        tableData2: []
-      },
-      // 顶部图数据
-      topseries: [],
-      topchartOptions: {},
-
-      // 中间图数据
-      midseries: [],
-      midchartOptions: {},
-
-      topchartData: {
-        columns: ["日期", "下单用户"],
-        rows: [
-          { 日期: "1000", 下单用户: 1093 },
-          { 日期: "2000", 下单用户: 3230 },
-          { 日期: "5000", 下单用户: 2623 },
-          { 日期: "6000", 下单用户: 1423 },
-          { 日期: "8000", 下单用户: 3492 },
-          { 日期: "9000", 下单用户: 4293 }
-        ]
-      },
-      tableData: [
-        {
-          date: "1",
-          name: "ASDAS",
-          address: "3242342"
+      ],
+      chartOptions: {
+        plotOptions: {
+          bar: {
+            horizontal: false,
+            columnWidth: '22%',
+            endingShape: 'rounded'
+          },
         },
-        {
-          date: "2",
-          name: "ASDAS",
-          address: "3242342"
+        dataLabels: {
+          enabled: false
         },
-        {
-          date: "3",
-          name: "ASDAS",
-          address: "3242342"
+        stroke: {
+          show: true,
+          width: 2,
+          colors: ['transparent']
         },
-        {
-          date: "4",
-          name: "ASDAS",
-          address: "3242342"
+        xaxis: {
+          categories: ['Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct'],
         },
-        {
-          date: "5",
-          name: "ASDAS",
-          address: "3242342"
+        yaxis: {
+          title: {
+            text: '$ (thousands)'
+          }
         },
-        {
-          date: "6",
-          name: "ASDAS",
-          address: "3242342"
+        fill: {
+          opacity: 1
         },
-        {
-          date: "7",
-          name: "ASDAS",
-          address: "3242342"
-        },
-        {
-          date: "8",
-          name: "ASDAS",
-          address: "3242342"
-        },
-        {
-          date: "9",
-          name: "ASDAS",
-          address: "3242342"
+        tooltip: {
+          y: {
+            formatter: function (val) {
+              return "$ " + val + " thousands"
+            }
+          }
         }
-      ]
+      }
     };
   }
 };
@@ -231,6 +184,7 @@ export default {
   background-size: 16px;
   height: 40px;
   line-height: 40px;
+  border: none;
 }
 
 /deep/ .el-input__inner::placeholder {
