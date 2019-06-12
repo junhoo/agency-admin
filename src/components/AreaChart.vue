@@ -33,5 +33,8 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss">
+.apexcharts-menu-icon, .apexcharts-menu {
+  opacity: 0;
+}
 </style>

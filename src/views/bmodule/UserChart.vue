@@ -67,8 +67,8 @@
 </template>
 
 <script>
-import TopChart from "components/Apexchart";
-import CommonMid from "components/midchart";
+import TopChart from "components/AreaChart";
+import CommonMid from "components/BarChart";
 import CommonRight from "components/RightChart";
 export default {
   name: "BUserChart",
@@ -233,6 +233,7 @@ export default {
   background-size: 16px;
   height: 40px;
   line-height: 40px;
+  border: none;
 }
 
 /deep/ .el-input__inner::placeholder {

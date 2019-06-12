@@ -189,8 +189,8 @@
 </template>
 
 <script>
-import TopChart from "components/Apexchart";
-import CommonMid from "components/midchart";
+import TopChart from "components/AreaChart";
+import CommonMid from "components/BarChart";
 import CommonRight from "components/RightChart";
 export default {
   name: "merchants",
@@ -198,6 +198,9 @@ export default {
     TopChart,
     CommonMid,
     CommonRight
+  },
+  created () {
+    this.getMerInfo()
   },
   mounted() {
     // 顶部数据
@@ -299,6 +302,15 @@ export default {
         }
       ]
     };
+  },
+  methods: {
+    getMerInfo () {
+      const path = '/api/awallet/getStatics'
+      const data = { token: localStorage.getItem('token') }
+      this.$post(path, data).then(res => {
+        console.log(res)
+      })
+    }
   }
 };
 </script>
@@ -355,6 +367,7 @@ export default {
   background-size: 16px;
   height: 40px;
   line-height: 40px;
+  border: none;
 }
 
 /deep/ .el-input__inner::placeholder {
