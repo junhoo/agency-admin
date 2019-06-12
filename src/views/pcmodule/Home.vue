@@ -14,10 +14,10 @@
             <el-tab-pane label="API接入" name="third">
               <item-third></item-third>
             </el-tab-pane>
-            <el-tab-pane name="fourth" @click="clickBtn()"><span slot="label"><i v-if="this.isIcon" class="el-icon-s-check"></i> {{tab5Text}}</span></el-tab-pane>
-            <el-tab-pane disabled label="" name="five">
+             <el-tab-pane label="缴纳代理金" name="five">
               <bond></bond>
             </el-tab-pane>
+            <el-tab-pane name="fourth" @click="clickBtn()"><span slot="label"><i v-if="this.isIcon" class="el-icon-s-check"></i> {{tab5Text}}</span></el-tab-pane>
         </el-tabs>
       </div>
     </div>
@@ -70,7 +70,7 @@ export default {
     },
     handleClick (tab, event) {
       sessionStorage.removeItem('activeName')
-      if (tab.index === '3') {
+      if (tab.index === '4') {
         this.clickBtn()
       } else {
         this.dialogVisibledata = false

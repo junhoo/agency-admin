@@ -40,12 +40,13 @@ axios.interceptors.response.use(response => {
   //   Vue.prototype.$message.warning(response.meta.msg)
   // }
   if (response.data.code === 1) {
-    Message.error('登录超时，请重新登录')
+    Message.error(response.data.msg)
     // 清除token
-    localStorage.removeItem('token')
-    localStorage.removeItem('userMsg')
+    // localStorage.removeItem('token')
+    // localStorage.removeItem('userMsg')
     // 页面跳转
     router.push('/home')
+    sessionStorage.setItem('activeName', 'five')
   }
   return response
 }, error => {
@@ -73,7 +74,7 @@ export function postHttp (url, data = {}) {
     axios.post(url, data)
       .then(res => {
         var code = parseInt(res.data.code)
-        var _res = res.data  
+        var _res = res.data
         if (code === 0) {
           resolve(_res)
         } else if (code === -1) {

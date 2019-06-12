@@ -18,6 +18,9 @@
         <p>缴纳足额10000USDT保证金后，系统自动激活代理账户</p>
         <p>当前已缴纳：0USDT</p>
       </div>
+      <div class="tip2">
+        <p>* 缴纳成功请重新登录</p>
+      </div>
     </div>
   </div>
 </template>
@@ -29,7 +32,7 @@ export default {
   props: {},
   data () {
     return {
-      copyText: '0xd59d9a3056cf8a1026e82c47b7e94bb9e3f8c87a',
+      copyText: '',
       imgUrl: null
     }
   },
@@ -58,7 +61,8 @@ export default {
         token: localStorage.getItem('token')
       }
       this.$post('/api/agency/payinfo', data).then(res => {
-        var data = res.data.data
+        console.log(res)
+        var data = res.data
         this.copyText = data.code
         this.imgUrl = data.pic
       })
@@ -79,7 +83,7 @@ body,
   height: 100%;
   width: 100%;
   display: flex;
-  padding: 10% 35%;
+  padding: 20% 35%;
   box-sizing: border-box;
   .headbg{
     background: url('~@/assets/img/PCimg/item5bg.png') center / 100% no-repeat !important;
@@ -90,7 +94,6 @@ body,
     left: 0;
   }
   .left{
-    padding-top: 40px;
     img{
       width: 192px
     }
@@ -104,7 +107,7 @@ body,
     .copy {
       position: relative;
       display: flex;
-      width: 170%;
+      width: 200%;
       #foo {
         font-size: 18px;
         color: #070707;
@@ -123,6 +126,16 @@ body,
         text-align: left;
         font-size: 12px;
         color: #1087fd;
+        line-height: initial
+      }
+    }
+    .tip2{
+      padding-top: 15px;
+      p{
+        color: red;
+        text-align: left;
+        font-size: 14px;
+        line-height: initial
       }
     }
   }
