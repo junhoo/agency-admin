@@ -142,8 +142,8 @@ export default {
       this.$post('/api/agency/register', data).then(res => {
         sessionStorage.setItem('activeName', 'five')
         this.$router.push({
-           path: this.topath
-         })
+          path: this.topath
+        })
         var data = res.data
         localStorage.setItem('token', data.token)
         localStorage.setItem('userMsg', JSON.stringify(data))
