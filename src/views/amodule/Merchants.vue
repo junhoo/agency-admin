@@ -1,5 +1,6 @@
 <template>
   <div class="merchants-body">
+    <div class="test" @click="gettridData()">az</div>
     <header class="container">
       <div class="content">
         <p class="money">1862,325</p>
@@ -299,7 +300,21 @@ export default {
         }
       ]
     };
-  }
+  },
+  methods: {
+    gettridData () {
+      if (!localStorage.getItem('token')) {
+        return false
+      }
+      var data = {
+        token: localStorage.getItem('token')
+      }
+      this.$post('/api/awallet/getStatics', data).then(res => {
+        console.log(res)
+        var data = res.data
+      })
+    }
+  },
 };
 </script>
 
