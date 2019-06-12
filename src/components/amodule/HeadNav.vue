@@ -6,8 +6,8 @@
           <!-- <p class="nav-name">{{this.index}}添加商户</p> -->
         </div>
         <div class="content">
-          <p>欢迎你xx代理</p>
-          <div class="icon-right"></div>
+          <p>欢迎你{{username}}代理</p>
+          <div class="icon-right" @click="loginOut"></div>
         </div>
     </header>
 </template>
@@ -18,7 +18,8 @@ export default {
   props: {headTitle: Number},
   data() {
     return {
-      index: null
+      index: null,
+      username:''
     }
   },
   computed: {
@@ -35,8 +36,25 @@ export default {
     if (this.$route.query.index) {
       this.index = this.$route.query.index
     }
+    this.getusername()
   },
   methods: {
+    // 获取用户名
+    getusername(){
+      let username = JSON.parse(localStorage.getItem('userMsg')).name
+      this.username = username
+    },
+    // 推出登录
+    loginOut(){
+      const data = {
+        token:localStorage.getItem('token')
+      }
+      this.$post('/api/auser/out',data).then(res=>{
+        localStorage.removeItem('token')
+        localStorage.removeItem('userMsg')
+        this.$router.push('/home')
+      })
+    },
     setDialogInfo(cmditem) {
       if (!cmditem) {
         // console.log("test");
@@ -56,14 +74,6 @@ export default {
       // 个人信息
       this.$router.push("/infoshow");
     },
-    logout() {
-      // 清除token
-      localStorage.removeItem("eleToken");
-      this.$store.dispatch("clearCurrentState");
-
-      // 页面跳转
-      this.$router.push("/login");
-    }
   },
   filters: {
     headTitleText(value){
