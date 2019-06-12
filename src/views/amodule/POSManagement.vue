@@ -4,7 +4,7 @@
     <ul class="search">
       <li class="iteminput">
         <input type="text" placeholder="输入联系人/机构名称" v-model="queryName">
-        <i slot="suffix" class="el-input__icon el-icon-search" @click="queryUser"></i>
+        <i slot="suffix" class="el-input__icon el-icon-search" ></i>
       </li>
       <li class="iteminput">
         <span class="date-span">起始日期</span>
@@ -22,7 +22,7 @@
         <span class="subSearch" @click="addMerchant">添加商户</span>
       </li>
       <li class="iteminput iteminput5">
-        <span class="search-box">搜索</span>
+        <span class="search-box" @click="queryUser">搜索</span>
       </li>
     </ul>
     <!-- 表格 -->
@@ -125,8 +125,10 @@ export default {
         page: this.pageSize,
         limit: this.pageNum
       };
-      this.$post("/api/auser/userList", data).then(res => {
+      console.log(data);
+      this.$post("/api/auser/userList",data).then(res => {
         console.log(res);
+        console.log('222');
         this.userList = res.data.data;
         this.pageSize = res.data.current_page;
         this.pageNum = res.data.per_page;
@@ -186,6 +188,9 @@ export default {
 
 <style lang="scss" scoped>
 /* 输入样式框 */
+ /deep/ .el-dialog__body{
+  padding: 0;
+}
 /deep/ .el-input__inner {
   height: 32px;
   line-height: 32px;

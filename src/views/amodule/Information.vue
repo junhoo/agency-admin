@@ -8,7 +8,7 @@
       <div class="register">
         <span>注册手机</span>
         <div class="input">
-          <el-input v-model="input" placeholder="请输入手机号" size="small"></el-input>
+          <el-input v-model="mobileChange.old_mobile" placeholder="请输入手机号" size="small"></el-input>
         </div>
         <el-button type="primary" size="small" @click="dialogVisible2 = true">换绑</el-button>
       </div>
@@ -61,7 +61,7 @@
       </div>
       <div class="text">
         <el-input size="small" placeholder="输入验证码" v-model="setPassword.code"></el-input>
-        <el-button type="primary" @click="getCcode(setPassword.mobile,1)">获取验证码</el-button>
+        <el-button type="primary" @click="getCode(setPassword.mobile,2)">获取验证码</el-button>
       </div>
       <div class="tips" style="marginTop:16px;">注：为确保资金安全，请先验证手机，并设置您的资金密码。</div>
       <div class="password" style="marginTop:20px;">设置资金密码</div>
@@ -96,7 +96,7 @@
       ></el-input>
       <div class="text1" style="marginTop:10px">
         <el-input size="small" placeholder="输入新的手机验证码" v-model="mobileChange.new_code"></el-input>
-        <el-button type="primary" class="btn" @click="getCode(mobileChange.new_mobile,1)">获取验证码</el-button>
+        <el-button type="primary" class="btn" @click="getCode(mobileChange.new_mobile,3)">获取验证码</el-button>
       </div>
       <span slot="footer" class="dialog-footer">
         <el-button type="primary" @click="submitChange" style="marginTop:16px;">确 定</el-button>
@@ -116,7 +116,7 @@
       </div>
       <div class="text">
         <el-input size="small" placeholder="输入验证码" v-model="changeLogin.code"></el-input>
-        <el-button type="primary" @click="getCode(changeLogin.mobile,1)">获取验证码</el-button>
+        <el-button type="primary" @click="getCode(changeLogin.mobile,2)">获取验证码</el-button>
       </div>
       <div class="tips" style="marginTop:16px;">注：为确保资金安全，请先验证手机。</div>
       <div class="password" style="marginTop:16px;">设置登录密码</div>
@@ -135,6 +135,7 @@
 
 
 <script>
+import { Message } from 'element-ui'
 export default {
   data() {
     return {
@@ -156,7 +157,7 @@ export default {
       },
       // 手机换绑
       mobileChange: {
-        old_mobile: "153****4544",
+        old_mobile: "",
         old_code: "",
         new_mobile: "",
         new_code: ""
@@ -168,7 +169,7 @@ export default {
         mobile: "153****4544"
       },
       // 设置资金密码
-      setPassword:{
+      setPassword: {
         code: "",
         password: "",
         mobile: "153****4544"
@@ -181,7 +182,9 @@ export default {
   methods: {
     // 信息管理列表
     getInfro() {
-      this.$post("/api/auser/agencyInfo", { token: localStorage.getItem('token') }).then(res => {
+      this.$post("/api/auser/agencyInfo", {
+        token: localStorage.getItem("token")
+      }).then(res => {
         this.form.agency_id = res.data.id;
         this.form.contacts = res.data.contacts;
         this.form.WeChat = res.data.wechat_no;
@@ -190,28 +193,36 @@ export default {
         this.form.agency_name = res.data.agency_name;
         this.form.award = res.data.bonus_rate;
         this.form.brief = res.data.agency_info;
+        let mobile = localStorage.getItem("userMsg");
+        this.changeLogin.mobile = JSON.parse(mobile).mobile;
+        this.setPassword.mobile = JSON.parse(mobile).mobile;
       });
     },
     // 获取验证码
     getCode(mob, tp) {
       this.$post("/api/agency/sendsms", { mobile: mob, type: tp }).then(
-        res => {}
+        res => {
+          console.log(res);
+        }
       );
     },
     // 手机换绑提交事件
     submitChange() {
       this.dialogVisible2 = false;
       const data = {
-        token: localStorage.getItem('token'),
+        token: localStorage.getItem("token"),
         old_mobile: this.mobileChange.old_mobile,
-        old_code: this.mobileChange.old_code,
+        old_code: parseInt(this.mobileChange.old_code),
         new_mobile: this.mobileChange.new_mobile,
-        new_code: this.mobileChange.new_code
+        new_code: parseInt(this.mobileChange.new_code)
       };
       this.$post("/api/auser/modifyMobile", data).then(res => {
         if (res.code === 0) {
-          this.$message({
-            message: res.msg,
+          this.mobileChange.old_code = ""
+          this.mobileChange.new_mobile = ""
+          this.mobileChange.new_code = ""
+          Message({
+            message: res.data,
             type: "success"
           });
         }
@@ -221,37 +232,41 @@ export default {
     changePassword() {
       this.dialogVisible3 = false;
       const data = {
-        token: localStorage.getItem('token'),
-        mobile:this.changeLogin.mobile,
-        code:this.changeLogin.code,
-        password:this.changeLogin.password
+        token: localStorage.getItem("token"),
+        mobile: this.changeLogin.mobile,
+        code: parseInt(this.changeLogin.code),
+        password: this.changeLogin.password
       };
-      this.$post('/api/auser/modifyLoginPassword',data).then(res=>{
+      this.$post("/api/auser/modifyLoginPassword", data).then(res => {
         if (res.code === 0) {
-          this.$message({
-            message: res.msg,
+          this.changeLogin.code = ""
+          this.changeLogin.password = ''
+            Message({
+            message: res.data,
             type: "success"
           });
         }
-      })
+      });
     },
     // 设置资金密码
-    setpassword(){
+    setpassword() {
       this.dialogVisible1 = false;
       const data = {
-        token:localStorage.getItem('token'),
-        mobile:this.setPassword.mobile,
-        code:this.setPassword.code,
-        pay_password:this.setPassword.password
-      }
-      this.$post('/api/auser/modifyPayPassword',data).then(res=>{
+        token: localStorage.getItem("token"),
+        mobile: this.setPassword.mobile,
+        code: parseInt(this.setPassword.code),
+        pay_password: this.setPassword.password
+      };
+      this.$post("/api/auser/modifyPayPassword", data).then(res => {
         if (res.code === 0) {
-          this.$message({
-            message: res.msg,
+          this.setPassword.code = ""
+          this.setPassword.password = ""
+          Message({
+            message: res.data,
             type: "success"
           });
         }
-      })
+      });
     }
   }
 };
@@ -259,15 +274,15 @@ export default {
 
 
 <style lang="scss" scoped>
-/deep/ .el-input__inner{
-  background-color: #0C2040 !important;
-  border-color: #0C2040;
-  color: #91A4B6
+/deep/ .el-input__inner {
+  background-color: #0c2040 !important;
+  border-color: #0c2040;
+  color: #91a4b6;
 }
-/deep/ .el-textarea__inner{
-  background-color: #0C2040 !important;
-  border-color: #0C2040;
-  color: #91A4B6;
+/deep/ .el-textarea__inner {
+  background-color: #0c2040 !important;
+  border-color: #0c2040;
+  color: #91a4b6;
 }
 .container {
   width: 100%;

@@ -232,6 +232,10 @@ export default {
   border-bottom: 2px solid #06476d !important;
 }
 
+/deep/ .el-dialog__body{
+  padding: 25px 25px 0px !important;
+}
+
 .container {
   height: 100%;
   width: 100%;
@@ -421,9 +425,7 @@ export default {
   background-color: #12223b;
   margin-top: 30vh;
 }
-.el-dialog__body{
-  padding: 25px 25px 0px !important;
-}
+
 .el-dialog__title {
   color: #fff;
   font-size: 12px;

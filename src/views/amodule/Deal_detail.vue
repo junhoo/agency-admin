@@ -36,6 +36,7 @@
           style="marginLeft:10px"
           class="my-btn"
         ></el-input>
+
         <el-dropdown>
           <el-button type="primary" size="small">
             全部交易类型
@@ -112,7 +113,9 @@ export default {
       this.getInfo()
     },
     handleDatePick () {
-      this.getInfo()
+      if (this.form.date1 !== '') {
+        this.getInfo()
+      }
     },
     seek () {
       if (this.input2 !== '') {

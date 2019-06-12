@@ -90,7 +90,7 @@ export default {
   nama: "dealData",
   data () {
     return {
-      dropdownList: [],
+      dropdownList: ['炸酱面', '烤面筋'],
       input2: '',
       form: {
         date1: '',
@@ -111,7 +111,9 @@ export default {
       this.getInfo()
     },
     handleDatePick () {
-      this.getInfo()
+      if (this.form.date1 !== '') {
+        this.getInfo()
+      }
     },
     seek () {
       if (this.input2 !== '') {
@@ -247,7 +249,7 @@ export default {
       border-color: #059e7e;
       margin-left: 10px;
       .el-icon--right {
-        margin-left: 0;
+        // margin-left: 0;
       }
     }
     .search-box {
