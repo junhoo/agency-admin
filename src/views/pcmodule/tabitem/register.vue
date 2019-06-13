@@ -67,8 +67,7 @@ export default {
       },
       content: '发送验证码', // 按钮里显示的内容
       totalTime: 60,
-      isShow: null,
-      topath: '/aindex'
+      isShow: null
     }
   },
   created () {
@@ -125,9 +124,6 @@ export default {
       }
     },
     onSubmit () {
-      if(this.form.value === '1'){
-        this.topath = '/bindex'
-      }
       var data = {
         mobile: this.form.phone,
         email: this.form.email,
@@ -142,8 +138,8 @@ export default {
       this.$post('/api/agency/register', data).then(res => {
         sessionStorage.setItem('activeName', 'five')
         this.$router.push({
-          path: this.topath
-        })
+           path: '/home'
+         })
         var data = res.data
         localStorage.setItem('token', data.token)
         localStorage.setItem('userMsg', JSON.stringify(data))

@@ -28,11 +28,12 @@
           style="marginLeft:10px"
           class="my-btn"
         ></el-input>
-      
+
         <el-button type="primary" size="small">
           团队人数
           <i class="el-icon-d-caret el-icon--right"></i>
         </el-button>
+        <el-button type="primary" size="small">搜索查询</el-button>
       </div>
     </el-form>
 
@@ -44,15 +45,15 @@
       :header-cell-style="{background:'#12223B',color:'#606266'}"
       align="center"
     >
-      <el-table-column prop="date" label="UID" width="100%" align="center"></el-table-column>
-      <el-table-column prop="name" label="手机号" width="100%" align="center"></el-table-column>
-      <el-table-column prop="address" label="邮箱" align="center"></el-table-column>
-      <el-table-column prop="address" label="是否实名" align="center"></el-table-column>
-      <el-table-column prop="address" label="用户名称" align="center"></el-table-column>
-      <el-table-column prop="address" label="保证金" align="center"></el-table-column>
-      <el-table-column prop="address" label="注册时间" align="center"></el-table-column>
-      <el-table-column prop="address" label="推荐人ID" align="center"></el-table-column>
-      <el-table-column prop="address" label="团队人数" align="center"></el-table-column>
+      <el-table-column prop="uid" label="UID" width="100%" align="center"></el-table-column>
+      <el-table-column prop="mobile" label="手机号" width="100%" align="center"></el-table-column>
+      <el-table-column prop="email" label="邮箱" align="center"></el-table-column>
+      <el-table-column prop="is_realname" label="是否实名" align="center"></el-table-column>
+      <el-table-column prop="name" label="用户名称" align="center"></el-table-column>
+      <el-table-column prop="deposit" label="保证金" align="center"></el-table-column>
+      <el-table-column prop="add_time" label="注册时间" align="center"></el-table-column>
+      <el-table-column prop="pid" label="推荐人ID" align="center"></el-table-column>
+      <el-table-column prop="total_num" label="团队人数" align="center"></el-table-column>
       <el-table-column prop="address" label="操作" align="center">
         <template scope>
           <router-link :to="{path:'b_InforDtetail'}">
@@ -69,42 +70,88 @@ export default {
   nama: "Binformation",
   data() {
     return {
-      dropdownList: ["黄金糕", "狮子头", "螺蛳粉", "双皮奶", "蚵仔煎"],
       input2: "",
       form: {
         date1: "",
         date2: ""
       },
-      tableData: [
-        {
-          date: "2016-05-02",
-          name: "王小虎",
-          address: "上海市普"
-        },
-        {
-          date: "2016-05-04",
-          name: "王小虎",
-          address: "上海市普"
-        },
-        {
-          date: "2016-05-01",
-          name: "王小虎",
-          address: "上海市普"
-        },
-        {
-          date: "2016-05-03",
-          name: "王小虎",
-          address: "上海市普"
-        }
-      ]
+      tableData: [],
+      // 页码
+      pageSize: 1,
+      // 页容量
+      pageNum: 10,
+      // 总数
+      total: 0
     };
   },
-  methods: {},
-  mounted() {}
+  created() {
+    this.getList();
+  },
+  methods: {
+    getList() {
+      const data = {
+        token: localStorage.getItem("token"),
+        page: this.pageSize,
+        limit: this.pageNum
+      };
+      this.$post("/api/buser/userList", data)
+        .then(res => {
+          console.log(res);
+          this.tableData = res.data.data;
+        })
+        .catch(e => {
+          console.log(e);
+        });
+    },
+    // 搜索商户列表
+    // queryUser() {
+    //   let start = this.startTime;
+    //   let end = this.endTime;
+    //   if (this.startTime) {
+    //     start =
+    //       this.startTime.getFullYear() +
+    //       "-" +
+    //       (this.startTime.getMonth() + 1) +
+    //       "-" +
+    //       this.startTime.getDate();
+    //   }
+    //   if (this.endTime) {
+    //     end =
+    //       this.endTime.getFullYear() +
+    //       "-" +
+    //       (this.endTime.getMonth() + 1) +
+    //       "-" +
+    //       this.endTime.getDate();
+    //   }
+    //   const data = {
+    //     token: localStorage.getItem("token"),
+    //     page: this.pageSize,
+    //     limit: this.pageNum,
+    //     start: start,
+    //     end: end,
+    //     name: this.queryName
+    //   };
+
+    //   this.$post("/api/auser/userList", data).then(res => {
+    //     console.log(res);
+    //     this.userList = res.data.data;
+    //     this.pageSize = res.data.current_page;
+    //     this.pageNum = res.data.per_page;
+    //     this.total = res.data.total;
+    //   });
+    // }
+  }
 };
 </script>
 
 <style lang="scss" scoped>
+/deep/ .el-table__empty-block {
+  background-color: #061220;
+}
+/deep/ .el-input--small .el-input__inner {
+  background-color: #0c2040;
+  border-color: #0c2040;
+}
 .container {
   width: 100%;
   height: 100%;

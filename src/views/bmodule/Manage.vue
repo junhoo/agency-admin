@@ -172,7 +172,7 @@ export default {
       this.$post("/api/buser/agencyInfo", {
         token: localStorage.getItem("token")
       }).then(res => {
-        console.log(res);
+        
         this.form.mobile = res.data.mobile
         this.form.name = res.data.contacts
         this.form.WeChat = res.data.wechat_no

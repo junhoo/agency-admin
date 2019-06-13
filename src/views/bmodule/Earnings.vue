@@ -4,16 +4,16 @@
     <div class="content">
       <div class="box">
         <div class="left">
-          <span>9500</span>
+          <span>{{totalNum}}</span>
           <span>积分余额</span>
         </div>
         <div class="right">
-          <el-button type="primary" @click="dialogVisible2 = true">兑换USDT</el-button>
+          <el-button type="primary" @click="chengeUsdt">兑换USDT</el-button>
         </div>
       </div>
       <div class="box">
         <div class="left">
-          <span>9500</span>
+          <span>{{totalUsdt}}</span>
           <span style="color:#059E7E;">积分余额</span>
         </div>
         <div class="right">
@@ -26,16 +26,18 @@
             <span>1</span>
             <span>USDT</span>
             <span>≈积分/</span>
-            <span>6.878</span>
+            <span>{{rate}}</span>
           </div>
           <div class="jf">USDT实时价格</div>
         </div>
       </div>
     </div>
     <!-- 推广跳转 -->
-    <div class="generalize"><a href="#">积分不够用？快去推广邀请吧!</a></div>
+    <div class="generalize">
+      <a href="#">积分不够用？快去推广邀请吧!</a>
+    </div>
     <!-- tab切换 -->
-    <el-tabs v-model="activeName">
+    <el-tabs v-model="activeName" @tab-click="handleClick">
       <el-tab-pane label="积分兑换记录" name="first">
         <el-table
           :data="tableData"
@@ -44,13 +46,13 @@
           :header-cell-style="{background:'#12223B',color:'#606266'}"
           align="center"
         >
-          <el-table-column prop="date" label="订单号" width="100%" align="center"></el-table-column>
-          <el-table-column prop="name" label="总积分" width="100%" align="center"></el-table-column>
-          <el-table-column prop="address" label="兑换积分数" align="center"></el-table-column>
-          <el-table-column prop="address" label="获得USDT数" align="center"></el-table-column>
-          <el-table-column prop="address" label="兑换时间" align="center"></el-table-column>
-          <el-table-column prop="address" label="剩余积分" align="center"></el-table-column>
-          <el-table-column prop="address" label="兑换状态" align="center"></el-table-column>
+          <el-table-column prop="id" label="订单号" width="100%" align="center"></el-table-column>
+          <el-table-column prop="amount_all_income" label="总积分" width="100%" align="center"></el-table-column>
+          <el-table-column prop="operating_amount" label="兑换积分数" align="center"></el-table-column>
+          <el-table-column prop="other_monery" label="获得USDT数" align="center"></el-table-column>
+          <el-table-column prop="add_time" label="兑换时间" align="center"></el-table-column>
+          <el-table-column prop="amount_income" label="剩余积分" align="center"></el-table-column>
+          <el-table-column prop="status" label="兑换状态" align="center"></el-table-column>
         </el-table>
       </el-tab-pane>
       <el-tab-pane label="USDT提现记录" name="second">
@@ -86,17 +88,17 @@
       center
     >
       <div class="mobile">
-        <span>验证手机：153****4544</span>
+        <span>验证手机：{{setPassword.mobile}}</span>
       </div>
       <div class="text">
-        <el-input size="small" placeholder="输入验证码" v-model="input"></el-input>
-        <el-button type="primary">获取验证码</el-button>
+        <el-input size="small" placeholder="输入验证码" v-model="setPassword.code"></el-input>
+        <el-button type="primary" @click="getCode(setPassword.mobile,2)">获取验证码</el-button>
       </div>
       <div class="tips">注：为确保资金安全，请先验证手机，并设置您的资金密码。</div>
       <div class="password">设置资金密码</div>
-      <el-input size="small" placeholder="请输入6位数密码" v-model="input3" class="input"></el-input>
+      <el-input size="small" placeholder="请输入6位数密码" v-model="setPassword.password" class="input"></el-input>
       <span slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="dialogVisible1 = false">确 定</el-button>
+        <el-button type="primary" @click="setpassword">确 定</el-button>
       </span>
     </el-dialog>
 
@@ -113,15 +115,15 @@
         <span>兑换积分数</span>
       </div>
       <div class="text">
-        <el-input size="small" placeholder="输入要兑换的数量" v-model="input"></el-input>
-        <el-button type="primary">全部兑换</el-button>
+        <el-input size="small" placeholder="输入要兑换的数量" v-model="usdtData.jf_num"></el-input>
+        <el-button type="primary" @click="allChange">全部兑换</el-button>
       </div>
       <!-- <div class="tips">注：为确保资金安全，请先验证手机，并设置您的资金密码。</div> -->
       <div class="password" style="marginTop:16px">可获得USDT个数</div>
-      <el-input size="small" placeholder="数量（USDT)" v-model="input3" class="input"></el-input>
-      <div class="tips">可用积分数：123124</div>
+      <el-input size="small" placeholder="数量（USDT)" v-model="usdtNum" class="input"></el-input>
+      <div class="tips">可用积分数：{{totalNum}}</div>
       <span slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="dialogVisible2 = false">确 定</el-button>
+        <el-button type="primary" @click="usdtAffirm">确 定</el-button>
       </span>
     </el-dialog>
 
@@ -160,10 +162,11 @@
     </el-dialog>
   </div>
 </template>
-
 <script>
+import { log } from "util";
+import { Message } from "element-ui";
 export default {
-  name: "BEarnings",
+  name: "earnings",
   data() {
     return {
       input: "",
@@ -172,42 +175,165 @@ export default {
       dialogVisible3: false,
       activeName: "first",
       input3: "",
-      tableData: [
-        {
-          date: "2016-05-02",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1518 弄"
-        },
-        {
-          date: "2016-05-04",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1517 弄"
-        },
-        {
-          date: "2016-05-01",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1519 弄"
-        },
-        {
-          date: "2016-05-03",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1516 弄"
-        }
-      ]
+      tableData: [],
+      // 页码
+      pageSize: 1,
+      // 页容量
+      pageNum: 10,
+      total: 0,
+      // 是否设置资金密码
+      setStatus: "",
+      // usdt费率
+      rate: "",
+      // 积分余额
+      totalNum: "",
+      // usdt余额
+      totalUsdt: "",
+      // 设置资金密码
+      setPassword: {
+        code: "",
+        password: "",
+        mobile: ""
+      },
+      // 兑换usdt
+      usdtData: {
+        jf_num: ""
+      }
     };
+  },
+  created() {
+    this.getList(1);
+  },
+  methods: {
+    // tab栏切换事件
+    handleClick(event) {
+      var index = parseInt(event.index);
+      if (index === 0) {
+        this.getList(1);
+      } else if (index === 1) {
+        this.getList(2);
+      }
+    },
+    // 获取钱包列表
+    getList(tp) {
+      const data = {
+        token: localStorage.getItem("token"),
+        page: this.pageSize,
+        limit: this.pageNum,
+        type: tp
+      };
+
+      this.$post("/api/bwallet/wallet", data)
+        .then(res => {
+          let mobile = localStorage.getItem("userMsg");
+          this.setPassword.mobile = JSON.parse(mobile).mobile;
+          this.setStatus = res.data.pay_password;
+          this.tableData = res.data.data;
+          this.rate = res.data.rate;
+          this.totalNum = res.data.amount_total;
+          this.totalUsdt = res.data.usdt_num;
+        })
+        .catch(e => {});
+    },
+    // 获取验证码
+    getCode(mob, tp) {
+      this.$post("/api/agency/sendsms", { mobile: mob, type: tp }).then(res => {
+        console.log(res);
+      });
+    },
+
+    // 设置资金密码
+    setpassword() {
+      this.dialogVisible1 = false;
+      const data = {
+        token: localStorage.getItem("token"),
+        mobile: this.setPassword.mobile,
+        code: parseInt(this.setPassword.code),
+        pay_password: this.setPassword.password
+      };
+      this.$post("/api/buser/modifyPayPassword", data).then(res => {
+        if (res.code === 0) {
+          this.setPassword.code = "";
+          this.setPassword.password = "";
+          this.setStatus = 1;
+          Message({
+            message: res.data,
+            type: "success"
+          });
+        }
+      });
+    },
+    // 兑换USDT
+    chengeUsdt() {
+      let status = parseInt(this.setStatus);
+      if (status === 0) {
+        this.dialogVisible1 = true;
+      } else if (status === 1) {
+        this.dialogVisible2 = true;
+      }
+    },
+    // 全部兑换积分
+    allChange() {
+      this.usdtData.jf_num = this.totalNum;
+    },
+    // 兑换USDT确认提交
+    usdtAffirm() {
+      this.dialogVisible2 = false;
+      const data = {
+        token: localStorage.getItem("token"),
+        convert_num: this.usdtData.jf_num
+      };
+      this.$post("/api/bwallet/exchangeUsdt", data)
+        .then(res => {
+          if (res.code === 0) {
+            Message({
+              message: res.msg,
+              type: "success"
+            });
+          }
+        })
+        .catch(e => {});
+    },
+
+    // 提币USDT
+    getCash() {
+      let status = parseInt(this.setStatus);
+      if (status === 0) {
+        this.dialogVisible1 = true;
+      } else if (status === 1) {
+        this.dialogVisible3 = true;
+      }
+    }
+  },
+  computed: {
+    usdtNum() {
+      let usdtNum = "";
+      if (this.usdtData.jf_num === "") {
+        usdtNum = "";
+      } else {
+        usdtNum = (this.usdtData.jf_num / this.rate).toFixed(2);
+      }
+      return usdtNum;
+    }
   }
 };
 </script>
 
 <style lang="scss" scoped>
+/deep/ .el-table__empty-block {
+  background-color: #061220;
+}
+/deep/ .el-dialog--center .el-dialog__footer{
+  text-align: left;
+}
 // 文本域样式
-/deep/ .el-textarea__inner{
-  background-color: #0C2040;
-  border-color: #0C2040;
+/deep/ .el-textarea__inner {
+  background-color: #0c2040;
+  border-color: #0c2040;
 }
 /* 输入框样式 */
 /deep/ .el-input__inner {
-  background-color:  #0C2040;
+  background-color: #0c2040;
   color: #708193;
   font-size: 12px;
   border: none;
@@ -219,7 +345,8 @@ export default {
   border-color: none;
 }
 
-/deep/ .el-table--border, .el-table--group {
+/deep/ .el-table--border,
+.el-table--group {
   border: 2px solid #06476d;
 }
 
@@ -232,7 +359,7 @@ export default {
   border-bottom: 2px solid #06476d !important;
 }
 
-/deep/ .el-dialog__body{
+/deep/ .el-dialog__body {
   padding: 25px 25px 0px !important;
 }
 
@@ -313,12 +440,12 @@ export default {
       }
     }
   }
-  .generalize{
+  .generalize {
     display: flex;
     justify-content: center;
     align-items: center;
     a {
-      color: #3986E2;
+      color: #3986e2;
     }
   }
   .mobile {
@@ -349,6 +476,7 @@ export default {
     }
   }
   .tips {
+    margin-top: 10px;
     color: #047e65;
     font-size: 12px;
     line-height: 22px;
@@ -430,5 +558,4 @@ export default {
   color: #fff;
   font-size: 12px;
 }
-
 </style>

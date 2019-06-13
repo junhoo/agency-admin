@@ -240,7 +240,7 @@ export default {
         type: this.form.value,
         rand_num: this.number
       }
-      if(this.form.value === 1){
+      if(this.form.value === 2){
         this.topath = '/bindex'
       }
       this.$post('/api/agency/login', data).then(res => {

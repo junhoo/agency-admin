@@ -29,17 +29,17 @@
         <li>
           <img src="~@/assets/img/PCimg/item1-ad1.png" alt="">
           <p>强大的技术能力</p>
-          <span>交易全程数字货币托管个人资产安全有保障</span>
+          <span>交易全程数字货币托管<br>个人资产安全有保障</span>
         </li>
         <li>
           <img src="~@/assets/img/PCimg/item1-ad2.png" alt="">
           <p>完善的账户体系</p>
-          <span>一秒买入快速撮合成交钱包间收发即时到账</span>
+          <span>一秒买入快速撮合成交<br>钱包间收发即时到账</span>
         </li>
         <li>
           <img src="~@/assets/img/PCimg/item1-ad3.png" alt="">
           <p>稳定的商户系统</p>
-          <span>承诺场外交易0费用降低交易成本</span>
+          <span>承诺场外交易0费用<br>降低交易成本</span>
         </li>
       </ul>
     </div>
@@ -98,17 +98,17 @@
             <img src="~@/assets/img/PCimg/item1-api7.png" alt="">
             <p>卖出</p>
           </li>
-          <i class="toleft"></i>
+          <i class="toright"></i>
           <li>
             <img src="~@/assets/img/PCimg/item1-api8.png" alt="">
             <p>商户账户划币<br>给客户账户</p>
           </li>
-          <i class="toleft"></i>
+          <i class="toright"></i>
           <li>
             <img src="~@/assets/img/PCimg/item1-api9.png" alt="">
             <p>客户账户扣币</p>
           </li>
-          <i class="toleft"></i>
+          <i class="toright"></i>
           <li>
             <img src="~@/assets/img/PCimg/item1-api10.png" alt="">
             <p>盾付宝交易员<br>付款给客户</p>
@@ -296,9 +296,13 @@ export default {
         padding-top: 34px
       }
       .txt{
+        letter-spacing: 1px;
         font-size: 14px;
         color: #79A5C0;
-        padding: 32px 0 53px
+        padding: 32px 0 53px;
+        span{
+          line-height: 20px;
+        }
       }
       .btn{
         i{
@@ -384,7 +388,10 @@ export default {
           padding: 18px 0
         }
         span{
-          font-size: 20px;
+          display: inline-block;
+          text-align: left;
+          line-height: 20px;
+          font-size: 14px;
           color: #79A5C0
         }
       }

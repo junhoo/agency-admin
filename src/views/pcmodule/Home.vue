@@ -4,7 +4,7 @@
     <div class="head">
        <img src="../../assets/img/PCimg/logo.png" alt="">
       <div class="tab">
-        <el-tabs v-model="activeName" @tab-click="handleClick">
+        <el-tabs v-model="activeName" @tab-click="handleClick" :before-leave="isfive">
             <el-tab-pane label="盾付宝钱包" name="first">
               <item-first></item-first>
             </el-tab-pane>
@@ -14,10 +14,14 @@
             <el-tab-pane label="API接入" name="third">
               <item-third></item-third>
             </el-tab-pane>
-             <el-tab-pane label="缴纳代理金" name="five">
+            <el-tab-pane name="fourth" @click="clickBtn()">
+              <span slot="label">
+                <i v-if="this.isIcon" class="el-icon-s-check"></i>{{tab5Text}}
+              </span>
+            </el-tab-pane>
+            <el-tab-pane label="" disabled name="five">
               <bond></bond>
             </el-tab-pane>
-            <el-tab-pane name="fourth" @click="clickBtn()"><span slot="label"><i v-if="this.isIcon" class="el-icon-s-check"></i> {{tab5Text}}</span></el-tab-pane>
         </el-tabs>
       </div>
     </div>
@@ -69,11 +73,19 @@ export default {
       this.isIcon = true
     },
     handleClick (tab, event) {
-      sessionStorage.removeItem('activeName')
-      if (tab.index === '4') {
+      // sessionStorage.removeItem('activeName')
+      if (sessionStorage.getItem('activeName')) {
+        return false
+      }
+      if (tab.index === '3') {
         this.clickBtn()
       } else {
         this.dialogVisibledata = false
+      }
+    },
+    isfive (activeName, oldActiveName) {
+      if (oldActiveName === 'five') {
+        return false
       }
     },
     clickBtn () {
@@ -99,7 +111,7 @@ export default {
           height: 40px;
           position: absolute;
           left: 15.6%;
-          top: 26px;
+          top: 36px;
           z-index: 9999;
       }
       .tab{
@@ -124,7 +136,7 @@ export default {
   position: absolute !important;
   width: 40%;
   right: 0;
-  padding-top: 30px !important;
+  padding-top: 20px !important;
 }
 /deep/ .el-tabs__item{
   color: #FFFFFF !important

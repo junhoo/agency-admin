@@ -27,21 +27,33 @@
                     </li>
                     <li>
                         <p><i class="inputicon"></i><span>联系电话</span></p>
-                        <input type="text" v-model="phone" placeholder="请填写商户联系人">
+                        <input type="text" v-model="phone" placeholder="请填写商户联系电话">
+                    </li>
+                    <li>
+                        <p><i class="inputicon"></i><span>邮箱地址</span></p>
+                        <input type="text" v-model="email" placeholder="请填写商户邮箱地址">
                     </li>
                     <li>
                         <p><i class="inputicon"></i><span>微信账号</span></p>
                         <input type="text" v-model="wechat" placeholder="请填写商户微信">
                     </li>
                     <li>
-                        <p><i class="inputicon"></i><span>邀请码</span></p>
-                        <input type="text" v-model="agency_code" placeholder="请填写商户微信">
+                        <p><i class="inputicon"></i><span>机构名称</span></p>
+                        <input type="text" v-model="agencyName" placeholder="请填写机构名称">
                     </li>
                     <li>
-                        <p><i class="inputicon"></i><span>机构简介</span></p>
-                        <textarea name="" id="" cols="30" rows="10" v-model="refs" placeholder="请填写机构简介"></textarea>
+                        <p><i class="inputicon"></i><span>官方链接</span></p>
+                        <input type="text" v-model="link" placeholder="请填写官方链接">
                     </li>
-                    <li class="submit"><span @click="submit()">确认提交</span></li>
+                    <li>
+                        <p><i class="inputicon"></i><span>邀请码</span></p>
+                        <input type="text" readonly v-model="agency_code">
+                    </li>
+                    <li>
+                        <p><span>机构简介</span></p>
+                        <textarea name="" id="" cols="30" rows="10" v-model="refs" placeholder="请填写机构简介（选填）"></textarea>
+                    </li>
+                    <li class="submit"><span @click="checkMsg()">确认提交</span></li>
                 </ul>
             </div>
         </div>
@@ -109,12 +121,13 @@
             </div>
             <div class="bottom">
                 <i></i>
-                <p class="submit2">确认提交</p>
+                <p class="submit2" @click="checkMsg()">确认提交</p>
             </div>
         </div>
     </div>
 </template>
 <script>
+import { Message } from 'element-ui'
 export default {
   name: 'mobile',
   data () {
@@ -123,7 +136,10 @@ export default {
       phone: '',
       wechat: '',
       refs: '',
-      agency_code: null
+      agency_code: null,
+      link: '',
+      agencyName: '',
+      email: ''
     }
   },
   created() {
@@ -131,11 +147,20 @@ export default {
   },
   methods: {
     checkMsg () {
-        if (this.phone === '') {
-            this.$message({
-              message: '警告哦，这是一条警告消息',
-              type: 'warning'
-            });
+        if (this.contacts === '') {
+            Message.warning('联系人不能为空')
+        } else if (this.phone === '') {
+            Message.warning('手机号不能为空')
+        } else if (this.phone === '') {
+            Message.warning('邮箱不能为空')
+        } else if (this.wechat === '') {
+            Message.warning('微信账号不能为空')
+        } else if (this.agencyName === '') {
+            Message.warning('机构名称不能为空')
+        } else if (this.link === '') {
+            Message.warning('官方链接不能为空')
+        } else {
+            this.submit()
         }
     },
     submit () {
@@ -144,10 +169,25 @@ export default {
         agency_code: this.agency_code,
         contacts: this.contacts,
         wechat_no: this.wechat,
-        organization_info: this.refs
+        organization_info: this.refs,
+        email: this.email,
+        organization_name: this.agencyName,
+        website: this.link
       }
       this.$post('/api/agency/apply', data).then(res => {
-
+          if (res.code === 0) {
+            Message({
+              message: res.data,
+              type: "success"
+            })
+            this.phone = ''
+            this.contacts = ''
+            this.wechat = ''
+            this.refs = ''
+            this.email = ''
+            this.agencyName = ''
+            this.link = ''
+          }
       })
 
     },
@@ -287,7 +327,7 @@ export default {
           margin-top: -60px;
           i{
               width: 90%;
-              height: 285px;
+              height: 320px;
               display: inline-block;
               background: url('~@/assets/img/PCimg/mobile-unit4bg.png') center / 100% no-repeat
           }

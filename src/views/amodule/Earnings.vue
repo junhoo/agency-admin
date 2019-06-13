@@ -26,7 +26,7 @@
             <span>1</span>
             <span>USDT</span>
             <span>≈积分/</span>
-            <span>6.878</span>
+            <span>{{rate}}</span>
           </div>
           <div class="jf">USDT实时价格</div>
         </div>
@@ -118,7 +118,7 @@
       </div>
       <div class="password" style="marginTop:16px">可获得USDT个数</div>
       <el-input size="small" placeholder="数量（USDT)" v-model="usdtNum" class="input"></el-input>
-      <div class="tips" style="marginTop:16px;">可用积分数：123124</div>
+      <div class="tips" style="marginTop:16px;">可用积分数：{{totalNum}}</div>
       <span slot="footer" class="dialog-footer">
         <el-button type="primary" @click="usdtAffirm">确 定</el-button>
       </span>
@@ -221,9 +221,7 @@ export default {
         type: tp
       };
 
-      this.$post("/api/awallet/wallet", data).then(res => {
-        console.log(res);
-        
+      this.$post("/api/awallet/wallet", data).then(res => {     
         let mobile = localStorage.getItem("userMsg");
         this.setPassword.mobile = JSON.parse(mobile).mobile;
         this.setStatus = res.data.pay_password;
@@ -231,7 +229,7 @@ export default {
         this.rate = res.data.rate;
         this.totalNum = res.data.amount_total;
         this.totalUsdt = res.data.usdt_num;
-      });
+      }).catch(e=>{});
     },
     // 获取验证码
     getCode(mob, tp) {
@@ -265,7 +263,6 @@ export default {
     chengeUsdt() {
       let status = parseInt(this.setStatus);
       if (status === 0) {
-        console.log("333");
         this.dialogVisible1 = true;
       } else if (status === 1) {
         this.dialogVisible2 = true;
@@ -282,12 +279,13 @@ export default {
         token: localStorage.getItem("token"),
         convert_num: this.usdtData.jf_num
       };
+      
       this.$post("/api/awallet/exchangeUsdt", data).then(res => {
         if (res.code === 0) {
           Message({
             message: res.msg,
             type: "success"
-          });
+          }).catch(e=>{});
         }
       });
     },

@@ -9,13 +9,13 @@
     <div class="mainbox">
       <el-container style="height:500px">
         <el-aside width="200px">
-          <div class="item" v-for="(item, index) in apiData.tabData" :class="{'active': activeIndex == index}" :key="index" @click="checkouttab(index)">
-            <span>{{item}}</span><i class="el-icon-arrow-right"></i>
+          <div class="item" v-for="(item, index) in apiData.tabData" :class="{'active': activeIndex == index}" :key="index" @click="checkouttab(index, item.id)">
+            <span>{{item.title}}</span><i class="el-icon-arrow-right"></i>
           </div>
         </el-aside>
         <el-main>
           <div class="itemContant">
-            <span>{{apiData.mainContant[activeIndex]}}</span>
+            <span>{{apiData.mainContant}}</span>
           </div>
         </el-main>
       </el-container>
@@ -28,15 +28,36 @@ export default {
   data () {
     return {
       apiData: {
-        tabData: ['云主机', '产品简介', '产品定价', '安全', '哈哈', '含糊'],
-        mainContant: ['云主机', '产品简介', '产品定价', '安全', '哈哈', '含糊']
+        tabData: [],
+        mainContant: ''
       },
       activeIndex: 0
     }
   },
+  created() {
+    this.getApititledata()
+    this.getApicontaindata(1)
+  },
   methods: {
-    checkouttab (idx) {
+    checkouttab (idx,id) {
       this.activeIndex = idx
+      console.log(idx, id)
+      this.getApicontaindata(id)
+    },
+    getApititledata () {
+      this.$post('/api/agency/agencyArticle').then(res => {
+        var data = res.data
+        this.apiData.tabData = data
+      })
+    },
+    getApicontaindata (id) {
+      var data = {
+        id: id
+      }
+      this.$post('/api/agency/agencyArticleDetail', data).then(res => {
+        var data = res.data
+        this.apiData.mainContant = data.content
+      })
     }
   }
 }

@@ -79,7 +79,8 @@ export function postHttp (url, data = {}) {
           resolve(_res)
         } else if (code === -1) {
           Message.error(res.data.msg)
-        }
+          reject(_res)
+        } 
       }, (err) => {
         reject(err)
       })
