@@ -81,7 +81,9 @@ export default {
         }
         if (data.status === 1) {
           localStorage.removeItem('activeName')
-          this.$router(url)
+          this.$router.push({
+            path: url
+          })
         }
 
       })

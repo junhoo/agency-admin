@@ -321,24 +321,6 @@ export default {
           address: "3242342"
         }
       ]
-<<<<<<< HEAD
-    };
-  },
-  methods: {
-    gettridData () {
-      if (!localStorage.getItem('token')) {
-        return false
-      }
-      var data = {
-        token: localStorage.getItem('token')
-      }
-      this.$post('/api/awallet/getStatics', data).then(res => {
-        console.log(res)
-        var data = res.data
-      })
-    }
-  },
-=======
     }
   },
   created () {
@@ -545,7 +527,6 @@ export default {
       }
     }
   }
->>>>>>> 3f6791f561404175a5e6d2685ab401fdc19f6950
 };
 </script>
 
