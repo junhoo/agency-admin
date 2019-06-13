@@ -390,8 +390,8 @@ export default {
         span{
           display: inline-block;
           text-align: left;
-          line-height: 24px;
-          font-size: 20px;
+          line-height: 20px;
+          font-size: 14px;
           color: #79A5C0
         }
       }
