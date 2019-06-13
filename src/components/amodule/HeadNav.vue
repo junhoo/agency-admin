@@ -7,7 +7,7 @@
         </div>
         <div class="content">
           <p>欢迎你{{username}}代理</p>
-          <div class="icon-right" @click="loginOut"></div>
+          <div class="icon-right" @click="loginOut()"></div>
         </div>
     </header>
 </template>
@@ -52,6 +52,7 @@ export default {
       this.$post('/api/auser/out',data).then(res=>{ 
         localStorage.removeItem('token')
         localStorage.removeItem('userMsg')
+        sessionStorage.removeItem('activeName')
         this.$router.push('/home')
       })
     },

@@ -1,5 +1,6 @@
 <template>
   <div class="merchants-body">
+    <div class="test" @click="gettridData()">az</div>
     <header class="container">
       <div class="content">
         <p class="money">{{user_num}}</p>

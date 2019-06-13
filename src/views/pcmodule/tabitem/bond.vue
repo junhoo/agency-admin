@@ -16,10 +16,7 @@
         <p>您充值至上述地址后，将在2个区块确认后到账</p>
         <p>充值其他数字资产导致的经济损失，平台概不负责</p>
         <p>缴纳足额10000USDT保证金后，系统自动激活代理账户</p>
-        <p>当前已缴纳：0USDT</p>
-      </div>
-      <div class="tip2">
-        <p>* 缴纳成功请重新登录</p>
+        <p>当前已缴纳：{{usdtNum}}USDT</p>
       </div>
     </div>
   </div>
@@ -33,11 +30,13 @@ export default {
   data () {
     return {
       copyText: '',
-      imgUrl: null
+      imgUrl: null,
+      usdtNum: null
     }
   },
   created () {
     this.getCode()
+    this.refresh()
   },
   methods: {
     // 复制
@@ -64,6 +63,29 @@ export default {
         var data = res.data
         this.copyText = data.code
         this.imgUrl = data.pic
+      })
+    },
+    refresh () {
+      if (!localStorage.getItem('token')) {
+        return false
+      }
+      var data = {
+        token: localStorage.getItem('token')
+      }
+      this.$post('api/agency/refresh', data).then(res => {
+        var data = res.data
+        var url = '/bindex'
+        this.usdtNum = data.deposit
+        if (data.is_agency === 1) {
+          url = '/aindex'
+        }
+        if (data.status === 1) {
+          localStorage.removeItem('activeName')
+          this.$router.push({
+            path: url
+          })
+        }
+
       })
     }
   }
@@ -125,15 +147,6 @@ body,
         text-align: left;
         font-size: 12px;
         color: #1087fd;
-        line-height: initial
-      }
-    }
-    .tip2{
-      padding-top: 15px;
-      p{
-        color: red;
-        text-align: left;
-        font-size: 14px;
         line-height: initial
       }
     }
