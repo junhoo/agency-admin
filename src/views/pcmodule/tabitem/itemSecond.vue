@@ -27,17 +27,17 @@
         <li>
           <img src="~@/assets/img/PCimg/item2-ad1.png" alt="">
           <p>加入门槛低</p>
-          <span>注册申请成为交易端代理缴纳代理费用</span>
+          <span>注册申请成为交易端代理<br>缴纳代理费用</span>
         </li>
         <li>
           <img src="~@/assets/img/PCimg/item2-ad2.png" alt="">
           <p>工作轻松自由</p>
-          <span>使用我们的推广链接，邀请用户注册成为交易员，交易端自动用户裂变模式，人数倍增</span>
+          <span>使用我们的推广链接，邀请用户注册成<br>为交易员，交易端自动用户裂变模式，人数倍增</span>
         </li>
         <li>
           <img src="~@/assets/img/PCimg/item2-ad3.png" alt="">
           <p>轻松达成高收益</p>
-          <span>代理推广所得的用户，包括用户推荐其他好友都属于代理方所有，并享受所有交易的带来的收益</span>
+          <span>代理推广所得的用户，包括用户推荐其他<br>好友都属于代理方所有，并享受所有<br>交易的带来的收益</span>
         </li>
       </ul>
     </div>
@@ -162,7 +162,11 @@ export default {
       .txt{
         font-size: 14px;
         color: #79A5C0;
-        padding: 0 0 53px
+        padding: 0 0 53px;
+        span{
+          line-height: 20px;
+          letter-spacing: 1px
+        }
       }
       .btn{
         i{
@@ -244,7 +248,9 @@ export default {
         }
         span{
           font-size: 14px;
-          color: #79A5C0
+          color: #79A5C0;
+          line-height: 20px;
+          letter-spacing: 1px
         }
       }
     }
