@@ -21,7 +21,9 @@ export default {
     LeftMenu
   },
   created () {
-    sessionStorage.setItem('activaItem', 0)
+    if (!sessionStorage.getItem('activaItem')) {
+      sessionStorage.setItem('activaItem', 0)
+    }
   },
   data() {
     return {

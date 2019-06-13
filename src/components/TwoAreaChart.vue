@@ -12,8 +12,15 @@ export default {
   watch: {
     objs: {
       handler(newName) {
-        this.series[0].data = newName.midList1;
-        this.series[1].data = newName.midList2;
+        this.series[0].data = newName.list1;
+        this.series[1].data = newName.list2;
+        this.chartOptions = {
+          ...this.chartOptions,
+          ...{
+            xaxis: {
+              categories: newName.name_list
+            }
+          }}
       },
       deep: true
     }
@@ -37,22 +44,13 @@ export default {
         stroke: {
           curve: "smooth"
         },
-
         xaxis: {
-          type: "datetime",
-          categories: [
-            "2018-09-19T00:00:00",
-            "2018-09-19T01:30:00",
-            "2018-09-19T02:30:00",
-            "2018-09-19T03:30:00",
-            "2018-09-19T04:30:00",
-            "2018-09-19T05:30:00",
-            "2018-09-19T06:30:00"
-          ]
+          categories: []
         },
+        colors: ['#45F0EA', '#16569E'],
         tooltip: {
           x: {
-            format: "dd/MM/yy HH:mm"
+            format: "yy"
           }
         }
       }
