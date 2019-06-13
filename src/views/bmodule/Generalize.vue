@@ -30,6 +30,7 @@
 <script>
 // 点击复制
 import Clipboard from "clipboard";
+import { Message } from "element-ui";
 export default {
   name: "generalize",
   data() {
@@ -43,8 +44,11 @@ export default {
       var clipboard = new Clipboard(".tag-copy");
       //成功回调
       clipboard.on("success", function(e) {
-        console.log("222");
-        alert("复制成功");
+       
+        Message({
+          message: "复制成功",
+          type: "success"
+        });
         clipboard.destroy();
       });
       //失败回调

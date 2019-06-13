@@ -61,7 +61,6 @@ export default {
         token: localStorage.getItem('token')
       }
       this.$post('/api/agency/payinfo', data).then(res => {
-        console.log(res)
         var data = res.data
         this.copyText = data.code
         this.imgUrl = data.pic

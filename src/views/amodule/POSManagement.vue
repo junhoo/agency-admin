@@ -127,8 +127,6 @@ export default {
       };
       console.log(data);
       this.$post("/api/auser/userList",data).then(res => {
-        console.log(res);
-        console.log('222');
         this.userList = res.data.data;
         this.pageSize = res.data.current_page;
         this.pageNum = res.data.per_page;

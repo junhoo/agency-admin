@@ -49,7 +49,7 @@ export default {
       const data = {
         token:localStorage.getItem('token')
       }
-      this.$post('/api/auser/out',data).then(res=>{
+      this.$post('/api/auser/out',data).then(res=>{ 
         localStorage.removeItem('token')
         localStorage.removeItem('userMsg')
         this.$router.push('/home')
