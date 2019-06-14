@@ -34,28 +34,31 @@
 
         <div class="date-box">
           <div class="hint">起始日期</div>
-          <div class="time-icon"></div>
 
+          <!-- <div class="time-icon"></div>
           <el-form ref="topForm" label-width="20px" class="my-form">
             <el-date-picker
-              type="date"
+              type="month"
               placeholder="2018-05"
               v-model="topForm.date1"
               size="small"
+              value-format="yyyy-MM"
               :editable="false"
             ></el-date-picker>
           </el-form>
 
-          <p class="black">—</p>
+          <p class="black">—</p> -->
 
           <div class="time-icon"></div>
           <el-form ref="topForm" label-width="20px" class="my-form" style="margin-right: 10px;">
             <el-date-picker
-              type="date"
+              type="month"
               placeholder="2019-06"
-              v-model="topForm.date2"
+              v-model="topForm.date"
               size="small"
+              value-format="yyyy-MM"
               :editable="false"
+              @change="handleDateTop"
             ></el-date-picker>
           </el-form>
         </div>
@@ -78,18 +81,21 @@
             <div class="time-icon"></div>
             <el-form ref="midForm" label-width="20px" class="my-form" style="margin-right: 10px;">
               <el-date-picker
-                type="date"
+                type="month"
                 placeholder="2019-06"
-                v-model="midForm.date1"
+                v-model="midForm1.date"
                 size="small"
+                value-format="yyyy-MM"
                 :editable="false"
+                @change="handleDateMid1"
               ></el-date-picker>
             </el-form>
           </div>
         </div>
 
         <!-- 柱状图 -->
-        <bar-chart :objs="bonus_ranking_list" :ccc="bonus_ranking_list.name_list"></bar-chart>
+        <!-- :ccc="bonus_ranking_list.name_list" -->
+        <bar-chart :objs="bonus_ranking_list" ></bar-chart>
       </div>
 
       <!-- 中右 -->
@@ -104,11 +110,13 @@
             <div class="time-icon"></div>
             <el-form ref="midForm" label-width="20px" class="my-form" style="margin-right: 10px;">
               <el-date-picker
-                type="date"
+                type="month"
                 placeholder="2019-06"
-                v-model="midForm.date2"
+                v-model="midForm2.date"
                 size="small"
+                value-format="yyyy-MM"
                 :editable="false"
+                @change="handleDateMid2"
               ></el-date-picker>
             </el-form>
           </div>
@@ -132,17 +140,19 @@
 
             <el-form
               ref="bottForm"
-              :model="bottForm"
+              :model="bottForm1"
               label-width="20px"
               class="my-form"
               style="margin-right: 10px;"
             >
               <el-date-picker
-                type="date"
+                type="month"
                 placeholder="2019-06"
-                v-model="bottForm.date1"
+                v-model="bottForm1.date"
                 size="small"
+                value-format="yyyy-MM"
                 :editable="false"
+                @change="handleDateBtm1"
               ></el-date-picker>
             </el-form>
           </div>
@@ -175,11 +185,13 @@
             <div class="time-icon"></div>
             <el-form ref="bottForm" label-width="20px" class="my-form" style="margin-right: 10px;">
               <el-date-picker
-                type="date"
+                type="month"
                 placeholder="2019-06"
-                v-model="bottForm.data2"
+                v-model="bottForm2.date"
                 size="small"
+                value-format="yyyy-MM"
                 :editable="false"
+                @change="handleDateBtm2"
               ></el-date-picker>
             </el-form>
           </div>
@@ -213,48 +225,65 @@ export default {
       bonus_amount: '', // 本月收益
 
       // 顶部表格数据
-      top_trend_list: [], // 代理收益趋势
+      top_trend_list: { // 代理收益趋势
+        list: [],
+        name_list: []
+      },
 
       // 中间表格数据
       bonus_ranking_list: { // 充值提现额排行
-        midList1: [],
-        midList2: [],
+        list1: [],
+        list2: [],
         name_list: []
       },
       bonus_trend_list: { // 充值提现趋势
-        midList1: [],
-        midList2: []
+        list1: [],
+        list2: [],
+        name_list: []
       },
 
       // 底部表格数据
       bonus_detail_list: [], // 收益贡献明细
       bonus_num_list: { // 收益贡献明细
-        midList1: [],
-        midList2: []
+        list1: [],
+        list2: [],
+        name_list: []
       },
 
       // 顶部
       topForm: {
-        date1: "",
-        date2: "",
+        date: "",
         toplist: []
       },
+
       // 中部
-      midForm: {
-        data1: [],
-        data2: [],
+      midForm1: {
+        date: [],
         list: {
-          midList1: [],
-          midList2: []
+          list1: [],
+          list2: []
         }
       },
+      midForm2: {
+        date: [],
+        list: {
+          list1: [],
+          list2: []
+        }
+      },
+
       // 底部表格
-      bottForm: {
-        data1: [],
-        data2: [],
+      bottForm1: {
+        date: [],
         tableData1: [],
         tableData2: []
       },
+      bottForm2: {
+        date: [],
+        tableData1: [],
+        tableData2: []
+      },
+
       // 顶部图数据
       topseries: [],
       topchartOptions: {},
@@ -330,8 +359,8 @@ export default {
     // 顶部数据
     this.topForm.toplist = [100, 100, 80, 80, 50, 50, 70, 91];
     // 中部数据
-    this.midForm.list.midList1 = [20, 40, 80, 80, 50, 50, 70, 91];
-    this.midForm.list.midList2 = [50, 60, 80, 80, 50, 50, 70, 91];
+    // this.midForm1.list.list1 = [20, 40, 80, 80, 50, 50, 70, 91];
+    // this.midForm1.list.list2 = [50, 60, 80, 80, 50, 50, 70, 91];
     // 底部数据
     // this.bottForm.tableData1 = this.tableData;
   },
@@ -351,180 +380,107 @@ export default {
 
         // 代理收益趋势
         // this.top_trend_list = _res.trend_list
-        this.top_trend_list = [100, 90, 80, 70, 50, 40, 20, 20];
+        this.top_trend_list.list = [100, 90, 80, 70, 50, 40, 20, 20];
+        this.top_trend_list.name_list = ['06-01','06-02','06-03','06-04','06-05','06-06','06-07','06-08']
 
         // 充值提现额排行
-        // this.bonus_ranking_list.midList1  = _res.bonus_ranking_list.recharge_amount_list
-        // this.bonus_ranking_list.midList2  = _res.bonus_ranking_list.withdraw_amount_list
-        this.bonus_ranking_list.midList1 = [10, 20, 30, 40, 50, 60, 70, 91];
-        this.bonus_ranking_list.midList2 = [10, 20, 30, 40, 50, 60, 70, 91];
+        // this.bonus_ranking_list.list1  = _res.bonus_ranking_list.recharge_amount_list
+        // this.bonus_ranking_list.list2  = _res.bonus_ranking_list.withdraw_amount_list
+        // this.bonus_ranking_list.name_list =
+        this.bonus_ranking_list.list1 = [10, 20, 30, 40, 50, 60, 70, 91];
+        this.bonus_ranking_list.list2 = [10, 20, 30, 40, 50, 60, 70, 91];
         this.bonus_ranking_list.name_list = ['mz','mz','mz','mz','mz','mz','mz','mz'];
 
         // 充值提现趋势
-        // this.bonus_trend_list.midList1  = _res.bonus_trend_list.recharge_amount_list
-        // this.bonus_trend_list.midList2  = _res.bonus_trend_list.withdraw_amount_list
-        this.bonus_trend_list.midList1 = [10, 20, 30, 40, 50, 60, 70, 91];
-        this.bonus_trend_list.midList2 = [90, 60, 50, 40, 30, 20, 50, 91];
-        this.bonus_trend_list.day_list =  _res.bonus_trend_list.day_list
+        // this.bonus_trend_list.list1  = _res.bonus_trend_list.recharge_amount_list
+        // this.bonus_trend_list.list2  = _res.bonus_trend_list.withdraw_amount_list
+        // this.bonus_trend_list.name_list =
+        this.bonus_trend_list.list1 = [10, 20, 30, 40, 50, 60, 70, 91];
+        this.bonus_trend_list.list2 = [90, 60, 50, 40, 30, 20, 50, 91];
+        this.bonus_trend_list.name_list =  ['06-01','06-02','06-03','06-04','06-05','06-06','06-07','06-08']
 
         // 收益贡献明细
         this.bonus_detail_list = _res.bonus_detail_list
 
         // 充值提现笔数
-        this.bonus_num_list.midList1 = _res.bonus_num_list.recharge_num_list
-        this.bonus_num_list.midList2 = _res.bonus_num_list.withdraw_num_list
+        // this.bonus_num_list.list1 = _res.bonus_num_list.recharge_num_list
+        // this.bonus_num_list.list2 = _res.bonus_num_list.withdraw_num_list
+        // this.bonus_num_list.name_list = _res.bonus_num_list.day_list
+        this.bonus_num_list.list1 = [10, 20, 30, 40, 50, 60, 70, 91];
+        this.bonus_num_list.list2 = [30, 40, 50, 60, 70, 60, 70, 91];
+        this.bonus_num_list.name_list = ['06-01','06-02','06-03','06-04','06-05','06-06','06-07','06-08']
         console.log(this.bonus_num_list)
       })
     },
-    ddd () {
-      return {
-          "code": 0,
-          "msg": "sucess",
-          "data": {
-              "user_num": 2,
-              "recharge_amount": "99.00",
-              "withdraw_amount": "0.00",
-              "bonus_amount": 0.0099,
-              "trend_list": {
-                  "bonus_amount_list": [
-                      0,
-                      0,
-                      0,
-                      0,
-                      0,
-                      0,
-                      0,
-                      0,
-                      0,
-                      0,
-                      0,
-                      0
-                  ],
-                  "day_list": [
-                      "06-01",
-                      "06-02",
-                      "06-03",
-                      "06-04",
-                      "06-05",
-                      "06-06",
-                      "06-07",
-                      "06-08",
-                      "06-09",
-                      "06-10",
-                      "06-11",
-                      "06-12"
-                  ]
-              },
-              "bonus_ranking_list": {
-                  "recharge_amount_list": [
-                      "99.00"
-                  ],
-                  "withdraw_amount_list": [
-                      "0.00"
-                  ],
-                  "name_list": [
-                      "深圳明治项目方"
-                  ]
-              },
-              "bonus_detail_list": [
-                  {
-                      "index": 1,
-                      "recharge_amount": "99.00",
-                      "withdraw_amount": "0.00",
-                      "bonus_amount": 0.0099,
-                      "name": "深圳明治项目方"
-                  }
-              ],
-              "bonus_trend_list": {
-                  "recharge_amount_list": [
-                      0,
-                      0,
-                      0,
-                      0,
-                      0,
-                      0,
-                      0,
-                      0,
-                      0,
-                      0,
-                      0,
-                      0
-                  ],
-                  "withdraw_amount_list": [
-                      0,
-                      0,
-                      0,
-                      0,
-                      0,
-                      0,
-                      0,
-                      0,
-                      0,
-                      0,
-                      0,
-                      0
-                  ],
-                  "day_list": [
-                      "06-01",
-                      "06-02",
-                      "06-03",
-                      "06-04",
-                      "06-05",
-                      "06-06",
-                      "06-07",
-                      "06-08",
-                      "06-09",
-                      "06-10",
-                      "06-11",
-                      "06-12"
-                  ]
-              },
-              "bonus_num_list": {
-                  "recharge_num_list": [
-                      0,
-                      0,
-                      0,
-                      0,
-                      0,
-                      0,
-                      0,
-                      0,
-                      0,
-                      0,
-                      0,
-                      0
-                  ],
-                  "withdraw_num_list": [
-                      0,
-                      0,
-                      0,
-                      0,
-                      0,
-                      0,
-                      0,
-                      0,
-                      0,
-                      0,
-                      0,
-                      0
-                  ],
-                  "day_list": [
-                      "06-01",
-                      "06-02",
-                      "06-03",
-                      "06-04",
-                      "06-05",
-                      "06-06",
-                      "06-07",
-                      "06-08",
-                      "06-09",
-                      "06-10",
-                      "06-11",
-                      "06-12"
-                  ]
-              }
-          }
+
+    // 代理收益趋势
+    handleDateTop () {
+      const url = '/api/awallet/getTrendList'
+      const data = {
+        token: localStorage.getItem("token"),
+        time: this.topForm.date
       }
+      this.$post(url, data).then(res => {
+        this.top_trend_list.list = res.data.bonus_amount_list
+        // this.top_trend_list = res.data.day_list
+      })
+    },
+
+    // 项目方充值提现额排行
+    handleDateMid1 () {
+      const url = '/api/awallet/getBonusRankingList'
+      const data = {
+        token: localStorage.getItem("token"),
+        time: this.midForm1.date
+      }
+      this.$post(url, data).then(res => {
+        this.bonus_ranking_list.list1 = res.data.recharge_amount_list
+        this.bonus_ranking_list.list2 = res.data.withdraw_amount_list
+        this.bonus_ranking_list.name_list = res.data.name_list
+      })
+    },
+
+    // 充值提现趋势
+    handleDateMid2 () {
+      console.log(this.midForm2.date)
+      const url = '/api/awallet/getBonusTrendList'
+      const data = {
+        token: localStorage.getItem("token"),
+        time: this.midForm2.date
+      }
+      this.$post(url, data).then(res => {
+        this.bonus_trend_list.list1 = res.data.recharge_amount_list
+        this.bonus_trend_list.list2 = res.data.withdraw_amount_list
+        this.bonus_trend_list.name_list = res.data.day_list
+      })
+    },
+
+    // 收益贡献明细
+    handleDateBtm1 () {
+      const url = '/api/awallet/getBonusDetailList'
+      const data = {
+        token: localStorage.getItem("token"),
+        time: this.bottForm1.date
+      }
+      this.$post(url, data).then(res => {
+        this.bonus_detail_list = res.data
+      })
+    },
+
+    // 充值提现笔数
+    handleDateBtm2 () {
+      console.log(this.bottForm2.date)
+      const url = '/api/awallet/getBonusCountTrendList'
+      const data = {
+        token: localStorage.getItem("token"),
+        time: this.bottForm2.date
+      }
+      this.$post(url, data).then(res => {
+        console.log(res)
+        this.bonus_num_list.list1 = res.data.recharge_num_list
+        this.bonus_num_list.list2 = res.data.withdraw_num_list
+        this.bonus_num_list.name_list = res.data.day_list
+      })
     }
   }
 };
@@ -534,6 +490,32 @@ export default {
 .merchants-body {
   width: 100%;
   height: 100%;
+}
+
+/** 时间按钮框 */
+/deep/ .el-icon-circle-close {
+  width: 0.1px;
+  display: none;
+}
+
+/** 图标编辑按钮 */
+/deep/ .apexcharts-zoom-in-icon {
+  display: none;
+}
+/deep/ .apexcharts-zoom-out-icon {
+  display: none;
+}
+/deep/ .apexcharts-zoom-icon {
+  display: none;
+}
+/deep/ .apexcharts-pan-icon {
+  display: none;
+}
+/deep/ .apexcharts-reset-zoom-icon {
+  display: none;
+}
+/deep/ .apexcharts-menu-icon {
+  display: none;
 }
 
 /deep/ .apexcharts-legend {
@@ -569,7 +551,8 @@ export default {
 
 /deep/ .el-date-editor.el-input {
   padding-left: 5px;
-  width: 72px;
+  // width: 95px;
+  width: 75px;
 }
 
 /deep/ .my-form {
@@ -578,11 +561,13 @@ export default {
 
 /deep/ .el-input__inner {
   padding: 0 !important;
-  background: url("~imgurl/pulldown_icon.png") no-repeat center right;
-  background-size: 16px;
   height: 40px;
   line-height: 40px;
   border: none;
+  color: #3884e0 !important;
+  font-size: 15px;
+  background: url("~imgurl/pulldown_icon.png") no-repeat center right;
+  background-size: 16px;
 }
 
 /deep/ .el-input__inner::placeholder {

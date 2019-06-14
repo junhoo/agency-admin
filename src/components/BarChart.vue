@@ -7,28 +7,20 @@
 <script>
 export default {
   props: {
-    objs: Object,
-    ccc: Array
+    objs: Object
   },
   watch: {
     objs: {
       handler(newName) {
-        this.series[0].data = newName.midList1
-        this.series[1].data = newName.midList2
-        this.chartOptions.xaxis.categories = newName.name_list
-        // console.log('====')
-        // console.log(newName.name_list)
-        // console.log(this.chartOptions.xaxis.categories)
-      },
-        deep: true
-      },
-    ccc: {
-      handler(newName) {
-        console.log('====')
-        console.log(newName)
-        this.chartOptions.xaxis.categories = newName
-        console.log('+++')
-        console.log(this.chartOptions.xaxis.categories)
+        this.series[0].data = newName.list1
+        this.series[1].data = newName.list2
+        this.chartOptions = {
+          ...this.chartOptions,
+          ...{
+            xaxis: {
+              categories: newName.name_list
+            }
+          }}
       },
         deep: true
       }
@@ -62,8 +54,7 @@ export default {
         },
 
         xaxis: {
-          categories: ['Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct'],
-          // categories: []
+          categories: []
         },
         yaxis: {
           title: {
@@ -75,10 +66,10 @@ export default {
             minWidth: 0,
             maxWidth: 160,
             style: {
-                color: '#f5f5f5',
-                fontSize: '12px',
-                fontFamily: 'Helvetica, Arial, sans-serif',
-                cssClass: 'apexcharts-yaxis-label',
+              color: '#f5f5f5',
+              fontSize: '12px',
+              fontFamily: 'Helvetica, Arial, sans-serif',
+              cssClass: 'apexcharts-yaxis-label',
             }
           },
           axisBorder: {
@@ -105,6 +96,7 @@ export default {
             },
           }
         },
+        colors: ['#93E642', '#FF7E78'],
         fill: {
           opacity: 1
         },

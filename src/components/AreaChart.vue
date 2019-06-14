@@ -10,9 +10,19 @@ export default {
     list: Array
   },
   watch: {
-    list (val) {
-      this.series[0].data = val
-    }
+    list: {
+      handler(newName) {
+        this.series[0].data = newName.list
+        this.chartOptions = {
+          ...this.chartOptions,
+          ...{
+            xaxis: {
+              categories: newName.name_list
+            }
+          }}
+      },
+        deep: true
+      }
   },
   data () {
     return {
@@ -21,12 +31,12 @@ export default {
           id: 'vuechart-example'
         },
         xaxis: {
-          categories: [2500, 2500, 2500, 2500, 2500, 2500, 2500, 2500]
+          categories: []
         }
       },
       series: [{
         name: 'series-1',
-        data: [30, 40, 35, 50, 49, 60, 70, 91]
+        data: []
       }]
     }
   }
