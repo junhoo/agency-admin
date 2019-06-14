@@ -2,26 +2,26 @@
   <div class="merchants-body">
     <header class="container">
       <div class="content">
-        <p class="money">1862,325</p>
-        <p class="name">用户数量</p>
+        <p class="money">{{week_register_users}}</p>
+        <p class="name">本周注册用户</p>
       </div>
       <div class="content">
-        <p class="money green">1862,325</p>
-        <p class="name">用户数量</p>
+        <p class="money green">{{week_used_users}}</p>
+        <p class="name">本周在线人数</p>
       </div>
       <div class="content">
-        <p class="money purple">1862,325</p>
-        <p class="name">用户数量</p>
+        <p class="money purple">{{all_users}}</p>
+        <p class="name">总用户量</p>
       </div>
       <div class="content">
         <div class="money light-blue">
-          1862,325
+          {{week_register_users}}
           <div class="percent">
             <!-- 30% -->
             <p class="text">30%</p>
           </div>
         </div>
-        <p class="name">用户数量</p>
+        <p class="name">本周推荐用户</p>
       </div>
     </header>
 
@@ -29,9 +29,15 @@
     <section class="chart-top">
       <div class="title-box">
         <div class="icon"></div>
-        <div class="text">代理收益趋势</div>
+        <div class="text">本周用户数据</div>
 
-        <div class="date-box">
+        <div class="radio-box">
+          <el-radio v-model="radio" label="1" @change="handleRadio">注册</el-radio>
+          <el-radio v-model="radio" label="2" @change="handleRadio">推荐</el-radio>
+          <el-radio v-model="radio" label="3" @change="handleRadio">在线</el-radio>
+        </div>
+
+        <!-- <div class="date-box">
           <div class="hint">起始日期</div>
           <div class="time-icon"></div>
 
@@ -57,11 +63,12 @@
               :editable="false"
             ></el-date-picker>
           </el-form>
-        </div>
+        </div> -->
       </div>
 
       <!-- 波浪图 -->
-      <top-chart :list="topForm.toplist"></top-chart>
+      <!-- <top-chart :list="topForm.toplist"></top-chart> -->
+      <top-chart :list="top_trend_list"></top-chart>
     </section>
   </div>
 </template>
@@ -73,33 +80,51 @@ export default {
   components: {
     TopChart,
   },
-  mounted() {
-    // 顶部数据
-    this.topForm.toplist = [100, 100, 80, 80, 50, 50, 70, 91];
-  },
-  data() {
-    return {
-      // 顶部
-      topForm: {
-        date1: "",
-        date2: "",
-        toplist: []
-      },
-    
-      // 顶部图数据
-      topseries: [],
-      topchartOptions: {},
-    };
-  },
   created(){
     this.getInfo()
   },
+  mounted() {
+    this.reqlist = {
+      register_users_list: [1,2,3,4,5,6,7,8],
+      used_users_list: [2,3,4,5,6,7,8,9]
+    }
+  },
+  data() {
+    return {
+      radio: '1',
+      week_register_users: '',
+      week_used_users: '',
+      all_users: '',
+      reqlist: {},
+      top_trend_list: { // 代理收益趋势
+        list: [],
+        name_list: []
+      }
+    }
+  },
   // 视图数据
-  methods:{
+  methods: {
     getInfo(){
       this.$post('/api/buser/getUserStatics',{token:localStorage.getItem('token')}).then(res=>{
         console.log(res);
+        var _res = res.data
+        this.radio = '1'
+        this.reqlist = _res
+        this.top_trend_list.list = _res.register_users_list
+        // this.top_trend_list.list = _res.used_users_list
+        this.top_trend_list.name_list = _res.day_list
+        this.week_register_users = _res.week_register_users
+        this.week_used_users = _res.week_used_users
+        this.all_users = _res.all_users
       })
+    },
+
+    handleRadio (type) {
+      if (this.radio === '1' || this.radio === '2') {
+        this.bonus_ranking_list.list = this.reqlist.register_users_list
+      } else {
+        this.bonus_ranking_list.list = this.reqlist.used_users_list
+      }
     }
   }
 
@@ -107,6 +132,30 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+/** 单选框 */
+/deep/ .el-radio {
+  color: #717E9E;
+}
+/deep/ .el-radio__inner {
+  width: 12px;
+  height: 12px;
+  border: 1px solid #7380A0;
+  background-color: #12223B;
+}
+/deep/ .el-radio__inner::after {
+  width: 3px;
+  height: 3px;
+  background-color: #3986E2;
+}
+/deep/ .el-radio__input.is-checked .el-radio__inner {
+  border-color: #26548F;
+  background: #26548F;
+}
+
+/deep/ .el-radio__input.is-checked+.el-radio__label {
+  color: #3986E2;
+}
+
 .merchants-body {
   width: 100%;
   height: 100%;
@@ -231,6 +280,8 @@ export default {
     text-align: left;
     height: 40px;
     line-height: 40px;
+    background-color: #12223B;
+    border-bottom: 1.2px solid #06476d;
     .icon {
       float: left;
       width: 36px;
@@ -240,6 +291,10 @@ export default {
     }
     .text {
       float: left;
+    }
+    .radio-box {
+      float: left;
+      margin-left: 35px;
     }
     .date-box {
       display: flex;
@@ -274,59 +329,6 @@ export default {
         color: #3884e0;
       }
     }
-  }
-}
-
-// 表格公共布局
-.chart-box {
-  margin-top: 26px;
-  display: flex;
-  justify-content: space-between;
-  .content {
-    width: 48.5%;
-    // height: 221px;
-    border: 1.2px #06476d solid;
-    .title-box {
-      color: #fff;
-      text-align: left;
-      height: 40px;
-      line-height: 40px;
-      border-bottom: 1.2px #06476d solid;
-      .icon {
-        float: left;
-        width: 36px;
-        height: 40px;
-        background: url("~imgurl/table_icon.png") no-repeat center;
-        background-size: 15px;
-      }
-      .text {
-        float: left;
-      }
-      .date-box {
-        float: right;
-        display: flex;
-        .time-icon {
-          width: 15px;
-          background: url("~imgurl/time.png") no-repeat center;
-          background-size: 15px;
-        }
-        .hint {
-          font-size: 15px;
-          margin-right: 5px;
-          color: #3884e0;
-        }
-      }
-      .date {
-        color: #3884e0;
-        float: right;
-      }
-    }
-  }
-}
-
-.chart-bottom {
-  margin-top: 27px;
-  .left {
   }
 }
 </style>

@@ -61,7 +61,7 @@ export default {
         },
 
         xaxis: {
-          categories: []
+          categories: [],
         },
         yaxis: {
           title: {

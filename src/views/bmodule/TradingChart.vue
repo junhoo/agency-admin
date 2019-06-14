@@ -38,7 +38,7 @@
 
         <div class="date-box">
           <div class="hint">起始日期</div>
-          <!-- <div class="time-icon"></div>
+          <div class="time-icon"></div>
 
           <el-form ref="topForm" label-width="20px" class="my-form">
             <el-date-picker
@@ -50,7 +50,7 @@
             ></el-date-picker>
           </el-form>
 
-          <p class="black">—</p> -->
+          <p class="black">—</p>
 
           <div class="time-icon"></div>
           <el-form ref="topForm" label-width="20px" class="my-form" style="margin-right: 10px;">
@@ -69,7 +69,10 @@
 
       <!-- 图形 -->
       <!-- <apexchart type="bar" height="350" :options="chartOptions" :series="series"/> -->
-      <bar-chart :objs="bonus_ranking_list" ></bar-chart>
+      <div class="chart-box">
+        <bar-chart :objs="bonus_ranking_list" ></bar-chart>
+        <div class="chart-hint">最多可查看15天</div>
+      </div>
     </section>
 
   </div>
@@ -95,17 +98,17 @@ export default {
       seller_amount: '',
       seller_num: '',
       bonus_ranking_list: { // 充值提现额排行
-        name1: '',
-        name2: '',
+        name1: '买入笔数',
+        name2: '卖出笔数',
         list1: [],
         list2: [],
         name_list: [],
-        column: '20%'
+        column: '30%'
       }
     }
   },
   created () {
-    // this.getTradInfo()
+    this.getTradInfo()
   },
   mounted() {
     // 顶部数据
@@ -115,12 +118,14 @@ export default {
       purchase_num_list: [9,8,7,6,5,4,3,2],
       seller_num_list: [8,7,6,5,4,3,2,1]
     }
-    this.bonus_ranking_list.name1 = '买入笔数'
-    this.bonus_ranking_list.name2 = '卖出笔数'
-    this.bonus_ranking_list.list1 = [10, 20, 30, 40, 50, 60, 70, 91];
-    this.bonus_ranking_list.list2 = [10, 20, 30, 40, 50, 60, 70, 91];
-    
-    this.bonus_ranking_list.name_list = ['mz','mz','mz','mz','mz','mz','mz','mz'];
+    // this.bonus_ranking_list.name1 = '买入笔数'
+    // this.bonus_ranking_list.name2 = '卖出笔数'
+    // this.bonus_ranking_list.list1 = [10, 20, 30, 40, 50, 60, 70, 80, 91, 101, 111, 121, 131, 141, 151];
+    // this.bonus_ranking_list.list2 = [10, 20, 30, 40, 50, 60, 70, 80, 91, 91, 101, 111, 121, 131, 141,];
+
+    // this.bonus_ranking_list.name_list = [
+    //   '06-01','06-02','06-03','06-04','06-05','06-06','06-07','06-08',
+    //   '06-09','06-10','06-11','06-12','06-13','06-14','06-15'];
   },
   methods: {
     getTradInfo () {
@@ -160,6 +165,7 @@ export default {
         console.log(111)
         console.log(res)
         var _res = res.data
+        this.radio = '1'
         this.reqlist = _res
         this.bonus_ranking_list.name_list = _res.day_list
         // 金额列表
@@ -173,7 +179,6 @@ export default {
     },
 
     handleRadio (type) {
-      console.log(this.radio)
       if (this.radio === '1') {
         this.bonus_ranking_list.name1 = '买入笔数'
         this.bonus_ranking_list.name2 = '卖出笔数'
@@ -185,7 +190,6 @@ export default {
         this.bonus_ranking_list.list1 = this.reqlist.purchase_amount_list
         this.bonus_ranking_list.list2 = this.reqlist.seller_amount_list
       }
-      console.log(this.bonus_ranking_list.list1)
     }
   }
 }
@@ -291,6 +295,10 @@ export default {
   background: #061220;
 }
 
+/deep/ .apexcharts-legend-series {
+  margin: 0px 50px !important;
+}
+
 .container {
   box-sizing: border-box;
   display: flex;
@@ -348,6 +356,8 @@ export default {
     text-align: left;
     height: 40px;
     line-height: 40px;
+    background-color: #12223B;
+    border-bottom: 1.2px solid #06476d;
     .icon {
       float: left;
       width: 36px;
@@ -396,58 +406,16 @@ export default {
       }
     }
   }
-}
-
-// 表格公共布局
-.chart-box {
-  margin-top: 26px;
-  display: flex;
-  justify-content: space-between;
-  .content {
-    width: 48.5%;
-    // height: 221px;
-    border: 1.2px #06476d solid;
-    .title-box {
-      color: #fff;
-      text-align: left;
-      height: 40px;
-      line-height: 40px;
-      border-bottom: 1.2px #06476d solid;
-      .icon {
-        float: left;
-        width: 36px;
-        height: 40px;
-        background: url("~imgurl/table_icon.png") no-repeat center;
-        background-size: 15px;
-      }
-      .text {
-        float: left;
-      }
-      .date-box {
-        float: right;
-        display: flex;
-        .time-icon {
-          width: 15px;
-          background: url("~imgurl/time.png") no-repeat center;
-          background-size: 15px;
-        }
-        .hint {
-          font-size: 15px;
-          margin-right: 5px;
-          color: #3884e0;
-        }
-      }
-      .date {
-        color: #3884e0;
-        float: right;
-      }
+  .chart-box {
+    position: relative;
+    // height: 300px;
+    .chart-hint {
+      position: absolute;
+      right: 30px;
+      bottom: 25px;
+      color: #65718E;
+      font-size: 12.5px;
     }
-  }
-}
-
-.chart-bottom {
-  margin-top: 27px;
-  .left {
   }
 }
 </style>
