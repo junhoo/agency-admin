@@ -166,6 +166,7 @@
           :pager-count="5"
           :total="total"
           @current-change="currentPage"
+          :page-size="pageNum"
           style="background: transparent;"
         ></el-pagination>
       </div>

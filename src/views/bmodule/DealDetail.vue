@@ -11,7 +11,7 @@
           class="my-btn"
           type="date"
           placeholder="选择日期"
-          v-model="form.date1"
+          v-model="startTime"
           style="width: 100%;"
           size="small"
         ></el-date-picker>
@@ -20,17 +20,21 @@
           class="my-btn"
           type="date"
           placeholder="选择日期"
-          v-model="form.date1"
+          v-model="endTime"
           style="width: 100%;"
           size="small"
         ></el-date-picker>
-        <el-dropdown class="first">
+        <el-dropdown class="first" trigger="click" @command="handleCommand">
           <el-button type="primary" size="small">
             全部类型
             <i class="el-icon-caret-bottom el-icon--right"></i>
           </el-button>
           <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item v-for="(item,index) in dropdownList" :key="index">{{item}}</el-dropdown-item>
+            <el-dropdown-item
+              v-for="(item,index) in dropdownList"
+              :key="index"
+              :command="index"
+            >{{item}}</el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
 
@@ -38,6 +42,7 @@
           交易金额
           <i class="el-icon-d-caret el-icon--right"></i>
         </el-button>
+        <el-button type="primary" size="small" @click="queryList">搜索查询</el-button>
       </div>
     </el-form>
 
@@ -49,20 +54,34 @@
       :header-cell-style="{background:'#12223B',color:'#606266'}"
       align="center"
     >
-      <el-table-column prop="date" label="订单号" width="100%" align="center"></el-table-column>
-      <el-table-column prop="name" label="交易员UID" width="100%" align="center"></el-table-column>
-      <el-table-column prop="address" label="姓名" align="center"></el-table-column>
-      <el-table-column prop="address" label="用户ID" align="center"></el-table-column>
-      <el-table-column prop="address" label="类型" align="center">
-        <template>
-          <span style="color:red">买入</span>
+      <el-table-column prop="order_no" label="订单号" align="center"></el-table-column>
+      <el-table-column prop="id" label="交易员UID" align="center"></el-table-column>
+      <el-table-column prop="user_name" label="姓名" align="center"></el-table-column>
+      <el-table-column prop="uid" label="用户ID" align="center"></el-table-column>
+      <el-table-column prop="order_type" label="类型" align="center">
+        <template scope="scope">
+          <span v-if="scope.row.order_type === '买入'" style="color:green">{{scope.row.order_type}}</span>
+          <span v-else-if="scope.row.order_type === '卖出'" style="color:red">{{scope.row.order_type}}</span>
         </template>
       </el-table-column>
-      <el-table-column prop="address" label="交易金额" align="center"></el-table-column>
-      <el-table-column prop="address" label="代理提成" align="center"></el-table-column>
-      <el-table-column prop="address" label="交易总金额" align="center"></el-table-column>
-      <el-table-column prop="address" label="代理提成" align="center"></el-table-column>
+      <el-table-column prop="order_amount" label="交易金额" align="center"></el-table-column>
+      <el-table-column prop="add_time" label="交易时间" align="center"></el-table-column>
+      <el-table-column prop="bonus_amount" label="代理提成" align="center"></el-table-column>
     </el-table>
+    <!-- 分页 -->
+    <div class="paging">
+      <div class="block">
+        <span class="demonstration"></span>
+        <el-pagination
+          layout="prev, pager, next"
+          :pager-count="5"
+          :total="total"
+          @current-change="currentPage"
+          :page-size="pageNum"
+          style="background: transparent;"
+        ></el-pagination>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -71,42 +90,120 @@ export default {
   nama: "deal",
   data() {
     return {
-      dropdownList: ["黄金糕", "狮子头", "螺蛳粉", "双皮奶", "蚵仔煎"],
+      dropdownList: ["卖出", "买入"],
       input2: "",
       form: {
         date1: "",
         date2: ""
       },
-      tableData: [
-        {
-          date: "2016-05-02",
-          name: "王小虎",
-          address: "上海市普"
-        },
-        {
-          date: "2016-05-04",
-          name: "王小虎",
-          address: "上海市普"
-        },
-        {
-          date: "2016-05-01",
-          name: "王小虎",
-          address: "上海市普"
-        },
-        {
-          date: "2016-05-03",
-          name: "王小虎",
-          address: "上海市普"
-        }
-      ]
+      tableData: [],
+      pageSize: 1,
+      pageNum: 10,
+      total: 0,
+      startTime: "",
+      endTime: ""
     };
   },
-  methods: {},
-  mounted() {}
+  created() {
+    this.getList();
+  },
+  methods: {
+    // 分页
+    currentPage(value) {
+      this.pageSize = value;
+      this.getList();
+    },
+    // 获取lieb
+    getList() {
+      const data = {
+        token: localStorage.getItem("token"),
+        page: this.pageSize,
+        limit: this.pageNum,
+        user_id: this.$route.query.userID
+      };
+      this.$post("/api/border/tradingDetail", data).then(res => {
+        this.tableData = res.data.data;
+        this.total = res.data.total;
+      });
+    },
+    // 类型搜索
+    getType(type) {
+      let start = this.startTime;
+      let end = this.endTime;
+      if (this.startTime) {
+        start =
+          this.startTime.getFullYear() +
+          "-" +
+          (this.startTime.getMonth() + 1) +
+          "-" +
+          this.startTime.getDate();
+      }
+      if (this.endTime) {
+        end =
+          this.endTime.getFullYear() +
+          "-" +
+          (this.endTime.getMonth() + 1) +
+          "-" +
+          this.endTime.getDate();
+      }
+      const data = {
+        token: localStorage.getItem("token"),
+        page: this.pageSize,
+        limit: this.pageNum,
+        order_type: type,
+        start: start,
+        end: end,
+        user_id: this.$route.query.userID
+      };
+      this.$post("/api/border/tradingDetail", data).then(res => {
+        this.tableData = res.data.data;
+        this.total = res.data.total;
+      });
+    },
+    // 时间查询
+    queryList(){
+      this.getType()
+    },
+    // 选择类型
+    handleCommand(command) {
+      // if( this.dropdownList[command]==="")
+      var type = Number(command) + 1;
+      this.getType(type);
+    }
+  }
 };
 </script>
 
 <style lang="scss" scoped>
+/deep/ .el-table__empty-block {
+  background: #061220;
+}
+.paging {
+  display: flex;
+  align-items: center;
+  margin-top: 30px;
+  flex-direction: row-reverse;
+}
+/** 基础页数 */
+/deep/ .el-pagination button:disabled {
+  background-color: transparent;
+}
+/deep/ .el-pager li {
+  color: #c0c4cc;
+  background-color: transparent;
+}
+/deep/ .el-pager li.active {
+  color: #409eff;
+}
+/deep/ .el-pagination .btn-next {
+  color: #c0c4cc;
+  background-color: transparent;
+}
+/deep/ .el-pagination .btn-prev {
+  color: #c0c4cc;
+  background-color: transparent;
+}
+
 /deep/ .el-input__inner {
   background-color: #0c2040 !important;
   border-color: #0c2040;
@@ -136,7 +233,7 @@ export default {
         width: 223px;
       }
       .el-date-editor {
-        width: 113px !important;
+        width: 140px !important;
       }
       .start {
         width: 67px;
