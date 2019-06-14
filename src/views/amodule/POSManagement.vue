@@ -58,6 +58,7 @@
             layout="prev, pager, next"
             :pager-count="5"
             :total="total"
+            @current-change="handleCurrentChange"
             style="background: transparent;">
           </el-pagination>
         </div>
@@ -98,14 +99,13 @@ export default {
       // 页码
       pageSize: 1,
       // 页数
-      pageNum: 10,
+      pageNum: 3,
       total: 0,
       text:''
     };
   },
   methods: {
     handleClick(row) {
-      console.log(row);
       this.dialogVisible = true;
       this.text = row.organization_name
     },
@@ -125,7 +125,6 @@ export default {
         page: this.pageSize,
         limit: this.pageNum
       };
-      console.log(data);
       this.$post("/api/auser/userList",data).then(res => {
         this.userList = res.data.data;
         this.pageSize = res.data.current_page;
@@ -135,7 +134,7 @@ export default {
     },
     // 页码改变事件
     handleCurrentChange(current) {
-      console.log(current);
+      console.log('333');
       this.pageSize = current;
       this.getUserList();
     },

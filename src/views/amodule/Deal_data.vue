@@ -129,9 +129,7 @@ export default {
         limit: 10,
         token: localStorage.getItem('token')
       }
-      console.log(param)
-      const url = 'http://agency.service.168mi.cn' + '/api/aorder/tradingFlow'
-      this.$post(url, param)
+      this.$post('/api/aorder/tradingFlow', param)
         .then(res => {
           var _res = res.data
           this.tableData = _res.data
