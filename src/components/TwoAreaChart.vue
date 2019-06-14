@@ -59,5 +59,13 @@ export default {
 };
 </script>
 
-<style scoped>
+<style lang='scss' scoped>
+/deep/ .apexcharts-legend-series {
+  margin: 0px 20px !important;
+}
+
+/deep/ .apexcharts-legend-marker {
+  width: 35px !important;
+  height: 5px !important;
+}
 </style>

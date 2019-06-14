@@ -32,7 +32,7 @@ export default {
   },
   methods: {
     sendleftData(data){
-      this.headtitleIndex=data;
+      this.headtitleIndex = data;
     }
   }
 };

@@ -14,8 +14,6 @@ export default {
       handler(newName) {
         this.series[0].data = newName.list1;
         this.series[1].data = newName.list2;
-        console.log('sssss')
-        console.log(newName)
         this.chartOptions = {
           ...this.chartOptions,
           ...{
@@ -61,5 +59,13 @@ export default {
 };
 </script>
 
-<style scoped>
+<style lang='scss' scoped>
+/deep/ .apexcharts-legend-series {
+  margin: 0px 20px !important;
+}
+
+/deep/ .apexcharts-legend-marker {
+  width: 35px !important;
+  height: 5px !important;
+}
 </style>

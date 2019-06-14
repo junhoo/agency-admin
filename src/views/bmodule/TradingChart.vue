@@ -2,26 +2,26 @@
   <div class="merchants-body">
     <header class="container">
       <div class="content">
-        <p class="money">1862,325</p>
-        <p class="name">用户数量</p>
+        <p class="money">{{purchase_amount}}</p>
+        <p class="name">本周买入金额</p>
       </div>
       <div class="content">
-        <p class="money green">1862,325</p>
-        <p class="name">用户数量</p>
+        <p class="money green">{{purchase_num}}</p>
+        <p class="name">本周买入单数</p>
       </div>
       <div class="content">
-        <p class="money purple">1862,325</p>
-        <p class="name">用户数量</p>
+        <p class="money purple">{{seller_amount}}</p>
+        <p class="name">本周卖出金额</p>
       </div>
       <div class="content">
         <div class="money light-blue">
-          1862,325
+          {{seller_num}}
           <div class="percent">
             <!-- 30% -->
             <p class="text">30%</p>
           </div>
         </div>
-        <p class="name">用户数量</p>
+        <p class="name">本周卖出单数</p>
       </div>
     </header>
 
@@ -29,7 +29,12 @@
     <section class="chart-top">
       <div class="title-box">
         <div class="icon"></div>
-        <div class="text">代理收益趋势</div>
+        <div class="text">每日买卖统计</div>
+
+        <div class="radio-box">
+          <el-radio v-model="radio" label="1" @change="handleRadio">笔数</el-radio>
+          <el-radio v-model="radio" label="2" @change="handleRadio">金额</el-radio>
+        </div>
 
         <div class="date-box">
           <div class="hint">起始日期</div>
@@ -50,92 +55,180 @@
           <div class="time-icon"></div>
           <el-form ref="topForm" label-width="20px" class="my-form" style="margin-right: 10px;">
             <el-date-picker
-              type="date"
+              type="month"
               placeholder="2019-06"
-              v-model="formInfo.date2"
+              v-model="formInfo.date"
               size="small"
+              value-format="yyyy-MM"
               :editable="false"
+              @change="handleDate"
             ></el-date-picker>
           </el-form>
         </div>
       </div>
 
       <!-- 图形 -->
-      <apexchart type="bar" height="350" :options="chartOptions" :series="series"/>
+      <!-- <apexchart type="bar" height="350" :options="chartOptions" :series="series"/> -->
+      <div class="chart-box">
+        <bar-chart :objs="bonus_ranking_list" ></bar-chart>
+        <div class="chart-hint">最多可查看15天</div>
+      </div>
     </section>
 
   </div>
 </template>
 
 <script>
+import BarChart from "components/BarChart";
 export default {
   name: "BTradingChart",
-  mounted() {
-    // 顶部数据
-    this.formInfo.toplist = [100, 100, 80, 80, 50, 50, 70, 91];
-    this.series[0].data = [20, 40, 80, 80, 50, 50, 70, 91];
-    this.series[1].data = [50, 60, 80, 80, 50, 50, 70, 91];
+  components: {
+    BarChart
   },
   data() {
     return {
+      radio: '1',
       formInfo: {
-        date1: "",
-        date2: "",
+        date: "",
         toplist: []
       },
-      series: [
-        {
-          name: '买入金额',
-          data: []
-        }, {
-          name: '卖出金额',
-          data: []
-        }
-      ],
-      chartOptions: {
-        plotOptions: {
-          bar: {
-            horizontal: false,
-            columnWidth: '22%',
-            endingShape: 'rounded'
-          },
-        },
-        dataLabels: {
-          enabled: false
-        },
-        stroke: {
-          show: true,
-          width: 2,
-          colors: ['transparent']
-        },
-        xaxis: {
-          categories: ['Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct'],
-        },
-        yaxis: {
-          title: {
-            text: '$ (thousands)'
-          }
-        },
-        fill: {
-          opacity: 1
-        },
-        tooltip: {
-          y: {
-            formatter: function (val) {
-              return "$ " + val + " thousands"
-            }
-          }
-        }
+      reqlist: {},
+      purchase_amount: '',
+      purchase_num: '',
+      seller_amount: '',
+      seller_num: '',
+      bonus_ranking_list: { // 充值提现额排行
+        name1: '买入笔数',
+        name2: '卖出笔数',
+        list1: [],
+        list2: [],
+        name_list: [],
+        column: '30%'
       }
-    };
+    }
+  },
+  created () {
+    this.getTradInfo()
+  },
+  mounted() {
+    // 顶部数据
+    this.reqlist = {
+      purchase_amount_list: [1,2,3,4,5,6,7,8],
+      seller_amount_list: [2,3,4,5,6,7,8,9],
+      purchase_num_list: [9,8,7,6,5,4,3,2],
+      seller_num_list: [8,7,6,5,4,3,2,1]
+    }
+    // this.bonus_ranking_list.name1 = '买入笔数'
+    // this.bonus_ranking_list.name2 = '卖出笔数'
+    // this.bonus_ranking_list.list1 = [10, 20, 30, 40, 50, 60, 70, 80, 91, 101, 111, 121, 131, 141, 151];
+    // this.bonus_ranking_list.list2 = [10, 20, 30, 40, 50, 60, 70, 80, 91, 91, 101, 111, 121, 131, 141,];
+
+    // this.bonus_ranking_list.name_list = [
+    //   '06-01','06-02','06-03','06-04','06-05','06-06','06-07','06-08',
+    //   '06-09','06-10','06-11','06-12','06-13','06-14','06-15'];
+  },
+  methods: {
+    getTradInfo () {
+      const url = '/api/bwallet/getStatics'
+      const data = {
+        token: localStorage.getItem("token")
+      }
+      this.$post(url, data).then(res => {
+        console.log(res)
+        var _res = res.data
+        this.reqlist = _res.daily_statistic
+        this.purchase_amount = _res.purchase_amount // 买入金额
+        this.purchase_num = _res.purchase_num // 买入次数
+        this.seller_amount = _res.seller_amount // 卖出金额
+        this.seller_num = _res.seller_num // 卖出次数
+        this.bonus_ranking_list.name_list = _res.daily_statistic.day_list
+
+        // 金额列表
+        // this.bonus_ranking_list.list1 = _res.daily_statistic.purchase_amount_list
+        // this.bonus_ranking_list.list2 = _res.daily_statistic.seller_amount_list
+
+        // 次数/笔数 列表
+        this.bonus_ranking_list.list1 = _res.daily_statistic.purchase_num_list
+        this.bonus_ranking_list.list2 = _res.daily_statistic.seller_num_list
+        console.log(this.bonus_ranking_list)
+      })
+    },
+
+    // 项目方充值提现额排行
+    handleDate () {
+      const url = '/api/bwallet/getDailyStatistic'
+      const data = {
+        token: localStorage.getItem("token"),
+        time: this.formInfo.date
+      }
+      this.$post(url, data).then(res => {
+        console.log(111)
+        console.log(res)
+        var _res = res.data
+        this.radio = '1'
+        this.reqlist = _res
+        this.bonus_ranking_list.name_list = _res.day_list
+        // 金额列表
+        // this.bonus_ranking_list.list1 = _res.purchase_amount_list
+        // this.bonus_ranking_list.list2 = _res.seller_amount_list
+
+        // 次数/笔数 列表
+        this.bonus_ranking_list.list1 = _res.purchase_num_list
+        this.bonus_ranking_list.list2 = _res.seller_num_list
+      })
+    },
+
+    handleRadio (type) {
+      if (this.radio === '1') {
+        this.bonus_ranking_list.name1 = '买入笔数'
+        this.bonus_ranking_list.name2 = '卖出笔数'
+        this.bonus_ranking_list.list1 = this.reqlist.purchase_num_list
+        this.bonus_ranking_list.list2 = this.reqlist.seller_num_list
+      } else {
+        this.bonus_ranking_list.name1 = '买入金额'
+        this.bonus_ranking_list.name2 = '卖出金额'
+        this.bonus_ranking_list.list1 = this.reqlist.purchase_amount_list
+        this.bonus_ranking_list.list2 = this.reqlist.seller_amount_list
+      }
+    }
   }
-};
+}
 </script>
 
 <style lang="scss" scoped>
 .merchants-body {
   width: 100%;
   height: 100%;
+}
+
+/** 单选框 */
+/deep/ .el-radio {
+  color: #717E9E;
+}
+/deep/ .el-radio__inner {
+  width: 12px;
+  height: 12px;
+  border: 1px solid #7380A0;
+  background-color: #12223B;
+}
+/deep/ .el-radio__inner::after {
+  width: 3px;
+  height: 3px;
+  background-color: #3986E2;
+}
+/deep/ .el-radio__input.is-checked .el-radio__inner {
+  border-color: #26548F;
+  background: #26548F;
+}
+
+/deep/ .el-radio__input.is-checked+.el-radio__label {
+  color: #3986E2;
+}
+
+/** 时间按钮框 */
+/deep/ .el-icon-circle-close {
+  width: 0.1px;
+  display: none;
 }
 
 /deep/ .apexcharts-legend {
@@ -171,7 +264,7 @@ export default {
 
 /deep/ .el-date-editor.el-input {
   padding-left: 5px;
-  width: 72px;
+  width: 75px;
 }
 
 /deep/ .my-form {
@@ -185,6 +278,8 @@ export default {
   height: 40px;
   line-height: 40px;
   border: none;
+  color: #3884e0 !important;
+  font-size: 15px;
 }
 
 /deep/ .el-input__inner::placeholder {
@@ -198,6 +293,10 @@ export default {
 
 /deep/ .el-table th.gutter {
   background: #061220;
+}
+
+/deep/ .apexcharts-legend-series {
+  margin: 0px 50px !important;
 }
 
 .container {
@@ -257,6 +356,8 @@ export default {
     text-align: left;
     height: 40px;
     line-height: 40px;
+    background-color: #12223B;
+    border-bottom: 1.2px solid #06476d;
     .icon {
       float: left;
       width: 36px;
@@ -266,6 +367,10 @@ export default {
     }
     .text {
       float: left;
+    }
+    .radio-box {
+      float: left;
+      margin-left: 35px;
     }
     .date-box {
       display: flex;
@@ -301,58 +406,16 @@ export default {
       }
     }
   }
-}
-
-// 表格公共布局
-.chart-box {
-  margin-top: 26px;
-  display: flex;
-  justify-content: space-between;
-  .content {
-    width: 48.5%;
-    // height: 221px;
-    border: 1.2px #06476d solid;
-    .title-box {
-      color: #fff;
-      text-align: left;
-      height: 40px;
-      line-height: 40px;
-      border-bottom: 1.2px #06476d solid;
-      .icon {
-        float: left;
-        width: 36px;
-        height: 40px;
-        background: url("~imgurl/table_icon.png") no-repeat center;
-        background-size: 15px;
-      }
-      .text {
-        float: left;
-      }
-      .date-box {
-        float: right;
-        display: flex;
-        .time-icon {
-          width: 15px;
-          background: url("~imgurl/time.png") no-repeat center;
-          background-size: 15px;
-        }
-        .hint {
-          font-size: 15px;
-          margin-right: 5px;
-          color: #3884e0;
-        }
-      }
-      .date {
-        color: #3884e0;
-        float: right;
-      }
+  .chart-box {
+    position: relative;
+    // height: 300px;
+    .chart-hint {
+      position: absolute;
+      right: 30px;
+      bottom: 25px;
+      color: #65718E;
+      font-size: 12.5px;
     }
-  }
-}
-
-.chart-bottom {
-  margin-top: 27px;
-  .left {
   }
 }
 </style>
