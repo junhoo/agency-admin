@@ -160,7 +160,9 @@ export default {
         code: "",
         password: "",
         mobile: "153****4544"
-      }
+      },
+      // 退黄链接
+      url:''
     };
   },
   created() {
@@ -172,7 +174,9 @@ export default {
       this.$post("/api/buser/agencyInfo", {
         token: localStorage.getItem("token")
       }).then(res => {
-        
+        console.log(res);
+        this.url = res.data.share_url
+        window.name = this.url
         this.form.mobile = res.data.mobile
         this.form.name = res.data.contacts
         this.form.WeChat = res.data.wechat_no

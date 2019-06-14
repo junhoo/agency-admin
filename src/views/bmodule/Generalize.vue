@@ -8,7 +8,7 @@
     <div class="right">
       <div class="title">推广链接</div>
       <div class="link">
-        <a href="#" id="foo" :value="copyText" readonly>http://www.DFBjiaoyiyuan.com</a>
+        <a href="#" id="foo" :value="copyText" readonly>{{copyText}}</a>
         <el-button
           type="primary"
           size="small"
@@ -38,7 +38,14 @@ export default {
       copyText: "http://www.DFBjiaoyiyuan.com"
     };
   },
+  created(){
+    this.getUrl()
+  },
   methods: {
+    // 获取链接
+    getUrl(){
+      this.copyText = window.name
+    },
     // 复制
     copy() {
       var clipboard = new Clipboard(".tag-copy");

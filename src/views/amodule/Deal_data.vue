@@ -78,6 +78,7 @@
           :pager-count="5"
           :total="totalPage"
           @current-change="currentPage"
+          :page-size="pageNum"
           style="background: transparent;">
         </el-pagination>
       </div>
@@ -99,6 +100,7 @@ export default {
       name: '',
       page: 1,
       totalPage: 0,
+      pageNum:3,
       tableData: []
     }
   },
@@ -126,7 +128,7 @@ export default {
         end: this.form.date2,
         name: this.input2,
         page: this.page,
-        limit: 10,
+        limit: this.pageNum,
         token: localStorage.getItem('token')
       }
       this.$post('/api/aorder/tradingFlow', param)

@@ -58,8 +58,10 @@
             layout="prev, pager, next"
             :pager-count="5"
             :total="total"
+            :page-size="pageNum"
             @current-change="handleCurrentChange"
             style="background: transparent;">
+            
           </el-pagination>
         </div>
       </div>
@@ -134,7 +136,6 @@ export default {
     },
     // 页码改变事件
     handleCurrentChange(current) {
-      console.log('333');
       this.pageSize = current;
       this.getUserList();
     },

@@ -23,7 +23,7 @@
         <el-input
           placeholder="输入手机号码查询"
           prefix-icon="el-icon-search"
-          v-model="input2"
+          v-model="queryName"
           size="small"
           style="marginLeft:10px"
           class="my-btn"
@@ -52,9 +52,10 @@
       <el-table-column prop="is_realname" label="是否实名" align="center">
         <template scope="scope">
           <span v-if="scope.row.is_realname ==='是'" style="color:green;">{{scope.row.is_realname}}</span>
-          <span v-else-if="scope.row.is_realname ==='否'" style="color:red;">{{scope.row.is_realname}}
-            
-          </span>
+          <span
+            v-else-if="scope.row.is_realname ==='否'"
+            style="color:red;"
+          >{{scope.row.is_realname}}</span>
         </template>
       </el-table-column>
 
@@ -76,6 +77,21 @@
         </template>
       </el-table-column>
     </el-table>
+
+    <!-- 分页 -->
+    <div class="paging">
+      <div class="block">
+        <span class="demonstration"></span>
+        <el-pagination
+          layout="prev, pager, next"
+          :pager-count="5"
+          :total="total"
+          @current-change="currentPage"
+          :page-size="pageNum"
+          style="background: transparent;"
+        ></el-pagination>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -96,16 +112,19 @@ export default {
       pageNum: 10,
       // 总数
       total: 0,
-      reName: "",
-      startTime:"",
-      endTime:"",
-      queryName:''
+      startTime: "",
+      endTime: "",
+      queryName: ""
     };
   },
   created() {
     this.getList();
   },
   methods: {
+    currentPage(value){
+      this.pageSize = value
+      this.getList()
+    },
     getList() {
       const data = {
         token: localStorage.getItem("token"),
@@ -113,9 +132,9 @@ export default {
         limit: this.pageNum
       };
       this.$post("/api/buser/userList", data)
-        .then(res => {
-          console.log(res);
+        .then(res => { 
           this.tableData = res.data.data;
+          this.total = res.data.total
         })
         .catch(e => {
           console.log(e);
@@ -151,10 +170,7 @@ export default {
       };
 
       this.$post("/api/buser/userList", data).then(res => {
-        console.log(res);
         this.tableData = res.data.data;
-        this.pageSize = res.data.current_page;
-        this.pageNum = res.data.per_page;
         this.total = res.data.total;
       });
     }
@@ -163,6 +179,32 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.paging {
+  display: flex;
+  align-items: center;
+  margin-top: 30px;
+  flex-direction: row-reverse;
+}
+/** 基础页数 */
+/deep/ .el-pagination button:disabled {
+  background-color: transparent;
+}
+/deep/ .el-pager li {
+  color: #c0c4cc;
+  background-color: transparent;
+}
+/deep/ .el-pager li.active {
+  color: #409eff;
+}
+/deep/ .el-pagination .btn-next {
+  color: #c0c4cc;
+  background-color: transparent;
+}
+/deep/ .el-pagination .btn-prev {
+  color: #c0c4cc;
+  background-color: transparent;
+}
+
 /deep/ .el-table__empty-block {
   background-color: #061220;
 }
