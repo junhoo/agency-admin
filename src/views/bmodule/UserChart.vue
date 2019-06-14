@@ -68,23 +68,14 @@
 
 <script>
 import TopChart from "components/AreaChart";
-import CommonMid from "components/BarChart";
-import CommonRight from "components/RightChart";
 export default {
   name: "BUserChart",
   components: {
     TopChart,
-    CommonMid,
-    CommonRight
   },
   mounted() {
     // 顶部数据
     this.topForm.toplist = [100, 100, 80, 80, 50, 50, 70, 91];
-    // 中部数据
-    this.midForm.list.midList1 = [20, 40, 80, 80, 50, 50, 70, 91];
-    this.midForm.list.midList2 = [50, 60, 80, 80, 50, 50, 70, 91];
-    // 底部数据
-    this.bottForm.tableData1 = this.tableData;
   },
   data() {
     return {
@@ -94,90 +85,24 @@ export default {
         date2: "",
         toplist: []
       },
-      // 中部
-      midForm: {
-        data1: [],
-        data2: [],
-        list: {
-          midList1: [],
-          midList2: []
-        }
-      },
-      // 底部表格
-      bottForm: {
-        data1: [],
-        data2: [],
-        tableData1: [],
-        tableData2: []
-      },
+    
       // 顶部图数据
       topseries: [],
       topchartOptions: {},
-
-      // 中间图数据
-      midseries: [],
-      midchartOptions: {},
-
-      topchartData: {
-        columns: ["日期", "下单用户"],
-        rows: [
-          { 日期: "1000", 下单用户: 1093 },
-          { 日期: "2000", 下单用户: 3230 },
-          { 日期: "5000", 下单用户: 2623 },
-          { 日期: "6000", 下单用户: 1423 },
-          { 日期: "8000", 下单用户: 3492 },
-          { 日期: "9000", 下单用户: 4293 }
-        ]
-      },
-      tableData: [
-        {
-          date: "1",
-          name: "ASDAS",
-          address: "3242342"
-        },
-        {
-          date: "2",
-          name: "ASDAS",
-          address: "3242342"
-        },
-        {
-          date: "3",
-          name: "ASDAS",
-          address: "3242342"
-        },
-        {
-          date: "4",
-          name: "ASDAS",
-          address: "3242342"
-        },
-        {
-          date: "5",
-          name: "ASDAS",
-          address: "3242342"
-        },
-        {
-          date: "6",
-          name: "ASDAS",
-          address: "3242342"
-        },
-        {
-          date: "7",
-          name: "ASDAS",
-          address: "3242342"
-        },
-        {
-          date: "8",
-          name: "ASDAS",
-          address: "3242342"
-        },
-        {
-          date: "9",
-          name: "ASDAS",
-          address: "3242342"
-        }
-      ]
     };
+  },
+  created(){
+    this.getInfo()
+  },
+  // 视图数据
+  methods:{
+    getInfo(){
+      this.$post('/api/buser/getUserStatics',{token:localStorage.getItem('token')}).then(res=>{
+        console.log(res);
+      })
+    }
   }
+
 };
 </script>
 

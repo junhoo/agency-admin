@@ -7,7 +7,7 @@
           class="my-btn"
           type="date"
           placeholder="选择日期"
-          v-model="form.date1"
+          v-model="startTime"
           style="width: 100%;"
           size="small"
         ></el-date-picker>
@@ -16,7 +16,7 @@
           class="my-btn"
           type="date"
           placeholder="选择日期"
-          v-model="form.date1"
+          v-model="endTime"
           style="width: 100%;"
           size="small"
         ></el-date-picker>
@@ -33,7 +33,7 @@
           团队人数
           <i class="el-icon-d-caret el-icon--right"></i>
         </el-button>
-        <el-button type="primary" size="small">搜索查询</el-button>
+        <el-button type="primary" size="small" @click="queryUser">搜索查询</el-button>
       </div>
     </el-form>
 
@@ -45,12 +45,26 @@
       :header-cell-style="{background:'#12223B',color:'#606266'}"
       align="center"
     >
-      <el-table-column prop="uid" label="UID" width="100%" align="center"></el-table-column>
-      <el-table-column prop="mobile" label="手机号" width="100%" align="center"></el-table-column>
+      <el-table-column prop="uid" label="UID" align="center"></el-table-column>
+      <el-table-column prop="mobile" label="手机号" align="center"></el-table-column>
       <el-table-column prop="email" label="邮箱" align="center"></el-table-column>
-      <el-table-column prop="is_realname" label="是否实名" align="center"></el-table-column>
+
+      <el-table-column prop="is_realname" label="是否实名" align="center">
+        <template scope="scope">
+          <span v-if="scope.row.is_realname ==='是'" style="color:green;">{{scope.row.is_realname}}</span>
+          <span v-else-if="scope.row.is_realname ==='否'" style="color:red;">{{scope.row.is_realname}}
+            
+          </span>
+        </template>
+      </el-table-column>
+
       <el-table-column prop="name" label="用户名称" align="center"></el-table-column>
-      <el-table-column prop="deposit" label="保证金" align="center"></el-table-column>
+      <el-table-column prop="deposit" label="保证金" align="center">
+        <template scope="scope">
+          <span v-if="scope.row.deposit ==='0'" style="color:red;">{{scope.row.deposit}}</span>
+          <span v-else style="color:green;">{{scope.row.deposit}}</span>
+        </template>
+      </el-table-column>
       <el-table-column prop="add_time" label="注册时间" align="center"></el-table-column>
       <el-table-column prop="pid" label="推荐人ID" align="center"></el-table-column>
       <el-table-column prop="total_num" label="团队人数" align="center"></el-table-column>
@@ -81,7 +95,11 @@ export default {
       // 页容量
       pageNum: 10,
       // 总数
-      total: 0
+      total: 0,
+      reName: "",
+      startTime:"",
+      endTime:"",
+      queryName:''
     };
   },
   created() {
@@ -104,42 +122,42 @@ export default {
         });
     },
     // 搜索商户列表
-    // queryUser() {
-    //   let start = this.startTime;
-    //   let end = this.endTime;
-    //   if (this.startTime) {
-    //     start =
-    //       this.startTime.getFullYear() +
-    //       "-" +
-    //       (this.startTime.getMonth() + 1) +
-    //       "-" +
-    //       this.startTime.getDate();
-    //   }
-    //   if (this.endTime) {
-    //     end =
-    //       this.endTime.getFullYear() +
-    //       "-" +
-    //       (this.endTime.getMonth() + 1) +
-    //       "-" +
-    //       this.endTime.getDate();
-    //   }
-    //   const data = {
-    //     token: localStorage.getItem("token"),
-    //     page: this.pageSize,
-    //     limit: this.pageNum,
-    //     start: start,
-    //     end: end,
-    //     name: this.queryName
-    //   };
+    queryUser() {
+      let start = this.startTime;
+      let end = this.endTime;
+      if (this.startTime) {
+        start =
+          this.startTime.getFullYear() +
+          "-" +
+          (this.startTime.getMonth() + 1) +
+          "-" +
+          this.startTime.getDate();
+      }
+      if (this.endTime) {
+        end =
+          this.endTime.getFullYear() +
+          "-" +
+          (this.endTime.getMonth() + 1) +
+          "-" +
+          this.endTime.getDate();
+      }
+      const data = {
+        token: localStorage.getItem("token"),
+        page: this.pageSize,
+        limit: this.pageNum,
+        start: start,
+        end: end,
+        name: this.queryName
+      };
 
-    //   this.$post("/api/auser/userList", data).then(res => {
-    //     console.log(res);
-    //     this.userList = res.data.data;
-    //     this.pageSize = res.data.current_page;
-    //     this.pageNum = res.data.per_page;
-    //     this.total = res.data.total;
-    //   });
-    // }
+      this.$post("/api/buser/userList", data).then(res => {
+        console.log(res);
+        this.tableData = res.data.data;
+        this.pageSize = res.data.current_page;
+        this.pageNum = res.data.per_page;
+        this.total = res.data.total;
+      });
+    }
   }
 };
 </script>
@@ -172,7 +190,7 @@ export default {
         width: 223px;
       }
       .el-date-editor {
-        width: 113px !important;
+        width: 140px !important;
       }
       .start {
         width: 67px;
