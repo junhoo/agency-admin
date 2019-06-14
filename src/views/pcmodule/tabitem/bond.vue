@@ -1,37 +1,44 @@
 <template>
     <div class="bond">
+      <tb-head :activeIndex='activeIndex'></tb-head>
       <div class="headbg"></div>
-      <div class="left">
-        <img :src="imgUrl" alt="">
-    </div>
-
-    <div class="right">
-      <h3 class="title">缴纳代理保证金10000USDT</h3>
-      <div class="copy">
-        <input id="foo" :value="copyText" readonly>
-        <i class="tag-copy" data-clipboard-target="#foo" @click="copy()"></i>
+      <div class="maincont">
+        <div class="left">
+          <img :src="imgUrl" alt="">
+        </div>
+        <div class="right">
+          <h3 class="title">缴纳代理保证金10000USDT</h3>
+          <div class="copy">
+            <input id="foo" :value="copyText" readonly>
+            <i class="tag-copy" data-clipboard-target="#foo" @click="copy()"></i>
+          </div>
+          <div class="tip">
+            <p>请勿充值USDT之外其他数字资产</p>
+            <p>您充值至上述地址后，将在2个区块确认后到账</p>
+            <p>充值其他数字资产导致的经济损失，平台概不负责</p>
+            <p>缴纳足额10000USDT保证金后，系统自动激活代理账户</p>
+            <p>当前已缴纳：{{usdtNum}}USDT</p>
+          </div>
+        </div>
       </div>
-      <div class="tip">
-        <p>请勿充值USDT之外其他数字资产</p>
-        <p>您充值至上述地址后，将在2个区块确认后到账</p>
-        <p>充值其他数字资产导致的经济损失，平台概不负责</p>
-        <p>缴纳足额10000USDT保证金后，系统自动激活代理账户</p>
-        <p>当前已缴纳：{{usdtNum}}USDT</p>
-      </div>
-    </div>
   </div>
 </template>
 
 <script>
+import tbHead from '@/views/pcmodule/head.vue'
 import Clipboard from 'clipboard' // npm install clipboard --save
 export default {
   name: 'bond',
+  components: {
+    tbHead
+  },
   props: {},
   data () {
     return {
       copyText: '',
       imgUrl: null,
-      usdtNum: null
+      usdtNum: null,
+      activeIndex: '1'
     }
   },
   created () {
@@ -80,7 +87,6 @@ export default {
           url = '/aindex'
         }
         if (data.status === 1) {
-          localStorage.removeItem('activeName')
           this.$router.push({
             path: url
           })
@@ -103,9 +109,6 @@ body,
   background-color: #fff;
   height: 100%;
   width: 100%;
-  display: flex;
-  padding: 20% 35%;
-  box-sizing: border-box;
   .headbg{
     background: url('~@/assets/img/PCimg/item5bg.png') center / 100% no-repeat !important;
     width: 100%;
@@ -113,6 +116,10 @@ body,
     position: absolute;
     top: 0;
     left: 0;
+  }
+  .maincont{
+    display: flex;
+    padding: 12% 27%
   }
   .left{
     img{

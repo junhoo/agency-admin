@@ -45,8 +45,7 @@ axios.interceptors.response.use(response => {
     // localStorage.removeItem('token')
     // localStorage.removeItem('userMsg')
     // 页面跳转
-    router.push('/home')
-    sessionStorage.setItem('activeName', 'five')
+    router.push('/bond')
   }
   return response
 }, error => {
@@ -80,7 +79,7 @@ export function postHttp (url, data = {}) {
         } else if (code === -1) {
           Message.error(res.data.msg)
           reject(_res)
-        } 
+        }
       }, (err) => {
         reject(err)
       })

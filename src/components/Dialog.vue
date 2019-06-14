@@ -145,6 +145,9 @@ export default {
       this.getimgCode()
     }
   },
+  created() {
+    this.getimgCode()
+  },
   data () {
     return {
       codeUrl: '',
@@ -253,10 +256,15 @@ export default {
           localStorage.setItem('token', data.token)
           localStorage.setItem('userMsg', JSON.stringify(data))
           this.$emit('userMsg', JSON.stringify(data))
-          this.$router.push({
-            path: this.topath
-          })
-
+          if (data.status === 1) {
+            this.$router.push({
+              path: this.topath
+            })
+          } else {
+            this.$router.push({
+              path: '/bond'
+            })
+          }
         }
       })
     },
@@ -310,6 +318,9 @@ export default {
 
 <style lang="scss" scoped>
 .Dialog {
+  /deep/ .el-dialog__wrapper{
+    top: 40px
+  }
   /deep/ .el-dialog {
     border-radius: 8px !important;
     border-radius: 8px !important;

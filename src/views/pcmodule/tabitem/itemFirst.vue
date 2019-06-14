@@ -1,5 +1,6 @@
 <template>
   <div class="itemFirst">
+    <tb-head :activeIndex='activeIndex'></tb-head>
     <div class="fixedBox">
       <div class="item" @click="kefu()"><i class="kefu"></i></div>
       <div class="item" @click="toTop()"><i class="fixedB"></i></div>
@@ -244,10 +245,15 @@
   </div>
 </template>
 <script>
+import tbHead from '@/views/pcmodule/head.vue'
 export default {
   name: 'itemFirst',
+  components: {
+    tbHead
+  },
   data () {
     return {
+      activeIndex: '1'
     }
   },
   methods: {

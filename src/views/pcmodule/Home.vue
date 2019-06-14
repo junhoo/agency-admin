@@ -1,20 +1,20 @@
 <template>
   <div class="home">
-    <dialogs :dialogVisibledata='dialogVisibledata' @userMsg="userMsgh" :init="showCount"></dialogs>
+    <dialogs :dialogVisibledata='dialogVisibledata' @userMsg="userMsgh" @activeName="activeNameh" :init="showCount"></dialogs>
     <div class="head">
        <img src="../../assets/img/PCimg/logo.png" alt="">
       <div class="tab">
         <el-tabs v-model="activeName" @tab-click="handleClick" :before-leave="isfive">
-            <el-tab-pane label="盾付宝钱包" name="first">
+            <el-tab-pane label="盾付宝钱包" name="first" >
               <item-first></item-first>
             </el-tab-pane>
-            <el-tab-pane label="交易端代理" name="second">
+            <el-tab-pane label="交易端代理" name="second" >
               <item-second></item-second>
             </el-tab-pane>
             <el-tab-pane label="API接入" name="third">
               <item-third></item-third>
             </el-tab-pane>
-            <el-tab-pane name="fourth" @click="clickBtn()">
+            <el-tab-pane name="fourth">
               <span slot="label">
                 <i v-if="this.isIcon" class="el-icon-s-check"></i>{{tab5Text}}
               </span>
@@ -23,6 +23,17 @@
               <bond></bond>
             </el-tab-pane>
         </el-tabs>
+        <div v-if="this.isIcon" class="loginout" @click="loginOut()">
+          <i class="el-icon-switch-button">退出</i>
+        </div>
+        <!-- <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="handleSelect">
+          <el-menu-item index="1">盾付宝钱包</el-menu-item>
+          <el-menu-item index="2">交易端代理</el-menu-item>
+          <el-menu-item index="3">API接入</el-menu-item>
+          <el-menu-item index="4"><i v-if="this.isIcon" class="el-icon-s-check"></i>{{tab5Text}}</el-menu-item>
+          <el-menu-item index="5">处理中心</el-menu-item>
+          <el-menu-item index="6">退出</el-menu-item>
+        </el-menu> -->
       </div>
     </div>
   </div>
@@ -34,6 +45,7 @@ import itemSecond from '@/views/pcmodule/tabitem/itemSecond.vue'
 import itemThird from '@/views/pcmodule/tabitem/itemThird.vue'
 import bond from '@/views/pcmodule/tabitem/bond.vue'
 import Dialogs from '@/components/Dialog.vue'
+import { log } from 'util';
 
 export default {
   name: 'home',
@@ -51,7 +63,8 @@ export default {
       userMsg: {},
       showCount: 0,
       tab5Text: '登录',
-      isIcon: false
+      isIcon: false,
+      isdisabled: true
     }
   },
   created () {
@@ -72,11 +85,15 @@ export default {
       this.tab5Text = this.userMsg.mobile
       this.isIcon = true
     },
+    activeNameh (data) {
+      this.activeName = data
+    },
     handleClick (tab, event) {
       // sessionStorage.removeItem('activeName')
       if (sessionStorage.getItem('activeName')) {
         return false
       }
+      console.log(tab.index)
       if (tab.index === '3') {
         this.clickBtn()
       } else {
@@ -84,16 +101,33 @@ export default {
       }
     },
     isfive (activeName, oldActiveName) {
-      if (oldActiveName === 'five') {
+      if (oldActiveName === 'five' ) {
         return false
       }
     },
+    // 登录弹框
     clickBtn () {
       this.dialogVisibledata = false
       setTimeout(() => {
         this.showCount = this.showCount + 1
         this.dialogVisibledata = !this.dialogVisibledata
       }, 200)
+    },
+    // 推出登录
+    loginOut(){
+      const data = {
+        token:localStorage.getItem('token')
+      }
+      this.$post('/api/agency/out',data).then(res=>{
+        localStorage.removeItem('token')
+        localStorage.removeItem('userMsg')
+        sessionStorage.removeItem('activeName')
+        // this.$router.go(0)
+        this.$router.push({path: '/home'})
+      })
+    },
+    toindexData (index) {
+      this.$emit("toindexData", index)
     }
   }
 }
@@ -124,6 +158,15 @@ export default {
           height: 30px;
           background-color: #fff;
         }
+      }
+      .loginout{
+        position: absolute;
+        top: 38px;
+        right: 9%;
+        font-size: 14px;
+        color: #FFFFFF;
+        z-index: 9999999;
+        padding: 10px;
       }
    }
 }

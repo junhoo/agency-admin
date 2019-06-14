@@ -1,6 +1,7 @@
 <template>
   <div class="itemSecond">
     <dialogs :dialogVisibledata='dialogVisibledata'></dialogs>
+    <tb-head :activeIndex='activeIndex'></tb-head>
     <div class="fixedBox">
       <div class="item" @click="kefu()"><i class="kefu"></i></div>
       <div class="item" @click="toTop()"><i class="fixedB"></i></div>
@@ -80,14 +81,17 @@
 </template>
 <script>
 import Dialogs from '@/components/Dialog.vue'
+import tbHead from '@/views/pcmodule/head.vue'
 export default {
   name: 'itemSecond',
   components: {
-    Dialogs
+    Dialogs,
+    tbHead
   },
   data () {
     return {
-      dialogVisibledata: false
+      dialogVisibledata: false,
+      activeIndex: '2'
     }
   },
   methods: {

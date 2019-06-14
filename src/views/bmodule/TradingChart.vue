@@ -2,26 +2,26 @@
   <div class="merchants-body">
     <header class="container">
       <div class="content">
-        <p class="money">1862,325</p>
-        <p class="name">用户数量</p>
+        <p class="money">{{profitData.purchase_amount}}</p>
+        <p class="name">本周买入金额</p>
       </div>
       <div class="content">
-        <p class="money green">1862,325</p>
-        <p class="name">用户数量</p>
+        <p class="money green">{{profitData.purchase_num}}</p>
+        <p class="name">本周买入单数</p>
       </div>
       <div class="content">
-        <p class="money purple">1862,325</p>
-        <p class="name">用户数量</p>
+        <p class="money purple">{{profitData.seller_amount}}</p>
+        <p class="name">本周卖出金额</p>
       </div>
       <div class="content">
         <div class="money light-blue">
-          1862,325
+          {{profitData.seller_num}}
           <div class="percent">
             <!-- 30% -->
             <p class="text">30%</p>
           </div>
         </div>
-        <p class="name">用户数量</p>
+        <p class="name">本周卖出单数</p>
       </div>
     </header>
 
@@ -42,6 +42,8 @@
               v-model="formInfo.date1"
               size="small"
               :editable="false"
+              value-format="yyyy-MM"
+              format="yyyy-MM"
             ></el-date-picker>
           </el-form>
 
@@ -55,6 +57,8 @@
               v-model="formInfo.date2"
               size="small"
               :editable="false"
+              value-format="yyyy-MM"
+              format="yyyy-MM"
             ></el-date-picker>
           </el-form>
         </div>
@@ -78,6 +82,7 @@ export default {
   },
   data() {
     return {
+      profitData: {},
       formInfo: {
         date1: "",
         date2: "",
@@ -128,7 +133,23 @@ export default {
         }
       }
     };
-  }
+  },
+  created() {
+    this.getProfitData()
+  },
+  methods: {
+    getProfitData () {
+      var data = {
+        token: localStorage.getItem("token")
+      }
+      console.log(data)
+      this.$post('/api/bwallet/getStatics', data).then(res => {
+        var data = res.data
+        console.log(res)
+        this.profitData = data
+      })
+    }
+  },
 };
 </script>
 

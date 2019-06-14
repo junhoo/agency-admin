@@ -1,5 +1,6 @@
 <template>
   <div class="itemThird">
+    <tb-head :activeIndex='activeIndex'></tb-head>
     <div class="unit unit1">
       <div class="bannerbox">
         <h3 class="title">API接入</h3>
@@ -23,15 +24,20 @@
   </div>
 </template>
 <script>
+import tbHead from '@/views/pcmodule/head.vue'
 export default {
   name: 'itemThird',
+  components: {
+    tbHead
+  },
   data () {
     return {
       apiData: {
         tabData: [],
         mainContant: ''
       },
-      activeIndex: 0
+      activeIndex: 0,
+      activeIndex: '3'
     }
   },
   created() {
@@ -64,6 +70,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.head{
+  background-color: transparent
+}
 .itemThird{
   height: 100%;
   width: 100%;
@@ -72,7 +81,7 @@ export default {
   .unit{
     height: 242px;
     background: url('~@/assets/img/PCimg/item2-bg.png') center / 100% no-repeat;
-    margin-top: 0;
+    margin-top: -94px;
     padding-left: 30.31%;
     .bannerbox{
       text-align: left;

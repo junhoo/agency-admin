@@ -43,11 +43,10 @@ export default {
       const data = {
         token:localStorage.getItem('token')
       }
-      this.$post('/api/buser/out',data).then(res=>{
+      this.$post('/api/agency/out',data).then(res=>{
         localStorage.removeItem('token')
         localStorage.removeItem('userMsg')
-        sessionStorage.removeItem('activeName')
-        this.$router.push('/home')
+        this.$router.push('/bond')
       })
     },
     setDialogInfo(cmditem) {

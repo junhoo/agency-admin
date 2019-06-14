@@ -23,14 +23,18 @@ import Binformation from "./views/bmodule/Information.vue";
 import BInforDtetail from "./views/bmodule/InforDtetail.vue";
 import generalize from "./views/bmodule/Generalize.vue";
 // PC 官 网
-import Mobile from './views/pcmodule/mobile.vue'
+import Amobile from './views/pcmodule/amobile.vue'
+import Bmobile from './views/pcmodule/bmobile.vue'
 import Home from './views/pcmodule/Home.vue'
 import Register from './views/pcmodule/tabitem/register.vue'
 import Bond from './views/pcmodule/tabitem/bond.vue'
+import ItemFirst from './views/pcmodule/tabitem/itemFirst.vue'
+import ItemSecond from './views/pcmodule/tabitem/itemSecond.vue'
+import ItemThird from './views/pcmodule/tabitem/itemThird.vue'
 
 Vue.use(Router)
 const routes =  [
-  { path: '/', redirect: '/home' },
+  { path: '/', redirect: '/itemFirst' },
   {
     path: '/aindex',
     name: 'aindex',
@@ -68,9 +72,14 @@ const routes =  [
     component: Home
   },
   {
-    path: '/mobile',
-    name: 'mobile',
-    component: Mobile
+    path: '/amobile',
+    name: 'amobile',
+    component: Amobile
+  },
+  {
+    path: '/bmobile',
+    name: 'bmobile',
+    component: Bmobile
   },
   {
     path: '/register',
@@ -81,6 +90,21 @@ const routes =  [
     path: '/bond',
     name: 'Bond',
     component: Bond
+  },
+  {
+    path: '/itemThird',
+    name: 'ItemThird',
+    component: ItemThird
+  },
+  {
+    path: '/itemSecond',
+    name: 'ItemSecond',
+    component: ItemSecond
+  },
+  {
+    path: '/itemFirst',
+    name: 'ItemFirst',
+    component: ItemFirst
   }
 ]
 

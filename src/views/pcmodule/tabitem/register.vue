@@ -136,9 +136,8 @@ export default {
         agency_type: this.form.value
       }
       this.$post('/api/agency/register', data).then(res => {
-        sessionStorage.setItem('activeName', 'five')
         this.$router.push({
-           path: '/home'
+           path: '/bond'
          })
         var data = res.data
         localStorage.setItem('token', data.token)
