@@ -166,7 +166,8 @@ export default {
         limit: this.pageNum,
         start: start,
         end: end,
-        name: this.queryName
+        mobile: this.queryName,
+        // mobile:
       };
 
       this.$post("/api/buser/userList", data).then(res => {

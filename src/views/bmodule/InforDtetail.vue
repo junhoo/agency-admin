@@ -132,7 +132,7 @@ export default {
         width: 223px;
       }
       .el-date-editor {
-        width: 113px !important;
+        width: 140px !important;
       }
       .start {
         width: 67px;
