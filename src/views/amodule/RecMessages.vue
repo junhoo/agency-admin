@@ -3,27 +3,68 @@
     <!-- 搜索查询 -->
     <ul class="search">
       <li class="iteminput">
-        <input type="text" placeholder="输入手机号码/机构名称" v-model="queryName">
-        <i slot="suffix" class="el-input__icon el-icon-search" ></i>
+        <input
+          type="text"
+          placeholder="输入手机号码/机构名称"
+          v-model="queryName"
+        >
+        <i
+          slot="suffix"
+          class="el-input__icon el-icon-search"
+        ></i>
       </li>
       <li class="iteminput">
         <span class="date-span">起始日期</span>
       </li>
       <li class="iteminput">
-        <el-date-picker popper-class="xiala" v-model="startTime" type="date" placeholder="选择日期"></el-date-picker>
+        <el-date-picker
+          popper-class="xiala"
+          v-model="startTime"
+          type="date"
+          placeholder="选择日期"
+        ></el-date-picker>
       </li>
       <li class="iteminput">
         <span class="line"></span>
       </li>
       <li class="iteminput">
-        <el-date-picker popper-class="xiala" v-model="endTime" type="date" placeholder="选择日期"></el-date-picker>
+        <el-date-picker
+          popper-class="xiala"
+          v-model="endTime"
+          type="date"
+          placeholder="选择日期"
+        ></el-date-picker>
+      </li>
+      <li class="iteminput">
+        <el-dropdown>
+          <el-button
+            type="primary"
+            size="small"
+          >
+            所有状态
+            <i class="el-icon-caret-bottom el-icon--right"></i>
+          </el-button>
+          <el-dropdown-menu slot="dropdown">
+            <el-dropdown-item
+              v-for="(item,index) in dropdownList"
+              :key="index"
+            >{{item}}</el-dropdown-item>
+          </el-dropdown-menu>
+        </el-dropdown>
       </li>
       <li class="iteminput iteminput5">
-        <span class="search-box" @click="queryUser">搜索</span>
+        <span
+          class="search-box"
+          @click="queryUser"
+        >搜索</span>
       </li>
+
     </ul>
     <!-- 表格 -->
-    <div v-if="dataShow" class="tableBox">
+    <div
+      v-if="dataShow"
+      class="tableBox"
+    >
       <el-table
         :data="userList"
         border
@@ -31,19 +72,68 @@
         :header-cell-style="{background:'#12223B',color:'#606266'}"
         align="center"
       >
-        <el-table-column prop="id" label="联系人" align="center"></el-table-column>
-        <el-table-column prop="organization_name" label="联系电话" align="center"></el-table-column>
-        <el-table-column prop="organization_info" label="邮箱" align="center"></el-table-column>
-        <el-table-column prop="website" label="微信账号" align="center"></el-table-column>
-        <el-table-column prop="contacts" label="机构名称" align="center"></el-table-column>
-        <el-table-column prop="tel" label="官网链接" align="center"></el-table-column>
-        <el-table-column prop="wechat" label="机构信息" align="center"></el-table-column>
-        <el-table-column prop="third_uid" label="填表时间" align="center"></el-table-column>
-        <el-table-column prop="add_time" label="状态" align="center"></el-table-column>
-        <el-table-column prop="add_time" label="操作" width="150" align="center">
+        <el-table-column
+          prop="contacts"
+          label="联系人"
+          align="center"
+        ></el-table-column>
+        <el-table-column
+          prop="tel"
+          label="联系电话"
+          align="center"
+        ></el-table-column>
+        <el-table-column
+          prop="email"
+          label="邮箱"
+          align="center"
+        ></el-table-column>
+        <el-table-column
+          prop="wechat"
+          label="微信账号"
+          align="center"
+        ></el-table-column>
+        <el-table-column
+          prop="organization_name"
+          label="机构名称"
+          align="center"
+        ></el-table-column>
+        <el-table-column
+          prop="website"
+          label="官网链接"
+          align="center"
+        ></el-table-column>
+        <el-table-column
+          prop="organization_info"
+          label="机构信息"
+          align="center"
+        ></el-table-column>
+        <el-table-column
+          prop="add_time"
+          label="填表时间"
+          align="center"
+        ></el-table-column>
+        <el-table-column
+          prop="status"
+          label="状态"
+          align="center"
+        ></el-table-column>
+        <el-table-column
+          prop="add_time"
+          label="操作"
+          width="150"
+          align="center"
+        >
           <div class="radio-box">
-            <el-radio v-model="radio" label="1" @change="handleRadio">未沟通</el-radio>
-            <el-radio v-model="radio" label="2" @change="handleRadio">已沟通</el-radio>
+            <el-radio
+              v-model="radio"
+              label="1"
+              @change="handleRadio"
+            >未沟通</el-radio>
+            <el-radio
+              v-model="radio"
+              label="2"
+              @change="handleRadio"
+            >已沟通</el-radio>
           </div>
         </el-table-column>
       </el-table>
@@ -57,15 +147,22 @@
             :pager-count="5"
             :total="total"
             @current-change="handleCurrentChange"
-            style="background: transparent;">
+            style="background: transparent;"
+          >
           </el-pagination>
         </div>
       </div>
     </div>
 
     <!-- 无数据 -->
-    <div v-else class="nodata">
-      <img src="~imgurl/noData.png" alt>
+    <div
+      v-else
+      class="nodata"
+    >
+      <img
+        src="~imgurl/noData.png"
+        alt
+      >
     </div>
     <!-- 弹框 -->
     <el-dialog
@@ -85,10 +182,11 @@
 <script>
 export default {
   name: "POSManagement",
-  data() {
+  data () {
     return {
+      dropdownList: ['炸酱面', '烤面筋'],
       radio: '1',
-      dialogVisible:false,
+      dialogVisible: false,
       userList: [],
       inputName: "",
       startTime: "",
@@ -100,15 +198,15 @@ export default {
       // 页数
       pageNum: 3,
       total: 0,
-      text:''
+      text: ''
     };
   },
   methods: {
-    handleClick(row) {
+    handleClick (row) {
       this.dialogVisible = true;
       this.text = row.organization_name
     },
-    addMerchant() {
+    addMerchant () {
       this.$router.push({
         path: "/a_add_management",
         query: {
@@ -117,28 +215,29 @@ export default {
       });
       sessionStorage.setItem("addManagement", "true");
     },
-    // 商户管理列表篇
-    getUserList() {
+
+    // 默认信息
+    getUserList () {
       const data = {
         token: localStorage.getItem('token'),
         page: this.pageSize,
         limit: this.pageNum
       };
-      this.$post("/api/auser/userList",data).then(res => {
-        this.userList = res.data.data;
-        this.pageSize = res.data.current_page;
-        this.pageNum = res.data.per_page;
-        this.total = res.data.total;
+      this.$post("/api/auser/receiveInfo", data).then(res => {
+        console.log(res)
+        var _res = res.data;
+        this.userList = _res.data;
+        this.total = _res.total;
       });
     },
     // 页码改变事件
-    handleCurrentChange(current) {
+    handleCurrentChange (current) {
       console.log('333');
       this.pageSize = current;
       this.getUserList();
     },
     // 搜索商户列表
-    queryUser() {
+    queryUser () {
       // console.log('3333');
       let start = this.startTime;
       let end = this.endTime;
@@ -178,40 +277,50 @@ export default {
     handleRadio (type) {
     }
   },
-  created() {
+  created () {
     this.getUserList()
   }
 };
 </script>
 
 <style lang="scss" scoped>
+/deep/ .el-button--primary {
+  margin-left: 10px;
+  background: #059e7e;
+}
+
+/deep/ .el-button--primary:focus, .el-button--primary:hover {
+  background: #059e7e;
+  border-color: #059e7e;
+}
+
 /** 单选框 */
 /deep/ .el-radio {
-  color: #717E9E;
+  color: #717e9e;
   margin-right: 5px;
 }
 /deep/ .el-radio__inner {
   width: 12px;
   height: 12px;
-  border: 1px solid #7380A0;
-  background-color: #12223B;
+  border: 1px solid #7380a0;
+  background-color: #12223b;
 }
 /deep/ .el-radio__inner::after {
   width: 3px;
   height: 3px;
-  background-color: #3986E2;
+  background-color: #3986e2;
 }
 /deep/ .el-radio__input.is-checked .el-radio__inner {
-  border-color: #26548F;
-  background: #26548F;
+  border-color: #26548f;
+  background: #26548f;
 }
 
-/deep/ .el-radio__input.is-checked+.el-radio__label {
-  color: #3986E2;
+/deep/ .el-radio__input.is-checked + .el-radio__label {
+  color: #3986e2;
 }
 
 /* 输入样式框 */
- /deep/ .el-dialog__body{
+/deep/ .el-dialog__body {
   padding: 0;
 }
 /deep/ .el-input__inner {
@@ -221,12 +330,12 @@ export default {
   border-radius: 3px;
   color: #708193;
   font-size: 12px !important;
-  border: 1px solid #555F79;
+  border: 1px solid #555f79;
   padding: 0 30px !important;
 }
 
-/deep/ .el-input__inner::placeholder{
-    color: #555F79
+/deep/ .el-input__inner::placeholder {
+  color: #555f79;
 }
 
 /** 时间选择框 */
@@ -239,18 +348,18 @@ export default {
   background-color: transparent;
 }
 /deep/ .el-pager li {
-  color: #C0C4CC;
+  color: #c0c4cc;
   background-color: transparent;
 }
 /deep/ .el-pager li.active {
-  color: #409EFF;
+  color: #409eff;
 }
 /deep/ .el-pagination .btn-next {
-  color: #C0C4CC;
+  color: #c0c4cc;
   background-color: transparent;
 }
 /deep/ .el-pagination .btn-prev {
-  color: #C0C4CC;
+  color: #c0c4cc;
   background-color: transparent;
 }
 
@@ -286,7 +395,7 @@ export default {
           color: #555f79;
         }
       }
-      i {
+      .el-icon-search {
         position: absolute;
         top: 4%;
         right: -12px;
@@ -405,8 +514,8 @@ export default {
   padding: 25px 25px 60px !important;
 }
 
-.el-input__icon{
-  color: #555F79;
+.el-input__icon {
+  color: #555f79;
   font-weight: 600;
   font-size: 13px !important;
 }

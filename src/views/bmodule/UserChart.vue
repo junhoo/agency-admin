@@ -80,15 +80,6 @@ export default {
   components: {
     TopChart,
   },
-  created(){
-    this.getInfo()
-  },
-  mounted() {
-    this.reqlist = {
-      register_users_list: [1,2,3,4,5,6,7,8],
-      used_users_list: [2,3,4,5,6,7,8,9]
-    }
-  },
   data() {
     return {
       radio: '1',
@@ -101,6 +92,16 @@ export default {
         name_list: []
       }
     }
+  },
+  created(){
+    this.getInfo()
+  },
+  mounted() {
+    this.reqlist = {
+      register_users_list: [1,2,3,4,5,6,7,8],
+      used_users_list: [2,8,3,8,3,8,2,8]
+    }
+    this.top_trend_list.list = this.reqlist.register_users_list
   },
   // 视图数据
   methods: {
@@ -121,9 +122,9 @@ export default {
 
     handleRadio (type) {
       if (this.radio === '1' || this.radio === '2') {
-        this.bonus_ranking_list.list = this.reqlist.register_users_list
+        this.top_trend_list.list = this.reqlist.register_users_list
       } else {
-        this.bonus_ranking_list.list = this.reqlist.used_users_list
+        this.top_trend_list.list = this.reqlist.used_users_list
       }
     }
   }
