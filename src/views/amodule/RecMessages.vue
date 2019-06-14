@@ -3,7 +3,7 @@
     <!-- 搜索查询 -->
     <ul class="search">
       <li class="iteminput">
-        <input type="text" placeholder="输入联系人/机构名称" v-model="queryName">
+        <input type="text" placeholder="输入手机号码/机构名称" v-model="queryName">
         <i slot="suffix" class="el-input__icon el-icon-search" ></i>
       </li>
       <li class="iteminput">
@@ -19,9 +19,6 @@
         <el-date-picker popper-class="xiala" v-model="endTime" type="date" placeholder="选择日期"></el-date-picker>
       </li>
       <li class="iteminput iteminput5">
-        <span class="subSearch" @click="addMerchant">添加商户</span>
-      </li>
-      <li class="iteminput iteminput5">
         <span class="search-box" @click="queryUser">搜索</span>
       </li>
     </ul>
@@ -34,20 +31,21 @@
         :header-cell-style="{background:'#12223B',color:'#606266'}"
         align="center"
       >
-        <el-table-column prop="id" label="ID" align="center"></el-table-column>
-        <el-table-column prop="organization_name" label="代理名称" align="center"></el-table-column>
-        <el-table-column prop="organization_info" label="代理简介" align="center"></el-table-column>
-        <el-table-column prop="website" label="官网地址" align="center"></el-table-column>
-        <el-table-column prop="contacts" label="联系人" align="center"></el-table-column>
-        <el-table-column prop="tel" label="手机号" align="center"></el-table-column>
-        <el-table-column prop="wechat" label="微信号" align="center"></el-table-column>
-        <el-table-column prop="third_uid" label="用户ID" align="center"></el-table-column>
-        <el-table-column prop="add_time" label="操作" align="center">
-          <template slot-scope="scope">
-            <el-button @click="handleClick(scope.row)" type="text" size="small">查看详情</el-button>
-          </template>
+        <el-table-column prop="id" label="联系人" align="center"></el-table-column>
+        <el-table-column prop="organization_name" label="联系电话" align="center"></el-table-column>
+        <el-table-column prop="organization_info" label="邮箱" align="center"></el-table-column>
+        <el-table-column prop="website" label="微信账号" align="center"></el-table-column>
+        <el-table-column prop="contacts" label="机构名称" align="center"></el-table-column>
+        <el-table-column prop="tel" label="官网链接" align="center"></el-table-column>
+        <el-table-column prop="wechat" label="机构信息" align="center"></el-table-column>
+        <el-table-column prop="third_uid" label="填表时间" align="center"></el-table-column>
+        <el-table-column prop="add_time" label="状态" align="center"></el-table-column>
+        <el-table-column prop="add_time" label="操作" width="150" align="center">
+          <div class="radio-box">
+            <el-radio v-model="radio" label="1" @change="handleRadio">未沟通</el-radio>
+            <el-radio v-model="radio" label="2" @change="handleRadio">已沟通</el-radio>
+          </div>
         </el-table-column>
-        <el-table-column prop="add_time" label="添加时间" align="center"></el-table-column>
       </el-table>
 
       <!-- 分页 -->
@@ -58,10 +56,8 @@
             layout="prev, pager, next"
             :pager-count="5"
             :total="total"
-            :page-size="pageNum"
             @current-change="handleCurrentChange"
             style="background: transparent;">
-            
           </el-pagination>
         </div>
       </div>
@@ -91,6 +87,7 @@ export default {
   name: "POSManagement",
   data() {
     return {
+      radio: '1',
       dialogVisible:false,
       userList: [],
       inputName: "",
@@ -136,6 +133,7 @@ export default {
     },
     // 页码改变事件
     handleCurrentChange(current) {
+      console.log('333');
       this.pageSize = current;
       this.getUserList();
     },
@@ -176,6 +174,8 @@ export default {
         this.pageNum = res.data.per_page;
         this.total = res.data.total;
       });
+    },
+    handleRadio (type) {
     }
   },
   created() {
@@ -185,6 +185,31 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+/** 单选框 */
+/deep/ .el-radio {
+  color: #717E9E;
+  margin-right: 5px;
+}
+/deep/ .el-radio__inner {
+  width: 12px;
+  height: 12px;
+  border: 1px solid #7380A0;
+  background-color: #12223B;
+}
+/deep/ .el-radio__inner::after {
+  width: 3px;
+  height: 3px;
+  background-color: #3986E2;
+}
+/deep/ .el-radio__input.is-checked .el-radio__inner {
+  border-color: #26548F;
+  background: #26548F;
+}
+
+/deep/ .el-radio__input.is-checked+.el-radio__label {
+  color: #3986E2;
+}
+
 /* 输入样式框 */
  /deep/ .el-dialog__body{
   padding: 0;
@@ -305,6 +330,9 @@ export default {
       padding-top: 2px;
       margin-left: 10px;
     }
+  }
+  .radio-box {
+    display: flex;
   }
   .dialogContant {
     font-size: 12px;

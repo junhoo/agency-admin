@@ -86,6 +86,8 @@ export default {
       } else if (value === 3) {
         value = '商户管理'
       } else if (value === 4) {
+        value = '推广接收信息'
+      } else if (value === 5) {
         value = '信息管理'
       } else {
         value = '添加商户'

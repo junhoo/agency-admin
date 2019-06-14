@@ -103,6 +103,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+/deep/ .el-input--small .el-input__inner {
+  background-color: #0c2040;
+  border-color: #0c2040;
+}
 .container {
   width: 100%;
   height: 100%;

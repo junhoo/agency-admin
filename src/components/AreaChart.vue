@@ -7,7 +7,7 @@
 <script>
 export default {
   props: {
-    list: Array
+    list: Object
   },
   watch: {
     list: {

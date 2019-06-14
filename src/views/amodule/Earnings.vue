@@ -157,6 +157,20 @@
       </span>
     </el-dialog>
 
+    <!-- 分页 -->
+    <div class="paging">
+      <div class="block">
+        <span class="demonstration"></span>
+        <el-pagination
+          layout="prev, pager, next"
+          :pager-count="5"
+          :total="total"
+          @current-change="currentPage"
+          :page-size="pageNum"
+          style="background: transparent;"
+        ></el-pagination>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -203,6 +217,12 @@ export default {
     this.getList(1);
   },
   methods: {
+    // 分页事件
+    currentPage(value) {
+      // console.log('33');
+      this.pageSize = value;
+      this.getList();
+    },
     // tab栏切换事件
     handleClick(event) {
       var index = parseInt(event.index);
@@ -221,15 +241,19 @@ export default {
         type: tp
       };
 
-      this.$post("/api/awallet/wallet", data).then(res => {     
-        let mobile = localStorage.getItem("userMsg");
-        this.setPassword.mobile = JSON.parse(mobile).mobile;
-        this.setStatus = res.data.pay_password;
-        this.tableData = res.data.data;
-        this.rate = res.data.rate;
-        this.totalNum = res.data.amount_total;
-        this.totalUsdt = res.data.usdt_num;
-      }).catch(e=>{});
+      this.$post("/api/awallet/wallet", data)
+        .then(res => {
+          console.log(res);
+          let mobile = localStorage.getItem("userMsg");
+          this.setPassword.mobile = JSON.parse(mobile).mobile;
+          this.setStatus = res.data.pay_password;
+          this.tableData = res.data.data;
+          this.rate = res.data.rate;
+          this.totalNum = res.data.amount_total;
+          this.totalUsdt = res.data.usdt_num;
+          this.total = res.data.total;
+        })
+        .catch(e => {});
     },
     // 获取验证码
     getCode(mob, tp) {
@@ -279,13 +303,13 @@ export default {
         token: localStorage.getItem("token"),
         convert_num: this.usdtData.jf_num
       };
-      
+
       this.$post("/api/awallet/exchangeUsdt", data).then(res => {
         if (res.code === 0) {
           Message({
             message: res.msg,
             type: "success"
-          }).catch(e=>{});
+          }).catch(e => {});
         }
       });
     },
@@ -315,6 +339,32 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.paging {
+  display: flex;
+  align-items: center;
+  margin-top: 30px;
+  flex-direction: row-reverse;
+}
+/** 基础页数 */
+/deep/ .el-pagination button:disabled {
+  background-color: transparent;
+}
+/deep/ .el-pager li {
+  color: #c0c4cc;
+  background-color: transparent;
+}
+/deep/ .el-pager li.active {
+  color: #409eff;
+}
+/deep/ .el-pagination .btn-next {
+  color: #c0c4cc;
+  background-color: transparent;
+}
+/deep/ .el-pagination .btn-prev {
+  color: #c0c4cc;
+  background-color: transparent;
+}
+
 /deep/ .my-btn,
 .start {
   .el-input__inner {

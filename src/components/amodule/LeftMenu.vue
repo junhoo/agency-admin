@@ -71,9 +71,16 @@ export default {
         },
         {
           icon: "icon-item5",
+          name: "推广接收信息",
+          path: "a_rec_messages",
+          index: 4,
+          select: false
+        },
+        {
+          icon: "icon-item6",
           name: "信息管理",
           path: "a_information",
-          index: 4,
+          index: 5,
           select: false
         }
       ]
@@ -186,7 +193,7 @@ a {
   background-size: 18px 15px;
 }
 
-.icon-item5 {
+.icon-item6 {
   padding-left: 24px;
   background: url('~imgurl/amenu_icon5.png') no-repeat center left;
   background-size: 18px 15px;

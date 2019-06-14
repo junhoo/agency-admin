@@ -9,6 +9,7 @@ import Earnings from "./views/amodule/Earnings.vue";
 import deal from "./views/amodule/Deal.vue";
 import dealData from "./views/amodule/Deal_data.vue";
 import dealDetail from "./views/amodule/Deal_detail.vue";
+import recMessages from "./views/amodule/RecMessages.vue";
 import information from "./views/amodule/Information.vue";
 
 // B方后台
@@ -47,6 +48,7 @@ const routes =  [
       { path: '/a_deal', name: 'deal', component: deal},
       { path: '/a_deal_data', name: 'dealData', component: dealData},
       { path: '/a_deal_detail', name: 'dealDetail', component: dealDetail},
+      { path: '/a_rec_messages', name: 'recMessages', component: recMessages},
       { path: '/a_information', name: 'information', component: information}
     ]
   },

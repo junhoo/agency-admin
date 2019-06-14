@@ -1,6 +1,6 @@
 <template>
   <div class="merchants-body">
-    <div class="test" @click="gettridData()">az</div>
+    <div class="test"></div>
     <header class="container">
       <div class="content">
         <p class="money">{{user_num}}</p>
@@ -232,9 +232,12 @@ export default {
 
       // 中间表格数据
       bonus_ranking_list: { // 充值提现额排行
+        name1: '买入金额',
+        name2: '卖出金额',
         list1: [],
         list2: [],
-        name_list: []
+        name_list: [],
+        column: '45%'
       },
       bonus_trend_list: { // 充值提现趋势
         list1: [],
@@ -370,8 +373,6 @@ export default {
       const data = { token: localStorage.getItem('token') }
       this.$post(path, data).then(res => {
         let _res = res
-        console.log('getMerInfo')
-        console.log(_res)
         _res = _res.data
         this.user_num = _res.user_num
         this.recharge_amount = _res.recharge_amount
@@ -640,6 +641,8 @@ export default {
     text-align: left;
     height: 40px;
     line-height: 40px;
+    background-color: #12223B;
+    border-bottom: 1.2px solid #06476d;
     .icon {
       float: left;
       width: 36px;
@@ -701,6 +704,8 @@ export default {
       height: 40px;
       line-height: 40px;
       border-bottom: 1.2px #06476d solid;
+      background-color: #12223B;
+      border-bottom: 1.2px solid #06476d;
       .icon {
         float: left;
         width: 36px;
