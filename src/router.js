@@ -1,37 +1,38 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 // A方后台
-import Merchants from './views/amodule/Merchants.vue';
-import AIndex from './views/amodule/Index.vue';
-import POSManagement from './views/amodule/POSManagement.vue';
-import AddManagement from './views/amodule/AddManagement.vue';
-import Earnings from "./views/amodule/Earnings.vue";
-import deal from "./views/amodule/Deal.vue";
-import dealData from "./views/amodule/Deal_data.vue";
-import dealDetail from "./views/amodule/Deal_detail.vue";
-import recMessages from "./views/amodule/RecMessages.vue";
-import information from "./views/amodule/Information.vue";
+const Merchants = () => import('./views/amodule/Merchants.vue')
+const AIndex = () => import('./views/amodule/Index.vue')
+const POSManagement = () => import('./views/amodule/POSManagement.vue')
+const AddManagement = () => import('./views/amodule/AddManagement.vue')
+const Earnings = () => import('./views/amodule/Earnings.vue')
+const deal = () => import('./views/amodule/Deal.vue')
+const dealData = () => import('./views/amodule/Deal_data.vue')
+const dealDetail = () => import('./views/amodule/Deal_detail.vue')
+const recMessages = () => import('./views/amodule/RecMessages.vue')
+const information = () => import('./views/amodule/Information.vue')
 
 // B方后台
-import BIndex from './views/bmodule/Index.vue';
-import BTradingChart from './views/bmodule/TradingChart.vue';
-import BUserChart from './views/bmodule/UserChart.vue';
-import BEarnings from './views/bmodule/Earnings.vue';
-import Bdeal from "./views/bmodule/Deal.vue";
-import Bdetail from "./views/bmodule/DealDetail.vue";
-import manage from "./views/bmodule/Manage.vue";
-import Binformation from "./views/bmodule/Information.vue";
-import BInforDtetail from "./views/bmodule/InforDtetail.vue";
-import generalize from "./views/bmodule/Generalize.vue";
-// PC 官 网
-import Amobile from './views/pcmodule/amobile.vue'
-import Bmobile from './views/pcmodule/bmobile.vue'
-import Home from './views/pcmodule/Home.vue'
-import Register from './views/pcmodule/tabitem/register.vue'
-import Bond from './views/pcmodule/tabitem/bond.vue'
-import ItemFirst from './views/pcmodule/tabitem/itemFirst.vue'
-import ItemSecond from './views/pcmodule/tabitem/itemSecond.vue'
-import ItemThird from './views/pcmodule/tabitem/itemThird.vue'
+const BIndex = () => import('./views/bmodule/Index.vue')
+const BTradingChart = () => import('./views/bmodule/TradingChart.vue')
+const BUserChart = () => import('./views/bmodule/UserChart.vue')
+const BEarnings = () => import('./views/bmodule/Earnings.vue')
+const Bdeal = () => import('./views/bmodule/Deal.vue')
+const Bdetail = () => import('./views/bmodule/DealDetail.vue')
+const manage = () => import('./views/bmodule/Manage.vue')
+const Binformation = () => import('./views/bmodule/Information.vue')
+const BInforDtetail = () => import('./views/bmodule/InforDtetail.vue')
+const generalize = () => import('./views/bmodule/Generalize.vue')
+
+// PC官网
+const Amobile = () => import('./views/pcmodule/amobile.vue')
+const Bmobile = () => import('./views/pcmodule/bmobile.vue')
+const Home = () => import('./views/pcmodule/Home.vue')
+const Register = () => import('./views/pcmodule/tabitem/register.vue')
+const Bond = () => import('./views/pcmodule/tabitem/bond.vue')
+const ItemFirst = () => import('./views/pcmodule/tabitem/itemFirst.vue')
+const ItemSecond = () => import('./views/pcmodule/tabitem/itemSecond.vue')
+const ItemThird = () => import('./views/pcmodule/tabitem/itemThird.vue')
 
 Vue.use(Router)
 const routes =  [

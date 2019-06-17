@@ -2,12 +2,12 @@ import VueApexCharts from 'vue-apexcharts'
 import Vue from 'vue';
 import App from './App.vue'
 import router from './router'
-import VCharts from 'v-charts'
+// import VCharts from 'v-charts'
 import './plugins/element.js'
 import '@/assets/styles/reset.css'
 import '@/assets/styles/border.css'
 import { getHttp, postHttp } from './plugins/http'
-
+//1
 import {
   Row, Col,
   Menu,
@@ -29,7 +29,7 @@ Vue.use(TabPane)
 Vue.use(Table)
 Vue.use(TableColumn)
 Vue.use(Dialog)
-Vue.use(VCharts)
+// Vue.use(VCharts)
 Vue.use(Input)
 Vue.use(Dropdown)
 Vue.use(Select)

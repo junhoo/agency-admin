@@ -1,5 +1,8 @@
 const path = require('path')
 const debug = process.env.NODE_ENV !== 'production'
+const CompressionWebpackPlugin = require('compression-webpack-plugin');
+const productionGzipExtensions = ['js', 'css'];
+const isProduction = process.env.NODE_ENV === 'production';
 //const VueConf = require('./src/assets/js/libs/vue_config_class')
 //const vueConf = new VueConf(process.argv)
 function resolve (dir) {
@@ -31,6 +34,33 @@ module.exports = {
             }
         }
     },
+    configureWebpack: config => {
+        config.externals = {
+            'vue': 'Vue',
+            // 'vue-router': 'VueRouter',
+            'element-ui': 'ELEMENT',
+            'vue-apexcharts': 'ApexCharts',
+            'axios': 'axios'
+        }
+        if (isProduction) {
+            const plugins = []
+            plugins.push(
+                new CompressionWebpackPlugin({
+                    filename: '[path].gz[query]',
+                    algorithm: 'gzip',
+                    test: productionGzipExtensions,
+                    threshold: 10240,
+                    minRatio: 0.8
+                })
+            )
+            config.plugins = [
+                ...config.plugins,
+                ...plugins
+            ]
+        }
+    },
+    configureWebpack: config => {
+  },
     parallel: require('os').cpus().length > 1, // 构建时开启多进程处理babel编译
     pluginOptions: { // 第三方插件配置
     },

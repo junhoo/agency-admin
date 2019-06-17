@@ -193,9 +193,15 @@ a {
   background-size: 18px 15px;
 }
 
-.icon-item6 {
+.icon-item5 {
   padding-left: 24px;
   background: url('~imgurl/amenu_icon5.png') no-repeat center left;
+  background-size: 18px 15px;
+}
+
+.icon-item6 {
+  padding-left: 24px;
+  background: url('~imgurl/amenu_icon6.png') no-repeat center left;
   background-size: 18px 15px;
 }
 </style>
